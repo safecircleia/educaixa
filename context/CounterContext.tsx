@@ -1,13 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-interface CounterContextType {
+type CounterContextType = {
   count: number;
   total: number;
   percentage: number;
-}
+};
 
 const CounterContext = createContext<CounterContextType>({
   count: 0,
@@ -15,34 +15,37 @@ const CounterContext = createContext<CounterContextType>({
   percentage: 0,
 });
 
-export const CounterProvider = ({ children }) => {
+export function CounterProvider({ children }: { children: React.ReactNode }) {
   const [count, setCount] = useState(0);
   const total = 5000;
   const percentage = Math.min((count / total) * 100, 100);
 
   useEffect(() => {
-    const getCount = async () => {
-      const { data } = await supabase
+    const fetchInitialCount = async () => {
+      const { data, error } = await supabase
         .from('waitlist_count')
         .select('count')
         .eq('id', 1)
         .single();
-      
-      if (data) setCount(data.count);
+
+      if (!error && data) {
+        setCount(data.count);
+      }
     };
 
-    getCount();
+    fetchInitialCount();
 
+    // Set up real-time subscription
     const channel = supabase
-      .channel('counter')
+      .channel('counter-changes')
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE',
+          event: '*',
           schema: 'public',
-          table: 'waitlist_count'
+          table: 'waitlist_count',
         },
-        (payload: any) => {
+        (payload) => {
           if (payload.new?.count !== undefined) {
             setCount(payload.new.count);
           }
@@ -51,7 +54,7 @@ export const CounterProvider = ({ children }) => {
       .subscribe();
 
     return () => {
-      channel.unsubscribe();
+      supabase.removeChannel(channel);
     };
   }, []);
 
@@ -60,6 +63,6 @@ export const CounterProvider = ({ children }) => {
       {children}
     </CounterContext.Provider>
   );
-};
+}
 
 export const useCounter = () => useContext(CounterContext);

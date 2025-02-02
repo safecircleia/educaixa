@@ -1,66 +1,24 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
-import { supabase } from '../../lib/supabase';
+import { useEffect, useRef } from 'react';
 import CountUp from './CountUp';
 import confetti from 'canvas-confetti';
+import { useCounter } from '../../context/CounterContext';
 
 export const Counter = ({ containerRef }) => {
-  const [count, setCount] = useState(0);
-  const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
-  const total = 5000;
-  const percentage = Math.min((count / total) * 100, 100);
-
-  // Add a previous count ref to track changes
-  const prevCountRef = useRef(count);
+  const { count, total, percentage } = useCounter();
+  const hasTriggeredConfetti = useRef(false);
+  const prevCount = useRef(count);
 
   useEffect(() => {
-    const getCount = async () => {
-      const { data } = await supabase
-        .from('waitlist_count')
-        .select('count')
-        .eq('id', 1)
-        .single();
-      
-      if (data) setCount(data.count);
-    };
-
-    getCount();
-
-    const channel = supabase
-      .channel('counter')
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'waitlist_count'
-        },
-        (payload: any) => {
-          if (payload.new?.count !== undefined) {
-            setCount(payload.new.count);
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    // Trigger confetti only when count exactly reaches 5000
-    if (count === total && prevCountRef.current !== total && !hasTriggeredConfetti) {
-      const startTime = Date.now();
-      const duration = 3000; // 3 seconds
-
+    // Trigger confetti only when count reaches total for the first time
+    if (count === total && prevCount.current !== total && !hasTriggeredConfetti.current) {
       const fireConfetti = () => {
-        const defaults = { 
-          startVelocity: 30, 
-          spread: 360, 
-          ticks: 60, 
+        const defaults = {
+          startVelocity: 30,
+          spread: 360,
+          ticks: 60,
           zIndex: 100,
           gravity: 1.2,
           scalar: 1.2,
@@ -79,9 +37,9 @@ export const Counter = ({ containerRef }) => {
         });
       };
 
-      fireConfetti();
-
-      // Continuous bursts
+      const startTime = Date.now();
+      const duration = 3000;
+      
       const interval = setInterval(() => {
         if (Date.now() - startTime > duration) {
           clearInterval(interval);
@@ -90,13 +48,12 @@ export const Counter = ({ containerRef }) => {
         fireConfetti();
       }, 200);
 
-      setHasTriggeredConfetti(true);
-
+      hasTriggeredConfetti.current = true;
       return () => clearInterval(interval);
     }
     
-    prevCountRef.current = count;
-  }, [count, total, hasTriggeredConfetti]);
+    prevCount.current = count;
+  }, [count, total]);
 
   return (
     <motion.div
@@ -129,7 +86,6 @@ export const Counter = ({ containerRef }) => {
         <div className="absolute inset-x-0 bottom-0 h-1 bg-black/20">
           <motion.div
             className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
-            initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
             transition={{ 
               type: "spring",
@@ -144,7 +100,7 @@ export const Counter = ({ containerRef }) => {
             <div className="font-mono text-4xl font-bold bg-clip-text text-transparent 
               bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
             >
-              <CountUp to={count} duration={1.5} />
+              <CountUp to={count} duration={1} />
             </div>
             <div className="font-mono text-2xl text-white/40">
               / {total.toLocaleString()}

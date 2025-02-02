@@ -1,14 +1,14 @@
 'use client';
 
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { usePhantom } from '../../hooks/usePhantom';
 import { useState, useEffect, useRef } from 'react';
-import { PhantomIcon } from '../PhantomIcon';
-import { Shield, ChevronDown, ExternalLink, GitHub, Book, Users, Coins, Code, Menu, X } from 'lucide-react';
+import { Shield, ChevronDown, ExternalLink, GitHub, Book, Users, Coins, Code, Menu, X, LogOut, LayoutDashboard } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import  CountUp  from './CountUp';
 import { useCounter } from '../../context/CounterContext';
 import Image from 'next/image';
+import Link from 'next/link';
+import WalletButtons from '@/components/WalletButtons';
 
 const navItems = [
   {
@@ -51,7 +51,6 @@ const navItems = [
 ];
 
 export const Navbar = () => {
-  const { connect, connected, address, balance } = usePhantom();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
@@ -59,6 +58,8 @@ export const Navbar = () => {
   const isCounterVisible = useInView(counterRef, { margin: "-100px 0px" });
   const { count, total, percentage } = useCounter();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isWalletMenuOpen, setIsWalletMenuOpen] = useState(false);
+  const walletMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,6 +67,17 @@ export const Navbar = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (walletMenuRef.current && !walletMenuRef.current.contains(event.target as Node)) {
+        setIsWalletMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -90,6 +102,15 @@ export const Navbar = () => {
     }
   };
 
+  const navigateToDashboard = () => {
+    router.push('/dashboard');
+    setIsWalletMenuOpen(false);
+  };
+
+  const handleWalletMenuClick = () => {
+    setIsWalletMenuOpen(!isWalletMenuOpen);
+  };
+
   return (
     <>
       <motion.nav
@@ -100,73 +121,72 @@ export const Navbar = () => {
           <div className="flex items-center h-20">
             {/* Left section - Fixed width */}
             <div className="w-[240px] flex items-center">
-              <motion.div 
-                className="flex items-center space-x-3"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="relative w-8 h-8">
-                  <motion.div
-                    className="absolute inset-0 bg-[#4dc8ff]/20 blur-xl rounded-full"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.3, 0.5, 0.3]
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  <Image
-                    src="/logo-nbg.png"
-                    alt="SafeCircle Logo"
-                    width={32}
-                    height={32}
-                    className="relative z-10"
-                  />
-                </div>
-                
-                <motion.span 
-                  className="text-xl font-black tracking-tighter"
-                  animate={{ 
-                    background: ['linear-gradient(to right, #fff, #4dc8ff)', 'linear-gradient(to right, #4dc8ff, #fff)'],
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent'
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: 'reverse'
-                  }}
-                >
-                  SAFECIRCLE
-                </motion.span>
-              </motion.div>
-
-              {/* Counter - Always visible next to title */}
-              <div className="flex items-center space-x-2 pl-4 border-l border-white/10">
-                <div className="flex items-baseline gap-2">
-                  <CountUp
-                    to={count}
-                    className="font-mono text-sm font-medium text-white/90"
-                  />
-                  <span className="text-white/50 text-sm">/</span>
-                  <span className="font-mono text-sm text-white/50">{total.toLocaleString()}</span>
-                </div>
+              <Link href="/">
                 <motion.div 
-                  className="h-1 w-16 bg-black/20 rounded-full overflow-hidden"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  className="flex items-center space-x-3 group"
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${percentage}%` }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                  />
+                  <div className="relative w-8 h-8">
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-[#4dc8ff]/20 to-[#2dd4bf]/20 blur-xl rounded-full"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.5, 0.3]
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <Image
+                      src="/logo-nbg.png"
+                      alt="SafeCircle Logo"
+                      width={32}
+                      height={32}
+                      className="relative z-10"
+                    />
+                  </div>
+                  
+                  <motion.span 
+                    className="text-2xl font-nothing text-white/90 tracking-wider
+                      group-hover:opacity-80 transition-opacity"
+                  >
+                    SafeCircle
+                  </motion.span>
                 </motion.div>
-              </div>
+              </Link>
+
+              {/* Counter - Only visible when scrolled */}
+              <AnimatePresence>
+                {isScrolled && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="flex items-center space-x-2 pl-4 border-l border-white/10"
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <CountUp
+                        to={count}
+                        className="font-mono text-sm font-medium text-white/90"
+                      />
+                      <span className="text-white/50 text-sm">/</span>
+                      <span className="font-mono text-sm text-white/50">{total.toLocaleString()}</span>
+                    </div>
+                    <motion.div 
+                      className="h-1 w-16 bg-black/20 rounded-full overflow-hidden"
+                    >
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${percentage}%` }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                      />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Center section - Desktop Navigation */}
@@ -179,7 +199,6 @@ export const Navbar = () => {
                         activeDropdown === item.title ? null : item.title
                       )}
                       className="px-4 py-2 rounded-lg flex items-center gap-2 group"
-                      whileHover={{ y: -1, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                     >
                       <item.icon className="w-4 h-4 opacity-60 group-hover:opacity-100 
                         transition-opacity duration-200" 
@@ -212,7 +231,6 @@ export const Navbar = () => {
                                 className="w-full flex items-center justify-between px-4 py-2
                                   rounded-lg text-sm text-white/70 hover:text-white
                                   hover:bg-white/5 transition-colors"
-                                whileHover={{ x: 4 }}
                               >
                                 {subItem.label}
                                 {subItem.external && (
@@ -229,51 +247,18 @@ export const Navbar = () => {
               </div>
             </div>
 
-            {/* Right section - Desktop */}
-            <div className="hidden md:flex w-[240px] justify-end">
-              <motion.button
-                onClick={connect}
-                className="flex items-center space-x-2 px-4 py-2 rounded-lg 
-                  bg-gradient-to-r from-[#4dc8ff]/10 to-[#2dd4bf]/10
-                  hover:from-[#4dc8ff]/20 hover:to-[#2dd4bf]/20
-                  border border-white/10"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <PhantomIcon className="w-5 h-5" />
-                {connected ? (
-                  <div className="flex items-center space-x-2">
-                    <span>{`${address?.slice(0, 4)}...${address?.slice(-4)}`}</span>
-                    {balance && (
-                      <span className="text-[#4dc8ff]">{`${balance} $SC`}</span>
-                    )}
-                  </div>
-                ) : (
-                  <span>Connect Wallet</span>
-                )}
-              </motion.button>
+            {/* Right section - Desktop Wallet Connect */}
+            <div className="hidden md:flex justify-end">
+              <WalletButtons />
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center ml-auto">
-              <motion.button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </motion.button>
+              <WalletButtons />
             </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -315,7 +300,7 @@ export const Navbar = () => {
                           {subItem.label}
                           {subItem.external && (
                             <ExternalLink className="w-3 h-3 opacity-50" />
-                          )}
+                          )} 
                         </motion.button>
                       ))}
                     </div>
@@ -324,21 +309,7 @@ export const Navbar = () => {
 
                 {/* Mobile Wallet Connection */}
                 <div className="pt-4 border-t border-white/10">
-                  <motion.button
-                    onClick={() => {
-                      connect();
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg
-                      bg-gradient-to-r from-[#4dc8ff]/10 to-[#2dd4bf]/10
-                      hover:from-[#4dc8ff]/20 hover:to-[#2dd4bf]/20
-                      border border-white/10"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <PhantomIcon className="w-5 h-5" />
-                    <span>Connect Wallet</span>
-                  </motion.button>
+                  <WalletButtons />
                 </div>
               </div>
             </motion.div>
