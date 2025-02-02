@@ -1,0 +1,42 @@
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px #4dc8ff, 0 0 10px #4dc8ff, 0 0 15px #4dc8ff; }
+  50% { box-shadow: 0 0 10px #4dc8ff, 0 0 20px #4dc8ff, 0 0 30px #4dc8ff; }
+  100% { box-shadow: 0 0 5px #4dc8ff, 0 0 10px #4dc8ff, 0 0 15px #4dc8ff; }
+}
+
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+.hexagon-grid {
+  background: 
+    linear-gradient(60deg, #0a0a0f 25%, transparent 25.5%) 0 0,
+    linear-gradient(-60deg, #0a0a0f 25%, transparent 25.5%) 0 0,
+    linear-gradient(60deg, transparent 75%, #0a0a0f 75.5%) 0 0,
+    linear-gradient(-60deg, transparent 75%, #0a0a0f 75.5%) 0 0;
+  background-size: 50px 87px;
+  background-color: #1d283e;
+}
+
+.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0%,
+    rgba(77, 200, 255, 0.05) 0.5%,
+    transparent 1%
+  );
+  pointer-events: none;
+  animation: scanlines 10s linear infinite;
+}
+
+.neon-text {
+  text-shadow: 0 0 12px rgba(77,200,255,0.6);
+}
+
+.liquid-progress {
+  background: linear-gradient(90deg, #4dc8ff 0%, #10b981 98.2%);
+  filter: drop-shadow(0 0 10px rgba(77,200,255,0.4));
+}

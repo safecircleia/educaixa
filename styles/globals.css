@@ -1,0 +1,125 @@
+@import './animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void-black: #0a0a0f;
+  --neon-blue: #4dc8ff;
+  --hacker-green: #10b981;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --accent: 0 0% 90%;
+  --space-black: #0f172a;
+  --cyber-teal: #2dd4bf;
+  --alert-red: #ff007a;
+}
+
+body {
+  background: linear-gradient(45deg, var(--void-black) 0%, #1d283e 100%);
+  color: white;
+  font-family: 'Geist', sans-serif;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#4adeff] to-[#38bdf8];
+}
+
+.glass-nav {
+  @apply backdrop-blur-xl border-b border-white/10 bg-black/20;
+}
+
+.cyber-card {
+  @apply bg-black/30 backdrop-blur-sm border border-neon-blue/20;
+  transition: transform 0.3s ease;
+}
+
+.cyber-card:hover {
+  transform: perspective(1000px) rotateX(5deg);
+}
+
+@keyframes ray-shine {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.5);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.5);
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.god-ray {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: ray-shine 10s ease-in-out infinite;
+  transform-origin: top;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s linear infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-[--space-black] text-white;
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-black/30 backdrop-blur-lg border border-white/20;
+  }
+  
+  .bento-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4;
+  }
+
+  .bento-item {
+    @apply glass rounded-3xl p-6 transition-all duration-300 hover:bg-white/[0.15];
+  }
+
+  .subtle-gradient {
+    @apply bg-gradient-to-br from-white/10 to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 2px 8px rgba(77,200,255,0.3);
+  }
+  
+  .cyber-gradient {
+    @apply bg-gradient-to-r from-[--neon-blue] via-[--cyber-teal] to-[--neon-blue];
+    background-size: 200% 100%;
+  }
+  
+  .cyber-gradient-text {
+    @apply cyber-gradient bg-clip-text text-transparent;
+  }
+
+  .animated-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-[2px] 
+    after:w-full after:origin-left after:scale-x-0 after:cyber-gradient
+    after:transition-transform after:duration-300 hover:after:scale-x-100;
+  }
+}
