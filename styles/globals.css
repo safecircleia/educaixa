@@ -101,6 +101,14 @@ body {
   .subtle-gradient {
     @apply bg-gradient-to-br from-white/10 to-transparent;
   }
+
+  .section-transition {
+    @apply transition-all duration-500 ease-in-out;
+  }
+  
+  .pagination-dot {
+    @apply transition-all duration-300 ease-out;
+  }
 }
 
 @layer utilities {
@@ -122,4 +130,39 @@ body {
     after:w-full after:origin-left after:scale-x-0 after:cyber-gradient
     after:transition-transform after:duration-300 hover:after:scale-x-100;
   }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(77,200,255,0.1)];
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:bottom-0 after:left-1/2 after:h-[2px] 
+    after:w-0 after:bg-gradient-to-r after:from-[#4dc8ff] after:to-[#2dd4bf]
+    after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full;
+  }
+}
+
+/* Glassmorphism utilities */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(
+    180deg, 
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-hover {
+  transition: all 0.3s ease;
+}
+
+.glass-hover:hover {
+  background: linear-gradient(
+    180deg, 
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.15);
 }

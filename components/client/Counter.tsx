@@ -6,7 +6,7 @@ import { supabase } from '../../lib/supabase';
 import CountUp from './CountUp';
 import confetti from 'canvas-confetti';
 
-export const Counter = () => {
+export const Counter = ({ containerRef }) => {
   const [count, setCount] = useState(0);
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
   const total = 5000;
@@ -99,33 +99,63 @@ export const Counter = () => {
   }, [count, total, hasTriggeredConfetti]);
 
   return (
-    <div className="relative">
-      <div className="relative bg-black/20 backdrop-blur-xl px-8 py-6 rounded-3xl border border-white/10">
-        {/* Updated progress bar */}
-        <div className="absolute inset-0 overflow-hidden rounded-3xl">
+    <motion.div
+      ref={containerRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.4 }}
+      className="relative w-full max-w-md mx-auto"
+    >
+      {/* Enhanced glow effect */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-radial from-[#4dc8ff]/20 via-transparent to-transparent blur-2xl" />
+        <motion.div
+          className="absolute inset-0 bg-gradient-conic from-[#4dc8ff]/10 via-transparent to-[#2dd4bf]/10"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 
+        bg-black/20 backdrop-blur-xl px-8 py-6"
+      >
+        {/* Progress indicator */}
+        <div className="absolute inset-x-0 bottom-0 h-1 bg-black/20">
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-white/[0.12] to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: percentage / 100 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            style={{ transformOrigin: "left" }}
+            className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
+            initial={{ width: 0 }}
+            animate={{ width: `${percentage}%` }}
+            transition={{ 
+              type: "spring",
+              stiffness: 50,
+              damping: 20
+            }}
           />
         </div>
-        
-        <div className="relative flex items-center justify-center gap-4">
-          <div className="font-mono text-3xl flex items-baseline gap-2">
-            <CountUp
-              to={count}
-              className="font-bold text-white"
-              duration={1.5}
-              separator=","
-            />
-            <span className="text-white/40 text-xl">/{total.toLocaleString()}</span>
+
+        <div className="relative flex flex-col items-center gap-3">
+          <div className="flex items-baseline gap-3">
+            <div className="font-mono text-4xl font-bold bg-clip-text text-transparent 
+              bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
+            >
+              <CountUp to={count} duration={1.5} />
+            </div>
+            <div className="font-mono text-2xl text-white/40">
+              / {total.toLocaleString()}
+            </div>
           </div>
-          <div className="h-8 w-px bg-white/10" />
-          <div className="text-white/60">Slots Filled</div>
+          
+          <div className="text-sm font-medium text-white/60 tracking-wider uppercase">
+            Early Access Slots
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
