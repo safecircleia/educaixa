@@ -20,7 +20,7 @@ const footerLinks = {
   ],
   developers: [
     { label: 'API Reference', href: '/api', icon: BookOpen },
-    { label: 'GitHub', href: 'https;//github.com/tresillo2017', icon: Github, external: true },
+    { label: 'GitHub', href: 'https;//github.com/safecircleia', icon: Github, external: true },
     { label: 'Documentation', href: '/docs', icon: FileText },
   ],
   support: [
@@ -51,17 +51,16 @@ export const Footer = () => {
 
       {/* Content Layer */}
       <div className="relative z-10">
-        <div className="container mx-auto px-4 pt-24 pb-12">
+        <div className="container mx-auto px-4 py-24">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid md:grid-cols-4 gap-8"
+            className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-white/5"
           >
-            <div>
-              <motion.div 
-                className="flex items-center space-x-3 mb-4 group"
-              >
+            {/* Brand & Description */}
+            <div className="md:col-span-4">
+              <motion.div className="flex items-center space-x-3 mb-4 group">
                 <div className="relative w-8 h-8">
                   <Image
                     src="/logo-nbg.png"
@@ -78,7 +77,8 @@ export const Footer = () => {
               </p>
             </div>
             
-            <div>
+            {/* Resources */}
+            <div className="md:col-span-2">
               <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2">
                 {footerLinks.resources.map((link) => (
@@ -95,7 +95,8 @@ export const Footer = () => {
               </ul>
             </div>
 
-            <div>
+            {/* Developers */}
+            <div className="md:col-span-2">
               <h4 className="font-semibold mb-4">Developers</h4>
               <ul className="space-y-2">
                 {footerLinks.developers.map((link) => (
@@ -117,7 +118,8 @@ export const Footer = () => {
               </ul>
             </div>
 
-            <div>
+            {/* Support & Social */}
+            <div className="md:col-span-4">
               <h4 className="font-semibold mb-4">Support</h4>
               <div className="space-y-4">
                 <motion.a
@@ -125,38 +127,36 @@ export const Footer = () => {
                   className="flex items-center space-x-2 px-4 py-3 rounded-lg 
                     bg-gradient-to-r from-[#4dc8ff]/10 to-[#2dd4bf]/10
                     hover:from-[#4dc8ff]/20 hover:to-[#2dd4bf]/20
-                    border border-white/10 group"
+                    border border-white/10 group transition-colors"
                   whileTap={{ scale: 0.98 }}
                 >
                   <Mail className="w-5 h-5 opacity-60 group-hover:opacity-100" />
                   <span>Contact Support</span>
                 </motion.a>
-                <p className="text-sm text-white/60">
-                  Our team is here to help you 24/7
-                </p>
-              </div>
-              
-              <div className="mt-6 flex space-x-4">
-                {footerLinks.community.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg
-                      bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </motion.a>
-                ))}
+
+                <div className="flex items-center justify-between pt-6">
+                  <div className="flex space-x-4">
+                    {footerLinks.community.map((social) => (
+                      <motion.a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        className="w-10 h-10 flex items-center justify-center rounded-lg
+                          bg-white/5 hover:bg-white/10 transition-colors"
+                      >
+                        <social.icon className="w-5 h-5" />
+                      </motion.a>
+                    ))}
+                  </div>
+                  <span className="text-sm text-white/40">
+                    © {new Date().getFullYear()} SafeCircle
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>
-          
-          <div className="mt-12 pt-8 text-center text-white/40 border-t border-white/5">
-            © {new Date().getFullYear()} SafeCircle. All rights reserved.
-          </div>
         </div>
       </div>
     </motion.footer>

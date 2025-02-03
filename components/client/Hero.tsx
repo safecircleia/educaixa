@@ -10,6 +10,16 @@ import RotatingText from "@/components/ui/RotatingText";
 export const Hero = () => {
 	const counterRef = useRef(null);
 
+	const scrollToSection = (sectionId: string) => {
+		const element = document.getElementById(sectionId);
+		if (element) {
+			element.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		}
+	};
+
 	return (
 		<div className="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-8">
 			<GodRays />
@@ -27,28 +37,31 @@ export const Hero = () => {
 							AI-Powered Child Safety
 						</motion.h1>
 						<LayoutGroup>
-              <motion.p className="flex whitespace-pre font-[900] text-4xl md:text-5xl lg:text-6xl" layout>
-                <motion.span
-                  className="pt-1 sm:pt-2 md:pt-3"
-                  layout
-                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                >
-                  Without Compromising{" "}
-                </motion.span>
-                <RotatingText
-                  texts={["Privacy", "Security", "Protection"]}
-                  mainClassName="px-3 sm:px-4 md:px-6 bg-cyan-300 text-black overflow-hidden py-1 sm:py-2 md:py-3 justify-center rounded-lg"
-                  staggerFrom={"last"}
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "-120%" }}
-                  staggerDuration={0.025}
-                  splitLevelClassName="overflow-hidden pb-1 sm:pb-2 md:pb-2 font-black"
-                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  rotationInterval={2000}
-                />
-              </motion.p>
-            </LayoutGroup>
+							<motion.p
+								className="flex whitespace-pre font-[900] text-4xl md:text-5xl lg:text-6xl"
+								layout
+							>
+								<motion.span
+									className="pt-1 sm:pt-2 md:pt-3"
+									layout
+									transition={{ type: "spring", damping: 30, stiffness: 400 }}
+								>
+									Without Compromising{" "}
+								</motion.span>
+								<RotatingText
+									texts={["Privacy", "Security", "Protection"]}
+									mainClassName="px-3 sm:px-4 md:px-6 bg-cyan-300 text-black overflow-hidden py-1 sm:py-2 md:py-3 justify-center rounded-lg"
+									staggerFrom={"last"}
+									initial={{ y: "100%" }}
+									animate={{ y: 0 }}
+									exit={{ y: "-120%" }}
+									staggerDuration={0.025}
+									splitLevelClassName="overflow-hidden pb-1 sm:pb-2 md:pb-2 font-black"
+									transition={{ type: "spring", damping: 30, stiffness: 400 }}
+									rotationInterval={2000}
+								/>
+							</motion.p>
+						</LayoutGroup>
 					</div>
 
 					{/* Counter and CTA sections */}
@@ -61,23 +74,23 @@ export const Hero = () => {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.4 }}
 							className="flex flex-col sm:flex-row items-center justify-center gap-6"
-						>
-            <WaitlistButton />
-            <motion.a
-								href="#learn-more"
-								className="px-8 py-4 rounded-full text-white/80 hover:text-white
-                  flex items-center gap-2 group transition-colors"
+							>
+							<WaitlistButton />
+							<motion.button
+								onClick={() => scrollToSection("section-how-it-works")}
+								className="group flex items-center gap-2 px-8 py-4 rounded-full 
+            text-white/80 hover:text-white transition-colors"
 								whileHover={{ y: -2 }}
 							>
 								Learn More
 								<motion.span
-									className="inline-block"
 									initial={{ x: 0 }}
 									whileHover={{ x: 4 }}
-                  >
+									className="inline-block transition-transform"
+								>
 									→
 								</motion.span>
-							</motion.a>
+							</motion.button>
 						</motion.div>
 					</div>
 				</div>

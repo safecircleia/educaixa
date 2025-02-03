@@ -15,10 +15,12 @@ const navItems = [
     title: 'Platform',
     icon: Shield,
     items: [
-      { label: 'How it Works', href: '#how-it-works' },
-      { label: 'Features', href: '#features' },
-      { label: 'Security', href: '#security' },
-      { label: 'AI Technology', href: '#technology' },
+      { label: 'How it Works', href: 'section-how-it-works' },
+      { label: 'Key Features', href: 'section-features' },
+      { label: 'Security', href: 'section-security' },
+      { label: 'AI Technology', href: 'section-ai' },
+      { label: 'Privacy', href: 'section-privacy' },
+      { label: 'Protection', href: 'section-protection' },
     ]
   },
   {
@@ -27,7 +29,7 @@ const navItems = [
     items: [
       { label: 'Documentation', href: '/docs', external: true },
       { label: 'API Reference', href: '/api', external: true },
-      { label: 'GitHub', href: 'https://github.com/safecircle', external: true },
+      { label: 'GitHub', href: 'https://github.com/safecircleia', external: true },
     ]
   },
   {
@@ -92,10 +94,13 @@ export const Navbar = () => {
 
   const handleSectionClick = (href: string) => {
     setActiveDropdown(null);
-    if (href.startsWith('#')) {
-      const element = document.getElementById(href.slice(1));
+    if (!href.startsWith('http') && !href.startsWith('/')) {
+      const element = document.getElementById(href);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
     } else {
       window.open(href, '_blank');
