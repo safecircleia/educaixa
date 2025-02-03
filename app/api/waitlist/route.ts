@@ -4,7 +4,10 @@ import { supabase } from '@/lib/supabase';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    // ...validate data as needed...
+    // Validate data as needed
+    if (!data.tier) {
+      return NextResponse.json({ error: 'Tier is required' }, { status: 400 });
+    }
     const { error, data: inserted } = await supabase
       .from('waitlist_entries')
       .insert([data])

@@ -3,8 +3,8 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET(request: Request, { params }: { params: { walletId: string }}) {
   try {
-    // Use params.walletId directly per Next.js requirements
-    const walletId = params.walletId;
+    // Await params.walletId as per Next.js requirements
+    const { walletId } = await params;
     const { data, error } = await supabase
       .from('waitlist_entries')
       .select('*')

@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PhantomIcon } from '@/components/PhantomIcon';
 import { TREASURY_WALLET, SC_TOKEN_MINT, tiers } from '@/lib/constants';
 import React from 'react';
-import { Transaction, PublicKey, Connection, TransactionInstruction, VersionedTransaction, TransactionMessage, Keypair } from '@solana/web3.js';
+import { Transaction, PublicKey, Connection, TransactionInstruction, VersionedTransaction, TransactionMessage, Keypair, clusterApiUrl } from '@solana/web3.js';
 import { createTransferInstruction, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { usePhantom } from '@/hooks/usePhantom';
 import bs58 from 'bs58';
@@ -111,24 +111,20 @@ export default function OnboardingPage() {
 
     try {
       setIsLoading(true);
-      // Generate a random reference (base58-encoded 32-byte public key)
       const reference = Keypair.generate().publicKey.toBase58();
-      // Call the transaction request API endpoint
-      const resp = await fetch('/api/transaction-request', {
+      const response = await fetch('/api/transaction-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ account: pubKey.toString(), reference }),
       });
-      const { transaction: base64Tx, message } = await resp.json();
+      const { transaction: base64Tx, message } = await response.json();
       if (!base64Tx) throw new Error(message || 'Failed to build transaction');
-      
-      // Deserialize the transaction from base64
+
       const txBuffer = Buffer.from(base64Tx, 'base64');
-      const transaction = Transaction.from(txBuffer);
-      
-      // Send and confirm the transaction using the wallet adapter
-      const signature = await sendTransaction(transaction, new Connection('https://api.devnet.solana.com'));
-      const confirmation = await new Connection('https://api.devnet.solana.com').confirmTransaction(signature, 'finalized');
+      const transaction = VersionedTransaction.deserialize(txBuffer);
+
+      const signature = await sendTransaction(transaction, new Connection(clusterApiUrl('devnet')));
+      const confirmation = await new Connection(clusterApiUrl('devnet')).confirmTransaction(signature, 'finalized');
       if (confirmation.value.err) throw new Error('Transaction failed to confirm');
 
       setIsPaid(true);

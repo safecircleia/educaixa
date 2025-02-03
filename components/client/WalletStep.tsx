@@ -1,8 +1,29 @@
 import { motion } from 'framer-motion';
 import { PhantomIcon } from '@/components/PhantomIcon';
 import React from 'react';
+import TransferRequest from './TransferRequest';
 
-const WalletStep = ({ onConnect, isPaid, isLoading, error, connected, pubKey, handlePaymentStep }) => (
+interface WalletStepProps {
+  onConnect: () => void;
+  isPaid: boolean;
+  isLoading: boolean;
+  error: string | null;
+  connected: boolean;
+  pubKey: any;
+  amount: number;
+  onPaymentSuccess: () => void;
+}
+
+const WalletStep: React.FC<WalletStepProps> = ({ 
+  onConnect, 
+  isPaid, 
+  isLoading, 
+  error, 
+  connected, 
+  pubKey,
+  amount,
+  onPaymentSuccess
+}) => (
   <div className="space-y-6">
     {!connected ? (
       <motion.button
@@ -21,15 +42,10 @@ const WalletStep = ({ onConnect, isPaid, isLoading, error, connected, pubKey, ha
           <p className="font-mono mt-1">{pubKey?.toString()}</p>
         </div>
         {!isPaid && (
-          <motion.button
-            onClick={handlePaymentStep}
-            disabled={isLoading}
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]
-              text-black font-medium"
-            whileHover={{ scale: 1.02 }}
-          >
-            {isLoading ? 'Processing...' : 'Pay Now'}
-          </motion.button>
+          <TransferRequest 
+            amount={amount}
+            onPaymentSuccess={onPaymentSuccess}
+          />
         )}
       </>
     )}

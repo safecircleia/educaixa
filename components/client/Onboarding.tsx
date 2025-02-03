@@ -3,30 +3,34 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { PhantomIcon } from '../PhantomIcon';
-import { Shield, User, Mail, ChevronRight, ChevronLeft, X } from 'lucide-react';
+import { Shield, User, ChevronRight, ChevronLeft, X } from 'lucide-react';
 import { createWaitlistEntry } from '@/lib/supabase';
 import { usePhantom } from '@/hooks/usePhantom';
 import type { WaitlistFormData } from '@/types/database';
 import React from 'react';
-import { PublicKey, SystemProgram, Transaction, Connection, clusterApiUrl } from '@solana/web3.js';
 import { toast } from 'sonner';
+import { tiers } from '@/lib/constants';
+import TransferRequest from '@/components/client/TransferRequest';
+import { establishConnection } from '@/lib/establishConnection';
+import { simulateCheckout } from '@/lib/simulateCheckout';
+import { simulateWalletInteraction } from '@/lib/simulateWalletInteraction';
+import { encodeURL, findReference, FindReferenceError, validateTransfer } from '@solana/pay';
+import { MERCHANT_WALLET } from '@/lib/constants';
 
-
-
-export const Onboarding = ({ isOpen, onClose, onComplete }) => {
+export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, onClose: () => void, onComplete: (entry: WaitlistFormData) => void }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<WaitlistFormData>({
     name: '',
     email: '',
-    tier: null,
+    tier: 0,
     wallet_id: '',
     order_number: '',
-    amount_paid: 0
+    amount_paid: 0,
+    status: 'pending'
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isPaid, setIsPaid] = useState(false);
-  const { connect, connected, address } = usePhantom();
+  const { connect, connected, pubKey: address } = usePhantom();
 
   const canProceed = () => {
     switch (currentStep) {
@@ -52,72 +56,57 @@ export const Onboarding = ({ isOpen, onClose, onComplete }) => {
       setCurrentStep(prev => prev + 1);
     } else {
       if (!isPaid) {
-        setError('Please complete the payment first');
+        toast.error('Please complete the payment first');
         return;
       }
 
       setIsLoading(true);
       try {
+        const connection = await establishConnection();
+        const { label, message, memo, amount, reference } = await simulateCheckout();
+        const url = encodeURL({ recipient: MERCHANT_WALLET, amount, reference, label, message, memo });
+        await simulateWalletInteraction(connection, url);
+
+        let signatureInfo;
+        const { signature } = await new Promise<{ signature: string }>((resolve, reject) => {
+          const interval = setInterval(async () => {
+            console.count('Checking for transaction...');
+            try {
+              signatureInfo = await findReference(connection, reference, { finality: 'confirmed' });
+              console.log('\n 🖌  Signature found: ', signatureInfo.signature);
+              clearInterval(interval);
+              resolve(signatureInfo);
+            } catch (error) {
+              if (!(error instanceof FindReferenceError)) {
+                console.error(error);
+                clearInterval(interval);
+                reject(error);
+              }
+            }
+          }, 250);
+        });
+
+        await validateTransfer(connection, signature, { recipient: MERCHANT_WALLET, amount });
+        toast.success('Payment successful!');
+        setIsPaid(true);
+        setFormData(prev => ({
+          ...prev,
+          status: 'completed'
+        }));
+
         const entry = await createWaitlistEntry({
           ...formData,
-          wallet_id: address
+          wallet_id: address?.toString(),
+          status: 'completed'
         });
         onComplete(entry);
         toast.success('Successfully joined waitlist!');
       } catch (error) {
-        setError(error.message);
         toast.error('Failed to create entry');
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
-    }
-  };
-
-  const handlePayment = async () => {
-    if (!connected || !address) return;
-    setError(null);
-    
-    try {
-      setIsLoading(true);
-      const phantom = window.phantom?.solana;
-      
-      if (!phantom) {
-        throw new Error('Phantom wallet not found');
-      }
-
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: new PublicKey(address),
-          toPubkey: new PublicKey(TREASURY_WALLET),
-          lamports: formData.amount_paid
-        })
-      );
-
-      // Get latest blockhash
-      const { blockhash } = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = blockhash;
-      transaction.feePayer = new PublicKey(address);
-
-      // Sign and send transaction
-      const signed = await phantom.signTransaction(transaction);
-      const signature = await connection.sendRawTransaction(signed.serialize());
-      
-      // Wait for confirmation
-      const confirmation = await connection.confirmTransaction(signature);
-      
-      if (confirmation.value.err) {
-        throw new Error('Transaction failed to confirm');
-      }
-
-      setIsPaid(true);
-      toast.success('Payment successful!');
-
-    } catch (err) {
-      console.error('Payment error:', err);
-      setError(err.message || 'Failed to process payment');
-      toast.error('Payment failed: ' + err.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -139,7 +128,7 @@ export const Onboarding = ({ isOpen, onClose, onComplete }) => {
             }`}
           whileHover={{ scale: 1.02 }}
         >
-          <div className={`absolute inset-0 bg-gradient-to-br ${tier.gradient} opacity-20`} />
+          <div className={`absolute inset-0 bg-gradient-to-br opacity-20`} />
           <div className="relative space-y-4">
             <div className="text-center pb-4 border-b border-white/10">
               <h3 className="font-bold text-lg">{tier.name}</h3>
@@ -224,60 +213,27 @@ export const Onboarding = ({ isOpen, onClose, onComplete }) => {
       )
     },
     {
-      id: 'wallet',
+      id: 'payment',
       title: 'Connect & Pay',
       icon: PhantomIcon,
       component: (
         <div className="text-center space-y-4">
           {!connected ? (
-            <>
-              <p className="text-white/60">Connect your Phantom wallet to secure your spot</p>
-              <motion.button
-                onClick={connect}
-                className="w-full py-3 rounded-lg bg-[#4dc8ff]/10 hover:bg-[#4dc8ff]/20
-                  border border-[#4dc8ff]/20 flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02 }}
-              >
-                <PhantomIcon className="w-5 h-5" />
-                Connect Phantom
-              </motion.button>
-            </>
+            <button onClick={connect} className="btn-primary">
+              Connect Wallet
+            </button>
           ) : (
-            <>
-              <p className="text-white/60">Complete payment to secure your spot</p>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/60">Amount to pay:</p>
-                <p className="text-xl font-mono">{formData.amount_paid} $SC</p>
-              </div>
-
-              {error && (
-                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
-                  {error}
-                </div>
-              )}
-
-              {isPaid ? (
-                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400">
-                  Payment Confirmed ✓
-                </div>
-              ) : (
-                <motion.button
-                  onClick={handlePayment}
-                  disabled={isLoading}
-                  className="w-full py-3 rounded-lg bg-gradient-to-r
-                    from-[#4dc8ff] to-[#2dd4bf] text-black font-medium
-                    disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  {isLoading ? 'Processing...' : 'Pay Now'}
-                </motion.button>
-              )}
-
-              <p className="text-xs text-white/40 flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                Your transaction is secured end-to-end and processed on our verified servers
-              </p>
-            </>
+            <TransferRequest 
+              amount={tiers[formData.tier].amount} 
+              onPaymentSuccess={() => {
+                setIsPaid(true);
+                setFormData(prev => ({
+                  ...prev,
+                  status: 'completed'
+                }));
+                toast.success('Payment successful!');
+              }} 
+            />
           )}
         </div>
       )
@@ -336,9 +292,6 @@ export const Onboarding = ({ isOpen, onClose, onComplete }) => {
                   className: "w-8 h-8 mx-auto mb-4"
                 })}
                 <h3 className="text-xl font-bold">{steps[currentStep].title}</h3>
-                {steps[currentStep].description && (
-                  <p className="text-white/60">{steps[currentStep].description}</p>
-                )}
               </div>
 
               <AnimatePresence mode="wait">
@@ -365,7 +318,6 @@ export const Onboarding = ({ isOpen, onClose, onComplete }) => {
                     Back
                   </motion.button>
                 )}
-                
                 <motion.button
                   onClick={handleNext}
                   disabled={!canProceed() || isLoading}
