@@ -51,12 +51,12 @@ export const Footer = () => {
 
       {/* Content Layer */}
       <div className="relative z-10">
-        <div className="container mx-auto px-4 py-24">
+        <div className="container mx-auto px-4 py-20">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-white/5"
+            className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 "
           >
             {/* Brand & Description */}
             <div className="md:col-span-4">

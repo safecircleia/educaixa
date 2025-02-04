@@ -9,8 +9,21 @@ import { useState } from 'react';
 import { GlowyDivider } from '../ui/GlowyDivider';
 import { WaitlistButton } from '../client/WaitlistButton';
 
-// Update How It Works section in sections array
-const sections = [
+// Add type annotations to sections, section, index, and other variables
+interface Section {
+  id: string;
+  title: string;
+  shortTitle: string;
+  description: string;
+  icon: React.ComponentType;
+  color: string;
+  stats?: { value: string; label: string };
+  subtitle?: string;
+  mainContent?: string;
+  features: { icon: React.ComponentType; title: string; description: string; stats?: string }[];
+}
+
+const sections: Section[] = [
   {
     id: 'section-how-it-works',
     title: 'How SafeCircle Works',
@@ -389,7 +402,7 @@ const ContentVisualizations = ({ section }: { section: string }) => {
 
 // Add TableOfContents component
 const TableOfContents = ({ sections, currentSection, onNavigate }: {
-  sections: typeof sections,
+  sections: Section[],
   currentSection: number,
   onNavigate: (index: number) => void
 }) => {
@@ -403,6 +416,8 @@ const TableOfContents = ({ sections, currentSection, onNavigate }: {
               onClick={() => onNavigate(index)}
               className={`flex items-center gap-3 group transition-all duration-200
                 ${currentSection === index ? 'text-[#4dc8ff]' : 'text-white/40 hover:text-white'}`}
+              aria-label={`Navigate to ${section.title}`}
+              tabIndex={0}
             >
               <div className="relative h-4 w-4">
                 <div className={`absolute inset-0 rounded-full border-2 
@@ -423,7 +438,7 @@ const TableOfContents = ({ sections, currentSection, onNavigate }: {
 
 // Add ScrollIndicator component
 const ScrollIndicator = ({ sections, currentSection }: {
-  sections: typeof sections,
+  sections: Section[],
   currentSection: number
 }) => {
   return (
@@ -496,7 +511,7 @@ const CallToAction = () => (
           Ready to Protect Your Family?
         </h2>
         <p className="text-lg md:text-xl text-white/60">
-          Join thousands of families already using SafeCircle to ensure their children's online safety.
+          Join thousands of families already using SafeCircle to ensure their children&apos;s online safety.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -505,6 +520,8 @@ const CallToAction = () => (
             href="#how-it-works"
             className="group flex items-center gap-2 px-8 py-4 rounded-full text-white/80 hover:text-white transition-colors"
             whileHover={{ y: -2 }}
+            aria-label="Learn more about how SafeCircle works"
+            tabIndex={0}
           >
             Learn More
             <motion.span
@@ -542,14 +559,7 @@ const CallToAction = () => (
 );
 
 const InfoSectionsWrapper = () => {
-  const [direction, setDirection] = useState(0);
   const currentSection = useScrollSpy(sections.map(s => s.id), 100);
-
-  const scrollToSection = (index: number) => {
-    setDirection(index > currentSection ? 1 : -1);
-    const element = document.getElementById(`section-${sections[index].id}`);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   useEffect(() => {
     // Handle initial hash navigation
@@ -627,7 +637,7 @@ const InfoSectionsWrapper = () => {
                     {/* Section Title */}
                     <div className="flex items-center gap-4 mb-12">
                       <div className="w-12 h-12 rounded-full bg-[#4dc8ff]/10 flex items-center justify-center">
-                        {React.createElement(section.icon, { className: "w-6 h-6 text-[#4dc8ff]" })}
+                        {React.createElement(section.icon as React.ComponentType<{ className: string }>, { className: "w-6 h-6 text-[#4dc8ff]" })}
                       </div>
                       <div>
                         <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
@@ -646,12 +656,12 @@ const InfoSectionsWrapper = () => {
                         {/* Content Section */}
                         <div className="space-y-6">
                           <div className="flex items-center gap-4">
-                            {React.createElement(sections[currentSection].icon, { className: "w-12 h-12" })}
+                            {React.createElement(sections[currentSection].icon as React.ComponentType<{ className: string }>, { className: "w-12 h-12" })}
                             <div className="space-y-1">
                               <h2 className="text-3xl font-bold">{sections[currentSection].title}</h2>
                               <div className="flex items-center gap-2 text-[#4dc8ff]">
-                                <span className="font-mono text-xl">{sections[currentSection].stats.value}</span>
-                                <span className="text-sm text-white/60">{sections[currentSection].stats.label}</span>
+                                <span className="font-mono text-xl">{sections[currentSection].stats?.value}</span>
+                                <span className="text-sm text-white/60">{sections[currentSection].stats?.label}</span>
                               </div>
                             </div>
                           </div>
@@ -677,7 +687,7 @@ const InfoSectionsWrapper = () => {
                         >
                           <SpotlightCard className="p-6 h-full hover:scale-[1.02] transition-all duration-300">
                             <div className="space-y-4">
-                              <feature.icon className="w-8 h-8 text-[#4dc8ff]" />
+                              {React.createElement(feature.icon as React.ComponentType<{ className: string }>, { className: "w-8 h-8 text-[#4dc8ff]" })}
                               <h3 className="text-xl font-semibold">{feature.title}</h3>
                               <p className="text-white/60">{feature.description}</p>
                               {feature.stats && <p className="text-white/60">{feature.stats}</p>}

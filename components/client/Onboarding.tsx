@@ -10,12 +10,11 @@ import type { WaitlistFormData } from '@/types/database';
 import React from 'react';
 import { toast } from 'sonner';
 import { tiers } from '@/lib/constants';
-import TransferRequest from '@/components/client/TransferRequest';
-import { establishConnection } from '@/lib/establishConnection';
-import { simulateCheckout } from '@/lib/simulateCheckout';
-import { simulateWalletInteraction } from '@/lib/simulateWalletInteraction';
-import { encodeURL, findReference, FindReferenceError, validateTransfer } from '@solana/pay';
-import { MERCHANT_WALLET } from '@/lib/constants';
+import TransferRequest from './TransferRequest';
+import { encodeURL, findReference, validateTransfer, FindReferenceError } from '@solana/pay';
+import { clusterApiUrl, Connection, PublicKey } from '@solana/web3.js';
+import BigNumber from 'bignumber.js';
+import { createQR } from '@solana/pay';
 
 export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, onClose: () => void, onComplete: (entry: WaitlistFormData) => void }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -62,10 +61,25 @@ export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, o
 
       setIsLoading(true);
       try {
-        const connection = await establishConnection();
-        const { label, message, memo, amount, reference } = await simulateCheckout();
-        const url = encodeURL({ recipient: MERCHANT_WALLET, amount, reference, label, message, memo });
-        await simulateWalletInteraction(connection, url);
+        const response = await fetch('/api/generate-reference', {
+          method: 'POST'
+        });
+        const { referencePublicKey } = await response.json();
+
+        const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+        const recipient = new PublicKey('3a8nLLkcniAFcaxSK67n6xms4prZf2NczYsnjY8zXPMP');
+        const amount = new BigNumber(tiers[formData.tier].amount);
+        const reference = new PublicKey(referencePublicKey);
+        const label = 'Your Store';
+        const message = 'Your order - #001234';
+        const memo = 'Order#001234';
+        const url = encodeURL({ recipient, amount, reference, label, message, memo });
+        const qr = createQR(url, 512, 'transparent');
+        const qrCodeElement = document.getElementById('qr-code');
+        if (qrCodeElement && qr._canvas) {
+          qrCodeElement.innerHTML = '';
+          qrCodeElement.appendChild(qr._canvas);
+        }
 
         let signatureInfo;
         const { signature } = await new Promise<{ signature: string }>((resolve, reject) => {
@@ -86,7 +100,7 @@ export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, o
           }, 250);
         });
 
-        await validateTransfer(connection, signature, { recipient: MERCHANT_WALLET, amount });
+        await validateTransfer(connection, signature, { recipient, amount });
         toast.success('Payment successful!');
         setIsPaid(true);
         setFormData(prev => ({
@@ -107,6 +121,36 @@ export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, o
       } finally {
         setIsLoading(false);
       }
+    }
+  };
+
+  const handlePayment = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api//waitlist/generate-reference', {
+        method: 'POST'
+      });
+      const { referencePublicKey } = await response.json();
+
+      const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+      const recipient = new PublicKey('3a8nLLkcniAFcaxSK67n6xms4prZf2NczYsnjY8zXPMP');
+      const amount = new BigNumber(tiers[formData.tier].amount);
+      const reference = new PublicKey(referencePublicKey);
+      const label = 'Your Store';
+      const message = 'Your order - #001234';
+      const memo = 'Order#001234';
+      const url = encodeURL({ recipient, amount, reference, label, message, memo });
+      const qr = createQR(url, 512, 'transparent');
+      const qrCodeElement = document.getElementById('qr-code');
+      if (qrCodeElement && qr._canvas) {
+        qrCodeElement.innerHTML = '';
+        qrCodeElement.appendChild(qr._canvas);
+      }
+    } catch (error) {
+      toast.error('Failed to generate payment link');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -223,17 +267,23 @@ export const Onboarding = ({ isOpen, onClose, onComplete }: { isOpen: boolean, o
               Connect Wallet
             </button>
           ) : (
-            <TransferRequest 
-              amount={tiers[formData.tier].amount} 
-              onPaymentSuccess={() => {
-                setIsPaid(true);
-                setFormData(prev => ({
-                  ...prev,
-                  status: 'completed'
-                }));
-                toast.success('Payment successful!');
-              }} 
-            />
+            <div>
+              <div id="qr-code" className="flex justify-center"></div>
+              <TransferRequest 
+                amount={tiers[formData.tier].amount} 
+                onPaymentSuccess={() => {
+                  setIsPaid(true);
+                  setFormData(prev => ({
+                    ...prev,
+                    status: 'completed'
+                  }));
+                  toast.success('Payment successful!');
+                }} 
+              />
+              <button onClick={handlePayment} className="btn-primary mt-4">
+                Generate Payment QR Code
+              </button>
+            </div>
           )}
         </div>
       )

@@ -8,7 +8,12 @@ import  CountUp  from './CountUp';
 import { useCounter } from '../../context/CounterContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import WalletButtons from '@/components/WalletButtons';
+
+// Stubbed supabase auth handler (replace with your Supabase auth integration)
+const handleAuth = () => {
+  // ...code to trigger Supabase login/signup...
+  console.log("Auth triggered");
+};
 
 const navItems = [
   {
@@ -55,11 +60,11 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const router = useRouter();
   const counterRef = useRef(null);
   const isCounterVisible = useInView(counterRef, { margin: "-100px 0px" });
   const { count, total, percentage } = useCounter();
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isWalletMenuOpen, setIsWalletMenuOpen] = useState(false);
   const walletMenuRef = useRef<HTMLDivElement>(null);
 
@@ -198,7 +203,7 @@ export const Navbar = () => {
             <div className="flex-1 hidden md:flex justify-center">
               <div className="flex items-center space-x-1">
                 {navItems.map((item) => (
-                  <div key={item.title} className="relative">
+                  <div key={item.title} className="relative group">
                     <motion.button
                       onClick={() => setActiveDropdown(
                         activeDropdown === item.title ? null : item.title
@@ -208,7 +213,7 @@ export const Navbar = () => {
                       <item.icon className="w-4 h-4 opacity-60 group-hover:opacity-100 
                         transition-opacity duration-200" 
                       />
-                      <span className="text-sm font-medium">{item.title}</span>
+                      <span className="text-sm font-medium group-hover:text-white transition-colors duration-200">{item.title}</span>
                       <motion.div
                         animate={{ rotate: activeDropdown === item.title ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
@@ -252,13 +257,23 @@ export const Navbar = () => {
               </div>
             </div>
 
-            {/* Right section - Desktop Wallet Connect */}
+            {/* Right section - Replace wallet with Login/Signup */}
             <div className="hidden md:flex justify-end">
-              <WalletButtons />
+              <button
+                onClick={handleAuth}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors"
+              >
+                Login / Signup
+              </button>
             </div>
 
             <div className="md:hidden flex items-center ml-auto">
-              <WalletButtons />
+              <button
+                onClick={handleAuth}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors"
+              >
+                Login / Signup
+              </button>
             </div>
           </div>
         </div>
@@ -312,9 +327,14 @@ export const Navbar = () => {
                   </div>
                 ))}
 
-                {/* Mobile Wallet Connection */}
+                {/* Mobile Login / Signup */}
                 <div className="pt-4 border-t border-white/10">
-                  <WalletButtons />
+                  <button
+                    onClick={handleAuth}
+                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors"
+                  >
+                    Login / Signup
+                  </button>
                 </div>
               </div>
             </motion.div>

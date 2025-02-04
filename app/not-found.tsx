@@ -18,7 +18,7 @@ export default function NotFound() {
       >
         <AlertCircle className="w-16 h-16 mx-auto text-[#4dc8ff]" />
         <h1 className="text-4xl font-bold">Page Not Found</h1>
-        <p className="text-white/60">The page you$aposre looking for doesn$apost exist or has been moved.</p>
+        <p className="text-white/60">The page you&apos;re looking for doesn&apos;t exist or has been moved.</p>
         <Link href="/">
           <motion.div
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full
