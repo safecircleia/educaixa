@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Home, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { GodRays } from '@/components/client/GodRays';
-import { Navbar } from '@/components/client/Navbar';
+import { Navbar } from '@/components/navbar';
 export default function NotFound() {
   return (
     <div>

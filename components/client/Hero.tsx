@@ -2,7 +2,7 @@
 
 import { LayoutGroup, motion } from "framer-motion";
 import { Counter } from "./Counter";
-import { WaitlistButton } from "./WaitlistButton";
+import { WaitlistButton } from "../whitelist/WaitlistButton";
 import { GodRays } from "./GodRays";
 import { useRef } from "react";
 import RotatingText from "@/components/ui/RotatingText";

@@ -4,7 +4,7 @@ import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 import '../styles/globals.css';
 import { CounterProvider } from '../context/CounterContext';
-import { Navbar } from '@/components/client/Navbar';
+import { Navbar } from '@/components/navbar';
 import { WalletProviders } from '@/providers/WalletProviders';
 
 const nothingFont = localFont({
