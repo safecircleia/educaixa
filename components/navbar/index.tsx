@@ -1,343 +1,349 @@
 'use client';
 
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
-import { Shield, ChevronDown, ExternalLink, GitHub, Book, Users, Coins, Code, Menu, X, LogOut, LayoutDashboard, Settings } from 'lucide-react';
+import * as React from "react";
+import { useState, useEffect } from 'react';
+import { LogOut, Menu, X, Shield, Code, Users, Coins, User, Settings, BookOpen, Terminal, Github, MessageCircle, FileText, Newspaper, Coins as TokenIcon, Flag, Lock, Sparkles, Layout, Heart, LucideIcon, LineChart, CircleDollarSign, Bot, ShieldCheck, KeyRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import  CountUp  from '../client/CountUp';
-import { useCounter } from '../../context/CounterContext';
-import Image from 'next/image';
 import Link from 'next/link';
-import { navItems } from './links'; // added import for navbar links
-import { AuthModal } from '../client/AuthModal'; // new import for auth popouts
-import { supabase } from '../../lib/supabase'; // new import for auth
+import Image from 'next/image';
+import { AuthModal } from '../client/AuthModal';
+import { supabase, DEFAULT_AVATAR_URL } from '../../lib/supabase';
+import { User as SupabaseUser } from '@supabase/supabase-js';
+import { navItems } from './links';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
-// Optionally, map navItems icons to actual components if you prefer:
-const mappedNavItems = navItems.map(item => ({
-  ...item,
-  icon: item.icon === 'Shield' ? Shield 
-        : item.icon === 'Code' ? Code 
-        : item.icon === 'Users' ? Users 
-        : item.icon === 'Coins' ? Coins 
-        : null
-}));
-
-// Stubbed supabase auth handler (replace with your Supabase auth integration)
-const handleAuth = () => {
-  // ...code to trigger Supabase login/signup...
-  console.log("Auth triggered");
+const icons = {
+  Shield,
+  Code,
+  Users,
+  Coins,
+  BookOpen,
+  Terminal,
+  Github,
+  MessageCircle,
+  FileText,
+  Newspaper,
+  TokenIcon,
+  Flag,
+  Lock,
+  Sparkles,
+  Layout,
+  Heart,
+  LineChart,
+  CircleDollarSign,
+  Bot,
+  ShieldCheck,
+  KeyRound,
 };
 
-// Define navbar variants for blur fade animation
-const navVariants = {
-  notScrolled: { backdropFilter: "blur(0px)", transition: { duration: 0.5 } },
-  scrolled: { backdropFilter: "blur(5px)", transition: { duration: 0.5 } },
+const getMenuItemIcon = (label: string): LucideIcon => {
+  if (label.includes('How it Works')) return Layout;
+  if (label.includes('AI Technology')) return Bot;
+  if (label.includes('Privacy')) return KeyRound;
+  if (label.includes('Protection')) return ShieldCheck;
+  if (label.includes('Features')) return Sparkles;
+  if (label.includes('Security')) return Lock;
+  if (label.includes('Documentation')) return BookOpen;
+  if (label.includes('API')) return Terminal;
+  if (label.includes('GitHub')) return Github;
+  if (label.includes('Discord')) return MessageCircle;
+  if (label.includes('Forum')) return Heart;
+  if (label.includes('Blog')) return Newspaper;
+  if (label.includes('Tokenomics')) return LineChart;
+  if (label.includes('Governance')) return Flag;
+  if (label.includes('Staking')) return CircleDollarSign;
+  return Shield;
 };
 
-export const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, children, href, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          href={href}
+          className={cn(
+            "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium no-underline outline-none transition-colors hover:bg-white/5 group",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
+
+const Navbar = () => {
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const router = useRouter();
-  const counterRef = useRef(null);
-  const isCounterVisible = useInView(counterRef, { margin: "-100px 0px" });
-  const { count, total, percentage } = useCounter();
-  const [isWalletMenuOpen, setIsWalletMenuOpen] = useState(false);
-  const walletMenuRef = useRef<HTMLDivElement>(null);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authType, setAuthType] = useState<'login' | 'signup'>('login');
-  // New user state
-  const [user, setUser] = useState<any>(null);
 
-  const openAuthModal = (type: 'login' | 'signup') => {
-    setAuthType(type);
-    setAuthModalOpen(true);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (walletMenuRef.current && !walletMenuRef.current.contains(event.target as Node)) {
-        setIsWalletMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Subscribe to auth state changes
   useEffect(() => {
     // Get initial user
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
     });
+
+    // Subscribe to auth changes
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user || null);
     });
+
     return () => {
       listener.subscription.unsubscribe();
     };
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-  };
-
-  const handleSectionClick = (href: string) => {
-    setActiveDropdown(null);
-    if (!href.startsWith('http') && !href.startsWith('/')) {
-      const element = document.getElementById(href);
-      if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else {
-      window.open(href, '_blank');
-    }
-  };
-
-  const navigateToDashboard = () => {
-    router.push('/dashboard');
-    setIsWalletMenuOpen(false);
-  };
-
-  const handleWalletMenuClick = () => {
-    setIsWalletMenuOpen(!isWalletMenuOpen);
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
   };
 
   return (
-    <>
-      <motion.nav
-        variants={navVariants}
-        animate={isScrolled ? "scrolled" : "notScrolled"}
-        className={`fixed top-0 w-full z-50 transition-shadow duration-300 py-4 
-          ${isScrolled ? 'bg-black/30 shadow-md' : 'bg-transparent'}`}
-      >
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          {/* Left section */}
-          <div className="w-1/4 flex items-center">
-            <Link href="/">
-              <motion.div className="flex items-center space-x-3 group" whileHover={{ scale: 1.02 }}>
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/logo-nbg.png"
-                    alt="SafeCircle Logo"
-                    width={32}
-                    height={32}
-                    className="relative z-10"
-                  />
-                </div>
-                <motion.span className="text-2xl font-nothing text-white/90 tracking-wider group-hover:opacity-80 transition-opacity">
-                  SafeCircle
-                </motion.span>
-              </motion.div>
+    <nav className="fixed top-0 left-0 right-0 z-50">
+      <div className="relative">
+        {/* Glassmorphism effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60 backdrop-blur-xl" />
+        
+        <div className="container mx-auto px-4 relative">
+          <div className="flex h-16 items-center justify-between gap-4">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2 shrink-0">
+              <Image src="/logo-nbg.png" alt="Logo" width={32} height={32} className="h-8 w-auto" />
+              <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+                SafeCircle
+              </span>
             </Link>
-            {/* Removed counter for minimalist design */}
-          </div>
 
-          {/* Center section - Desktop Navigation */}
-          <div className="hidden md:flex w-1/2 justify-center items-center">
-            <div className="flex items-center justify-center space-x-6 text-center">  {/* updated classes for centering */}
-              {mappedNavItems.map((item) => (
-                <div 
-                  key={item.title} 
-                  className="relative group" 
-                  onMouseEnter={() => setActiveDropdown(item.title)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
-                  <motion.button
-                    // Removed onClick as hover now triggers dropdown
-                    className="p-2 flex items-center gap-1 text-sm text-gray-300 hover:text-white"
-                  >
-                    <item.icon className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
-                    <span className="font-medium">{item.title}</span>
-                    <motion.div animate={{ rotate: activeDropdown === item.title ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <ChevronDown className="w-4 h-4 opacity-60 group-hover:opacity-100" />
-                    </motion.div>
-                  </motion.button>
-                  <AnimatePresence>
-                    {activeDropdown === item.title && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        // Updated dropdown background with blur
-                        className="absolute top-full left-0 mt-2 w-56 rounded-md bg-black/50 shadow-md backdrop-blur-md"
-                      >
-                        <div className="p-2">
-                          {item.items.map((subItem) => (
-                            <motion.button
-                              key={subItem.label}
-                              onClick={() => handleSectionClick(subItem.href)}
-                              className="w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/50 transition-colors rounded"
-                            >
-                              {subItem.label}
-                              {subItem.external && <ExternalLink className="w-3 h-3 inline opacity-50 ml-1" />}
-                            </motion.button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex flex-1 justify-center">
+              <NavigationMenu>
+                <NavigationMenuList className="gap-2">
+                  {navItems.map((item) => {
+                    const Icon = icons[item.icon as keyof typeof icons];
+                    return (
+                      <NavigationMenuItem key={item.title} className="relative flex items-center">
+                        <NavigationMenuTrigger 
+                          className="bg-transparent data-[state=open]:bg-white/5 hover:bg-white/5 h-10 text-white/80 hover:text-white focus:bg-white/5 transition-all duration-200"
+                        >
+                          <Icon className="w-4 h-4 mr-2 opacity-70 group-hover:opacity-100" />
+                          {item.title}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <motion.div 
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ 
+                              duration: 0.15,
+                              ease: [0.4, 0, 0.2, 1]
+                            }}
+                            className="absolute left-0 pt-4"
+                          >
+                            <div className="relative min-w-[220px] p-1 bg-black/95 backdrop-blur-2xl rounded-xl border border-white/5 shadow-xl shadow-black/20">
+                              {item.items.map((subItem) => {
+                                const SubIcon = getMenuItemIcon(subItem.label);
+                                return (
+                                  <ListItem
+                                    key={subItem.label}
+                                    href={subItem.external ? subItem.href : `/#${subItem.href}`}
+                                  >
+                                    <SubIcon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                                    <span className="flex-1 text-white/80 group-hover:text-white transition-colors">{subItem.label}</span>
+                                    {subItem.external && (
+                                      <svg 
+                                        className="w-3 h-3 opacity-50 group-hover:opacity-70 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          fill="currentColor"
+                                          d="M14 5c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h3v-2H6V6h6v2h2V5zm-1 4-3.5 3.5L8 11v3h3l-1.5-1.5L13 9z"
+                                        />
+                                      </svg>
+                                    )}
+                                  </ListItem>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    );
+                  })}
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
-          </div>
 
-          {/* Right section */}
-          <div className="hidden md:flex w-1/4 justify-end items-center space-x-4">
-            { user ? (
-              <div className="relative" ref={walletMenuRef}>
-                <img 
-                  src={user?.user_metadata?.avatar_url || '/default-avatar.png'} 
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full cursor-pointer"
-                  onClick={() => setIsWalletMenuOpen(!isWalletMenuOpen)}
-                />
-                <AnimatePresence>
-                  {isWalletMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9, y: 5 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.9, y: 5 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-40 bg-black/70 backdrop-blur-lg rounded-md shadow-lg py-1 z-50"  // updated styling
-                    >
-                      <button 
-                        className="w-full px-4 py-2 flex items-center gap-2 text-gray-100 hover:bg-gray-700"
-                        onClick={() => {
-                          // Navigate to Settings (implementation as needed)
-                          setIsWalletMenuOpen(false);
-                        }}
-                      >
-                        <Settings className="w-4 h-4" />
+            {/* Right section */}
+            <div className="flex items-center gap-4">
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-2 outline-none group">
+                    <Avatar className="h-8 w-8 ring-2 ring-white/5 group-hover:ring-white/10 transition-all">
+                      <AvatarImage src={user.user_metadata?.avatar_url || DEFAULT_AVATAR_URL} />
+                      <AvatarFallback className="bg-white/5">
+                        {user.email?.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="hidden md:flex flex-col items-start">
+                      <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+                        {user.user_metadata?.full_name || 'User'}
+                      </span>
+                      <span className="text-xs text-white/50 group-hover:text-white/70 transition-colors">
+                        {user.email}
+                      </span>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    align="end" 
+                    className="w-56 p-2 mt-2 bg-black/95 backdrop-blur-2xl border border-white/5 rounded-xl"
+                  >
+                    <Link href="/dashboard">
+                      <DropdownMenuItem className="flex items-center gap-2 rounded-lg cursor-pointer text-white/80 hover:text-white focus:text-white hover:bg-white/5 transition-colors">
+                        <User className="w-4 h-4 opacity-70" />
+                        Dashboard
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/dashboard/settings">
+                      <DropdownMenuItem className="flex items-center gap-2 rounded-lg cursor-pointer text-white/80 hover:text-white focus:text-white hover:bg-white/5 transition-colors">
+                        <Settings className="w-4 h-4 opacity-70" />
                         Settings
-                      </button>
-                      <button 
-                        onClick={async () => {
-                          await supabase.auth.signOut();
-                          setUser(null);
-                          setIsWalletMenuOpen(false);
-                        }}
-                        className="w-full px-4 py-2 flex items-center gap-2 text-red-500 hover:bg-red-800 hover:text-white"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Logout
-                      </button>
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator className="my-1 bg-white/5" />
+                    <DropdownMenuItem 
+                      onClick={handleSignOut}
+                      className="flex items-center gap-2 rounded-lg cursor-pointer text-red-400/80 hover:text-red-400 focus:text-red-400 hover:bg-red-500/5 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4 opacity-70" />
+                      Sign out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 transition-all duration-300 font-medium hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-indigo-500/20"
+                >
+                  Get Started
+                </button>
+              )}
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 transition-colors"
+              >
+                <AnimatePresence initial={false} mode="wait">
+                  {isMobileMenuOpen ? (
+                    <motion.div
+                      key="close"
+                      initial={{ opacity: 0, rotate: -90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 90 }}
+                      transition={{ type: "spring", duration: 0.3 }}
+                    >
+                      <X className="w-5 h-5" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu"
+                      initial={{ opacity: 0, rotate: 90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: -90 }}
+                      transition={{ type: "spring", duration: 0.3 }}
+                    >
+                      <Menu className="w-5 h-5" />
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            ) : (
-              <>
-                <motion.button
-                  onClick={() => openAuthModal('login')}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-gray-800 text-sm font-semibold shadow-sm transition-colors"
-                >
-                  <LogOut className="w-4 h-4 mr-1" />
-                  Login
-                </motion.button>
-                {/* Removed the Signup button */}
-              </>
-            )}
+              </button>
+            </div>
           </div>
 
-          {/* Mobile menu toggle */}
-          <div className="md:hidden flex items-center">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2">
-              {isMobileMenuOpen ? <X className="w-6 h-6 text-white"/> : <Menu className="w-6 h-6 text-white"/>}
-            </button>
-          </div>
-        </div>
-      </motion.nav>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 z-40"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 20 }}
-              className="fixed top-0 right-0 bottom-0 w-[280px] bg-gray-900 z-50 overflow-y-auto shadow-md"
-            >
-              <div className="p-6 space-y-6 text-center">
-                {navItems.map((item) => (
-                  <div key={item.title} className="space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400">
-                      <item.icon className="w-4 h-4" />
-                      {item.title}
-                    </div>
-                    <div className="space-y-1">
-                      {item.items.map((subItem) => (
-                        <motion.button
-                          key={subItem.label}
-                          onClick={() => {
-                            handleSectionClick(subItem.href);
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="w-full text-left py-2 text-sm text-gray-400 hover:text-white transition-colors"
-                          whileHover={{ x: 4 }}
-                        >
-                          {subItem.label}
-                          {subItem.external && <ExternalLink className="w-3 h-3 inline opacity-50 ml-1" />}
-                        </motion.button>
-                      ))}
-                    </div>
+          {/* Mobile Navigation */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ type: "spring", duration: 0.3 }}
+                className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-black/95 backdrop-blur-2xl"
+              >
+                <div className="container mx-auto px-4 py-6 overflow-y-auto h-full">
+                  <div className="grid gap-6">
+                    {navItems.map((section) => (
+                      <div key={section.title} className="space-y-3">
+                        <div className="flex items-center gap-2 text-sm font-medium text-white/90">
+                          {section.icon && icons[section.icon as keyof typeof icons] && (
+                            <span>{icons[section.icon as keyof typeof icons]({ size: 18 })}</span>
+                          )}
+                          {section.title}
+                        </div>
+                        <div className="grid gap-1 pl-6">
+                          {section.items.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.external ? item.href : `/#${item.href}`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="group flex items-center gap-2 py-2 text-sm text-white/70 hover:text-white transition-colors"
+                            >
+                              <span>{item.label}</span>
+                              {item.external && (
+                                <svg 
+                                  className="w-3 h-3 opacity-50 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M14 5c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h3v-2H6V6h6v2h2V5zm-1 4-3.5 3.5L8 11v3h3l-1.5-1.5L13 9z"
+                                  />
+                                </svg>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-
-                {/* Mobile Buttons: centered */}
-                <div className="pt-4 border-t border-gray-700 flex flex-col items-center space-y-4">
-                  <motion.button
-                    onClick={openAuthModal.bind(null, 'login')}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full max-w-xs flex items-center justify-center px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md text-gray-700 text-sm font-semibold shadow-sm transition-colors"
-                  >
-                    <LogOut className="w-4 h-4 mr-1" />
-                    Login
-                  </motion.button>
-                  {/* Removed Signup button */}
                 </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-      
-      {/* Render AuthModal */}
-      <AuthModal 
-        show={authModalOpen} 
-        type={authType} 
-        onClose={() => setAuthModalOpen(false)} 
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      <AuthModal
+        show={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
       />
-    </>
+    </nav>
   );
-};
+}
+
+export default Navbar;

@@ -1,63 +1,48 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '../types/supabase';
+import type { Database } from '../types/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
+export const DEFAULT_AVATAR_URL = '/default-avatar.svg';
+
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
-  realtime: {
-    params: {
-      eventsPerSecond: 10
-    }
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
   }
 });
 
-const generateOrderNumber = () => {
-  const timestamp = Date.now();
-  const random = Math.random().toString(36).substring(2, 7).toUpperCase();
-  return `SC-${timestamp}-${random}`;
+// Helper function to get public URL for avatar
+export const getAvatarPublicUrl = (userId: string, fileName: string) => {
+  const { data } = supabase.storage
+    .from('avatars')
+    .getPublicUrl(`${userId}/${fileName}`);
+  return data.publicUrl;
 };
 
-export const incrementWaitlistCount = async () => {
-  const { data, error } = await supabase.rpc('increment_waitlist_count');
-  if (error) throw error;
-  return data;
-};
+// Helper function to upload avatar
+export const uploadAvatar = async (userId: string, file: File): Promise<string> => {
+  try {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${userId}/${fileName}`;
 
-export const createWaitlistEntry = async (data: WaitlistFormData) => {
-  // Generate order number first
-  const orderNumber = generateOrderNumber();
-  
-  const { data: entry, error } = await supabase
-    .from('waitlist_entries')
-    .insert([{
-      ...data,
-      order_number: orderNumber,
-      created_at: new Date().toISOString(),
-      status: data.tx_hash ? 'completed' : 'pending'
-    }])
-    .select()
-    .single();
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: true
+      });
 
-  if (error) {
-    console.error('Error creating entry:', error);
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    return getAvatarPublicUrl(userId, fileName);
+  } catch (error) {
+    console.error('Error uploading avatar:', error);
     throw error;
   }
-
-  try {
-    await incrementWaitlistCount();
-  } catch (error) {
-    console.error('Error incrementing count:', error);
-  }
-
-  return entry;
-};
-
-export const updateEntryStatus = async (walletId: string, status: 'pending' | 'completed' | 'failed') => {
-  const { error } = await supabase
-    .from('waitlist_entries')
-    .update({ status })
-    .eq('wallet_id', walletId);
-
-  if (error) throw error;
 };
