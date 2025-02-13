@@ -2,22 +2,31 @@
 export const navItems = [
   {
     title: 'Platform',
-    icon: 'Shield', // Use the same icon key, import and map in the navbar if needed
+    icon: 'Shield',
     items: [
-      { label: 'How it Works', href: 'section-how-it-works' },
-      { label: 'AI Technology', href: 'section-ai' },
-      { label: 'Privacy', href: 'section-privacy' },
-      { label: 'Protection', href: 'section-protection' },
-      { label: 'Key Features', href: 'section-features' },
-      { label: 'Security', href: 'section-security' },
+      { 
+        label: 'Core Features',
+        subitems: [
+          { label: 'How it Works', href: 'section-how-it-works' },
+          { label: 'AI Technology', href: 'section-ai' },
+        ]
+      },
+      {
+        label: 'Security',
+        subitems: [
+          { label: 'Privacy', href: 'section-privacy' },
+          { label: 'Protection', href: 'section-protection' },
+        ]
+      },
+      { label: 'Features', href: 'section-features' },
     ]
   },
   {
-    title: 'Developers',
+    title: 'Develop',
     icon: 'Code',
     items: [
-      { label: 'Documentation', href: 'docs.safecircle.tech', external: true },
-      { label: 'API Reference', href: '/api', external: true },
+      { label: 'Docs', href: 'docs.safecircle.tech', external: true },
+      { label: 'API', href: '/api', external: true },
       { label: 'GitHub', href: 'https://github.com/safecircleia', external: true },
     ]
   },
