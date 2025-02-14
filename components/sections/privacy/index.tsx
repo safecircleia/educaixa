@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Lock } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { features } from './features';
 import { PrivacyIllustration } from './PrivacyIllustration';
@@ -15,11 +15,11 @@ export const PrivacySection = () => (
     >
       <div className="flex items-center gap-4">
         <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center">
-          <Lock className="w-6 h-6 text-purple-500" />
+          <Shield className="w-6 h-6 text-purple-500" />
         </div>
         <div>
-          <h2 className="text-4xl font-bold">Privacy & Security</h2>
-          <p className="text-white/60">Military-grade encryption with zero-knowledge architecture</p>
+          <h2 className="text-4xl font-bold">Privacy First</h2>
+          <p className="text-white/60">Your data belongs to you, and only you</p>
         </div>
       </div>
     </motion.div>
@@ -28,15 +28,16 @@ export const PrivacySection = () => (
       <div className="grid md:grid-cols-2 gap-12">
         <div className="space-y-6">
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold">Uncompromising Data Protection</h3>
+            <h3 className="text-2xl font-bold">Complete Data Privacy</h3>
             <p className="text-white/70 leading-relaxed">
-              Your family&apos;s privacy is our top priority. Using zero-knowledge proofs and end-to-end encryption, 
-              we ensure that your data remains completely private and secure, even from us.
+              Your family&apos;s privacy is paramount. With our zero-knowledge architecture, 
+              you maintain full control over your personal information. We believe privacy 
+              isn&apos;t just a feature—it&apos;s a fundamental right.
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="font-mono text-xl text-purple-500">AES-256</div>
-            <div className="text-sm text-white/60">Encryption</div>
+            <div className="font-mono text-xl text-purple-500">100%</div>
+            <div className="text-sm text-white/60">Data ownership</div>
           </div>
         </div>
         <motion.div
@@ -50,7 +51,7 @@ export const PrivacySection = () => (
       </div>
     </SpotlightCard>
 
-    <div className="grid md:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {features.map((feature, i) => (
         <motion.div
           key={feature.title}

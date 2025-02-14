@@ -3,12 +3,20 @@
 import { HowItWorksSection } from '../sections/how-it-works';
 import { AITechnologySection } from '../sections/ai-technology';
 import { PrivacySection } from '../sections/privacy';
-import { ProtectionSection } from '../sections/protection';
 import { FeaturesSection } from '../sections/features';
-import { SecuritySection } from '../sections/security';
+import { SecurityProtectionSection } from '../sections/securityProtection';
 import { GlowyDivider } from '../ui/GlowyDivider';
-import { CallToAction } from './CallToAction'; // Updated import path
+import { CallToAction } from './CallToAction';
 import React from 'react';
+
+// Define section colors
+const sectionColors = {
+  'section-how-it-works': 'from-violet-500 to-blue-500',
+  'section-ai': 'from-blue-500 to-cyan-500',
+  'section-privacy': 'from-cyan-500 to-teal-500',
+  'section-security-protection': 'from-emerald-500 to-amber-500',
+  'section-features': 'from-amber-500 to-orange-500',
+} as const;
 
 const sections = [
   {
@@ -24,16 +32,12 @@ const sections = [
     component: PrivacySection,
   },
   {
-    id: 'section-protection',
-    component: ProtectionSection,
+    id: 'section-security-protection',
+    component: SecurityProtectionSection,
   },
   {
     id: 'section-features',
     component: FeaturesSection,
-  },
-  {
-    id: 'section-security',
-    component: SecuritySection,
   }
 ];
 
@@ -44,14 +48,17 @@ export const InfoSections = () => {
         <React.Fragment key={section.id}>
           <section
             id={section.id}
-            className="min-h-screen flex items-center py-8" // Reduced padding from py-16 to py-8
+            className="min-h-screen flex items-center py-8"
+            style={{
+              '--section-gradient': `bg-gradient-to-br ${sectionColors[section.id as keyof typeof sectionColors]}`
+            } as any}
           >
             <div className="container mx-auto px-4">
               <section.component />
             </div>
           </section>
           {index < sections.length - 1 && (
-            <div className="py-4"> {/* Reduced spacing from py-8 to py-4 */}
+            <div className="py-4">
               <GlowyDivider />
             </div>
           )}

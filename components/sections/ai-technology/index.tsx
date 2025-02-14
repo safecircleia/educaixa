@@ -49,10 +49,12 @@ export const AITechnologySection = () => (
       <div className="grid md:grid-cols-2 gap-12">
         <div className="space-y-6">
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold">Real-time Protection</h3>
+            <h3 className="text-2xl font-bold">Proprietary AI Technology</h3>
             <p className="text-white/70 leading-relaxed">
-              Our AI system processes millions of data points per second, identifying and blocking threats 
-              before they reach your children while maintaining complete privacy.
+              Our in-house developed AI models process millions of data points per second, 
+              built from the ground up with children's safety in mind. Our proprietary algorithms 
+              identify and block threats before they reach your children while maintaining 
+              complete privacy.
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -65,7 +67,7 @@ export const AITechnologySection = () => (
     </SpotlightCard>
 
     {/* Features Grid */}
-    <div className="grid md:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {features.map((feature, i) => (
         <motion.div
           key={feature.title}

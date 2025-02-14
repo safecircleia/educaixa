@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Stepper, { Step } from '../ui/stepper';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useCounter } from '@/context/CounterContext';
 import TierGrid from './TierGrid';
 
 export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
@@ -14,21 +13,40 @@ export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
     tier: null,
     amount_paid: 0
   });
-  
+  const [user, setUser] = useState<{ id: string, email?: string } | null>(null);
   const supabase = createClientComponentClient();
-  const { incrementCount } = useCounter();
+
+  useEffect(() => {
+    const { auth } = supabase;
+    auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+        setFormData(prev => ({ ...prev, email: session.user.email || '' }));
+      }
+    });
+  }, [supabase]);
 
   const handleSubmit = async () => {
+    if (!user) return;
+    
     try {
+      // Insert into waitlist
       const { error: dbError } = await supabase
         .from('waitlist')
         .insert([{ 
           email: formData.email,
-          wallet_address: formData.wallet_address
+          wallet_address: formData.wallet_address,
+          user_id: user.id
         }]);
 
       if (dbError) throw dbError;
-      incrementCount();
+
+      // Increment waitlist count
+      const { error: countError } = await supabase
+        .rpc('increment_waitlist_count');
+
+      if (countError) throw countError;
+      
       onClose();
     } catch (error) {
       console.error('Error:', error);
@@ -38,9 +56,9 @@ export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1:
-        return formData.email && formData.email.includes('@');
+        return !!user;
       case 2:
-        return formData.wallet_address && formData.wallet_address.startsWith('0x');
+        return Boolean(formData.wallet_address && formData.wallet_address.startsWith('0x'));
       case 3:
         return formData.tier !== null;
       case 4:
@@ -68,11 +86,11 @@ export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
         <div className="rounded-2xl border border-white/10 overflow-hidden bg-black/90 backdrop-blur-xl">
           <Stepper
             initialStep={1}
-            onStepChange={(step) => console.log('Current step:', step)}
+            onStepChange={(step: number) => console.log('Current step:', step)}
             onFinalStepCompleted={handleSubmit}
             backButtonText="Previous"
             nextButtonText="Continue"
-            nextButtonProps={(step) => ({
+            nextButtonProps={(step: number) => ({
               disabled: !validateStep(step),
               className: `px-4 py-2 rounded-lg font-medium transition-all ${
                 validateStep(step)

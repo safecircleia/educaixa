@@ -20,9 +20,8 @@ export const navItems: NavItem[] = [
       { label: 'How it Works', href: 'section-how-it-works' },
       { label: 'AI Technology', href: 'section-ai' },
       { label: 'Privacy', href: 'section-privacy' },
-      { label: 'Protection', href: 'section-protection' },
+      { label: 'Security & Protection', href: 'section-security-protection' },
       { label: 'Key Features', href: 'section-features' },
-      { label: 'Security', href: 'section-security' },
     ]
   },
   {
