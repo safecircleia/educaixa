@@ -4,7 +4,6 @@ import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 import '../styles/globals.css';
 import { CounterProvider } from '../context/CounterContext';
-import { Navbar } from '@/components/navbar';
 import { WalletProviders } from '@/providers/WalletProviders';
 
 const nothingFont = localFont({
@@ -17,21 +16,22 @@ export const metadata = {
    description: 'AI-Powered Child Safety Without Compromising Privacy',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
+}) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${nothingFont.variable}`}>
       <head />
       <body className="font-sans bg-black text-white min-h-screen flex flex-col">
         <WalletProviders>
-          <Navbar />
-          <main className="flex-grow">
-            <Suspense fallback={null}>
-              <CounterProvider>
-                {children}
-              </CounterProvider>
-              <Toaster position="bottom-right" theme="dark" />
-            </Suspense>
-          </main>
+          <Suspense fallback={null}>
+            <CounterProvider>
+              {children}
+            </CounterProvider>
+            <Toaster position="bottom-right" theme="dark" />
+          </Suspense>
         </WalletProviders>
       </body>
     </html>

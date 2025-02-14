@@ -82,11 +82,40 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        'radar-scan': {
+          '0%': {
+            transform: 'rotate(0deg)',
+            opacity: 0
+          },
+          '50%': {
+            opacity: 1
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+            opacity: 0
+          }
+        },
+        'threat-pulse': {
+          '0%': {
+            transform: 'scale(0.95)',
+            boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.4)'
+          },
+          '70%': {
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 10px rgba(251, 191, 36, 0)'
+          },
+          '100%': {
+            transform: 'scale(0.95)',
+            boxShadow: '0 0 0 0 rgba(251, 191, 36, 0)'
+          }
+        }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'radar': 'radar-scan 4s linear infinite',
+        'threat-detect': 'threat-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
   		}
   	}
   },

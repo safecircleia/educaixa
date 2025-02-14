@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { features } from './features';
+import { PrivacyIllustration } from './PrivacyIllustration';
 
 export const PrivacySection = () => (
   <div className="space-y-12">
@@ -29,7 +30,7 @@ export const PrivacySection = () => (
           <div className="space-y-4">
             <h3 className="text-2xl font-bold">Uncompromising Data Protection</h3>
             <p className="text-white/70 leading-relaxed">
-              Your family's privacy is our top priority. Using zero-knowledge proofs and end-to-end encryption, 
+              Your family&apos;s privacy is our top priority. Using zero-knowledge proofs and end-to-end encryption, 
               we ensure that your data remains completely private and secure, even from us.
             </p>
           </div>
@@ -38,7 +39,14 @@ export const PrivacySection = () => (
             <div className="text-sm text-white/60">Encryption</div>
           </div>
         </div>
-        {/* Privacy Visual Component would go here */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex items-center justify-center"
+        >
+          <PrivacyIllustration />
+        </motion.div>
       </div>
     </SpotlightCard>
 
