@@ -2,17 +2,22 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import CountUp from './CountUp';
 import confetti from 'canvas-confetti';
 import { useCounter } from '../../context/CounterContext';
+import UICounter from '@/components/ui/counter';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Users, Info } from "lucide-react";
 
-export const Counter = ({ containerRef }) => {
+interface AnimatedCounterProps {
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
   const { count, total, percentage } = useCounter();
   const hasTriggeredConfetti = useRef(false);
   const prevCount = useRef(count);
 
   useEffect(() => {
-    // Trigger confetti only when count reaches total for the first time
     if (count === total && prevCount.current !== total && !hasTriggeredConfetti.current) {
       const fireConfetti = () => {
         const defaults = {
@@ -63,55 +68,54 @@ export const Counter = ({ containerRef }) => {
       transition={{ delay: 0.3, duration: 0.4 }}
       className="relative w-full max-w-md mx-auto"
     >
-      {/* Enhanced glow effect */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-radial from-[#4dc8ff]/20 via-transparent to-transparent blur-2xl" />
-        <motion.div
-          className="absolute inset-0 bg-gradient-conic from-[#4dc8ff]/10 via-transparent to-[#2dd4bf]/10"
-          animate={{
-            rotate: 360
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
-      </div>
-
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 
-        bg-black/20 backdrop-blur-xl px-8 py-6"
-      >
-        {/* Progress indicator */}
-        <div className="absolute inset-x-0 bottom-0 h-1 bg-black/20">
-          <motion.div
-            className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
-            animate={{ width: `${percentage}%` }}
-            transition={{ 
-              type: "spring",
-              stiffness: 50,
-              damping: 20
-            }}
-          />
-        </div>
-
-        <div className="relative flex flex-col items-center gap-3">
-          <div className="flex items-baseline gap-3">
-            <div className="font-mono text-4xl font-bold bg-clip-text text-transparent 
-              bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
-            >
-              <CountUp to={count} duration={1} />
+      <HoverCard openDelay={200}>
+        <HoverCardTrigger asChild>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 backdrop-blur-xl px-8 py-6 cursor-help group">
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-black/20">
+              <motion.div
+                className="h-full bg-gradient-to-r from-[#4dc8ff] to-[#2dd4bf]"
+                animate={{ width: `${percentage}%` }}
+                transition={{ type: "spring", stiffness: 50, damping: 20 }}
+              />
             </div>
-            <div className="font-mono text-2xl text-white/40">
-              / {total.toLocaleString()}
+
+            <div className="relative flex flex-col items-center gap-3">
+              <div className="flex items-center gap-2">
+                <UICounter
+                  value={count}
+                  places={[1000, 100, 10, 1]}
+                  fontSize={48}
+                  padding={4}
+                  gap={6}
+                  textColor="white"
+                  fontWeight={700}
+                />
+                <Info className="w-5 h-5 text-cyan-400/70 group-hover:text-cyan-400 transition-colors" />
+              </div>
+              
+              <div className="text-base font-medium tracking-wide text-white/80 group-hover:text-white/90 transition-colors">
+                Early Access Spots
+              </div>
             </div>
           </div>
-          
-          <div className="text-sm font-medium text-white/60 tracking-wider uppercase">
-            Early Access Slots
+        </HoverCardTrigger>
+        <HoverCardContent sideOffset={8} className="w-80 bg-black/95 border border-white/10">
+          <div className="flex justify-between space-x-4">
+            <div className="space-y-2.5">
+              <h4 className="text-sm font-semibold flex items-center gap-2">
+                <Users className="h-4 w-4 text-cyan-400" />
+                Early Access Program
+              </h4>
+              <p className="text-sm leading-relaxed text-white/80">
+                Join our exclusive early access program to help the project and test it before public release. Limited to {total.toLocaleString()} participants who will get first access to SafeCircle.
+              </p>
+              <div className="flex items-center pt-1 text-xs font-medium text-cyan-400/90">
+                <span>{Math.round(percentage)}% spots filled</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </HoverCardContent>
+      </HoverCard>
     </motion.div>
   );
 };

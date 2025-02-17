@@ -17,7 +17,7 @@ const CounterContext = createContext<CounterContextType>({
 
 export function CounterProvider({ children }: { children: React.ReactNode }) {
   const [count, setCount] = useState(0);
-  const total = 5000;
+  const total = 1000;
   const percentage = Math.min((count / total) * 100, 100);
 
   useEffect(() => {

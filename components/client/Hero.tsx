@@ -1,7 +1,7 @@
 "use client";
 
 import { LayoutGroup, motion } from "framer-motion";
-import { Counter } from "./Counter";
+import { AnimatedCounter } from "./Counter";
 import { WaitlistButton } from "../whitelist/WaitlistButton";
 import { GodRays } from "./GodRays";
 import { useRef } from "react";
@@ -67,7 +67,7 @@ export const Hero = () => {
 					{/* Counter and CTA sections */}
 					<div className="space-y-12">
 						<div ref={counterRef} className="max-w-lg mx-auto">
-							<Counter containerRef={counterRef} />
+							<AnimatedCounter containerRef={counterRef} />
 						</div>
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}

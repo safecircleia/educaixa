@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { navItems } from './links';
 import { AuthModal } from '../client/AuthModal';
 import { supabase } from '../../lib/supabase';
+import { cn } from '@/lib/utils';
 
 import {
   DropdownMenu,
@@ -133,11 +134,15 @@ export const Navbar = () => {
                       {item.items.map((subItem) => (
                         <button
                           key={subItem.label}
-                          onClick={() => handleSectionClick(subItem.href)}
-                          className="w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors rounded-lg flex items-center"
+                          onClick={() => { if (!subItem.comingSoon) handleSectionClick(subItem.href); }}
+                          disabled={!!subItem.comingSoon}
+                          className={`w-full text-left px-4 py-2 text-sm rounded-lg flex items-center transition-colors ${subItem.comingSoon ? 'text-gray-400 cursor-not-allowed' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
                         >
                           {subItem.label}
-                          {subItem.external && (
+                          {subItem.comingSoon && (
+                            <span className="ml-2 text-xs italic opacity-70">Coming Soon</span>
+                          )}
+                          {!subItem.comingSoon && subItem.external && (
                             <ExternalLink className="w-3 h-3 inline opacity-50 ml-1" />
                           )}
                         </button>
@@ -164,12 +169,12 @@ export const Navbar = () => {
                     />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-40">
-                  <DropdownMenuItem onClick={() => router.push('/dashboard')} className="cursor-pointer">
+                <DropdownMenuContent align="end" className={cn("w-40 bg-black/95 backdrop-blur-xl border border-white/5 shadow-xl rounded-xl py-2", isScrolled ? "bg-black/80" : "bg-black/95")}>
+                  <DropdownMenuItem onClick={() => router.push('/dashboard')} className="px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center">
                     <LayoutDashboard className="w-4 h-4 mr-2" />
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="cursor-pointer">
+                  <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center">
                     <Settings className="w-4 h-4 mr-2" />
                     Settings
                   </DropdownMenuItem>
@@ -178,7 +183,7 @@ export const Navbar = () => {
                       await supabase.auth.signOut();
                       setUser(null);
                     }}
-                    className="text-red-500 focus:text-red-500 cursor-pointer"
+                    className="px-4 py-2 text-sm text-red-500 hover:bg-white/10 flex items-center"
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
@@ -213,12 +218,12 @@ export const Navbar = () => {
                     />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-40" sideOffset={8}>
-                  <DropdownMenuItem onClick={() => router.push('/dashboard')} className="cursor-pointer">
+                <DropdownMenuContent align="end" sideOffset={8} className={cn("w-40 bg-black/95 backdrop-blur-xl border border-white/5 shadow-xl rounded-xl py-2", isScrolled ? "bg-black/80" : "bg-black/95")}>
+                  <DropdownMenuItem onClick={() => router.push('/dashboard')} className="px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center">
                     <LayoutDashboard className="w-4 h-4 mr-2" />
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="cursor-pointer">
+                  <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center">
                     <Settings className="w-4 h-4 mr-2" />
                     Settings
                   </DropdownMenuItem>
@@ -227,7 +232,7 @@ export const Navbar = () => {
                       await supabase.auth.signOut();
                       setUser(null);
                     }}
-                    className="text-red-500 focus:text-red-500 cursor-pointer"
+                    className="px-4 py-2 text-sm text-red-500 hover:bg-white/10 flex items-center"
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
@@ -285,14 +290,19 @@ export const Navbar = () => {
                         <motion.button
                           key={subItem.label}
                           onClick={() => {
-                            handleSectionClick(subItem.href);
-                            setIsMobileMenuOpen(false);
+                            if (!subItem.comingSoon) {
+                              handleSectionClick(subItem.href);
+                              setIsMobileMenuOpen(false);
+                            }
                           }}
-                          className="w-full text-left py-1.5 text-sm text-gray-400 hover:text-white transition-colors flex items-center"
-                          whileHover={{ x: 4 }}
+                          className={`w-full text-left py-1.5 text-sm flex items-center transition-colors ${subItem.comingSoon ? 'text-gray-400 cursor-not-allowed' : 'text-gray-400 hover:text-white'}`}
+                          whileHover={!subItem.comingSoon ? { x: 4 } : {}}
                         >
                           {subItem.label}
-                          {subItem.external && <ExternalLink className="w-3 h-3 inline opacity-50 ml-1" />}
+                          {subItem.comingSoon && (
+                            <span className="ml-2 text-xs italic opacity-70">Coming Soon</span>
+                          )}
+                          {!subItem.comingSoon && subItem.external && <ExternalLink className="w-3 h-3 inline opacity-50 ml-1" />}
                         </motion.button>
                       ))}
                     </div>

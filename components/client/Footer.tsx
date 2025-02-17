@@ -20,7 +20,7 @@ const footerLinks = {
   ],
   developers: [
     { label: 'API Reference', href: '/api', icon: BookOpen },
-    { label: 'GitHub', href: 'https;//github.com/safecircleia', icon: Github, external: true },
+    { label: 'GitHub', href: 'https://github.com/safecircleia', icon: Github, external: true },
     { label: 'Documentation', href: '/docs', icon: FileText },
   ],
   support: [

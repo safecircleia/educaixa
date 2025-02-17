@@ -1,14 +1,17 @@
 import { LucideIcon, Shield, Code, Users, Coins } from 'lucide-react';
 
+interface NavSubItem {
+  label: string;
+  href: string;
+  external?: boolean;
+  comingSoon?: boolean; // Optional flag to indicate if the link is coming soon/disabled
+}
+
 interface NavItem {
   title: string;
   icon: 'Shield' | 'Code' | 'Users' | 'Coins';
   IconComponent: LucideIcon;
-  items: {
-    label: string;
-    href: string;
-    external?: boolean;
-  }[];
+  items: NavSubItem[];
 }
 
 export const navItems: NavItem[] = [
@@ -29,8 +32,8 @@ export const navItems: NavItem[] = [
     icon: 'Code',
     IconComponent: Code,
     items: [
-      { label: 'Documentation', href: 'docs.safecircle.tech', external: true },
-      { label: 'API Reference', href: '/api', external: true },
+      { label: 'Documentation', href: 'docs.safecircle.tech', external: true, comingSoon: true },
+      { label: 'API Reference', href: '/api', external: true, comingSoon: true },
       { label: 'GitHub', href: 'https://github.com/safecircleia', external: true },
     ]
   },
@@ -40,8 +43,8 @@ export const navItems: NavItem[] = [
     IconComponent: Users,
     items: [
       { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', external: true },
-      { label: 'Forum', href: '/forum' },
-      { label: 'Blog', href: '/blog' },
+      { label: 'Forum', href: '/forum', comingSoon: true},
+      { label: 'Blog', href: '/blog', comingSoon: true },
     ]
   },
   {
@@ -49,9 +52,39 @@ export const navItems: NavItem[] = [
     icon: 'Coins',
     IconComponent: Coins,
     items: [
-      { label: 'Tokenomics', href: '#token' },
+      { label: 'Tokenomics', href: '/token' },
       { label: 'Governance', href: '/governance' },
       { label: 'Staking', href: '/staking' },
     ]
   }
 ];
+
+export const links = [
+  {
+    title: 'How it Works',
+    href: '#section-how-it-works',
+  },
+  {
+    title: 'Features',
+    href: '#section-features',
+  },
+  {
+    title: 'Privacy',
+    href: '#section-privacy',
+  },
+  {
+    title: 'Security',
+    href: '#section-security-protection',
+  },
+] as const;
+
+export const legalLinks = [
+  {
+    title: 'Privacy Policy',
+    href: '/privacy',
+  },
+  {
+    title: 'Terms of Service',
+    href: '/terms',
+  },
+] as const;
