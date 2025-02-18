@@ -43,7 +43,7 @@ const sections = [
 
 export const InfoSections = () => {
   return (
-    <div className="relative bg-black text-gray-300">
+    <div className="relative">
       {sections.map((section, index) => (
         <React.Fragment key={section.id}>
           <section
