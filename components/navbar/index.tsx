@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { ExternalLink, Menu, X, LogOut, LayoutDashboard, Settings, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Menu as MenuIcon, X, LogOut, LayoutDashboard, Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';

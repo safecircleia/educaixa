@@ -32,6 +32,7 @@ module.exports = {
         'pulse-dot': 'pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'gradient-flow': 'gradient 2s linear infinite',
         'float-smooth': 'float 6s cubic-bezier(0.37, 0, 0.63, 1) infinite',
+        shine: 'shine 5s linear infinite',
       },
       keyframes: {
         radar: {
@@ -59,6 +60,10 @@ module.exports = {
         gradient: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
+        },
+        shine: {
+          '0%': { 'background-position': '100%' },
+          '100%': { 'background-position': '-100%' },
         },
       },
       backgroundImage: {
