@@ -16,7 +16,7 @@ interface NavItem {
 
 export const navItems: NavItem[] = [
   {
-    title: 'Platform',
+    title: 'About Us',
     icon: 'Shield',
     IconComponent: Shield,
     items: [
