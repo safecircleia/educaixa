@@ -23,12 +23,12 @@ export const WaitlistButton = () => {
                 ? 'opacity-50 saturate-50 cursor-not-allowed hover:opacity-50' 
                 : 'cursor-pointer hover:opacity-90'
             }`}
-            color={isProduction ? "#808080" : "#4dc8ff"}
+            color={isProduction ? "#808080" : "cyan"}
             speed="4s"
           >
             <span className="flex items-center gap-2 px-4">
               <div className="flex items-center gap-3">
-                <span className={isProduction ? 'text-gray-400' : ''}>Join Waitlist</span>
+                <span className={isProduction ? 'text-gray-400' : ''}>Unirse a la lista de espera</span>
                 {!isProduction && (
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 )}
@@ -42,14 +42,13 @@ export const WaitlistButton = () => {
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-blue-400" />
-                  Coming Soon
+                  Proximamente
                 </h4>
                 <p className="text-sm text-white/70">
-                  Our team is working hard to bring you something special. Join our waitlist soon!
-                </p>
+                  Nuestro equipo está trabajando duro para ofrecerte algo especial. ¡Únete pronto a nuestra lista de espera!                </p>
                 <div className="flex items-center pt-2 text-xs text-white/50">
                   <CalendarDays className="mr-2 h-4 w-4" />
-                  <span>Coming Q1 2025</span>
+                  <span>Proximamente Q1 2025</span>
                 </div>
               </div>
             </div>

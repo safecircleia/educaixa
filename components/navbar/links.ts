@@ -1,90 +1,74 @@
-import { LucideIcon, Shield, Code, Users, Coins } from 'lucide-react';
+import { Github, FileCode2, BookOpen, MessageCircle, Send, MessageSquare, BookText, LucideIcon, Twitter } from 'lucide-react';
 
 interface NavSubItem {
   label: string;
   href: string;
+  description?: string;
   external?: boolean;
-  comingSoon?: boolean; // Optional flag to indicate if the link is coming soon/disabled
+  comingSoon?: boolean;
+  icon?: LucideIcon;
 }
 
 interface NavItem {
   title: string;
-  icon: 'Shield' | 'Code' | 'Users' | 'Coins';
-  IconComponent: LucideIcon;
-  items: NavSubItem[];
+  href?: string;
+  description?: string;
+  items?: NavSubItem[];
 }
 
 export const navItems: NavItem[] = [
   {
-    title: 'About Us',
-    icon: 'Shield',
-    IconComponent: Shield,
-    items: [
-      { label: 'How it Works', href: 'section-how-it-works' },
-      { label: 'AI Technology', href: 'section-ai' },
-      { label: 'Privacy', href: 'section-privacy' },
-      { label: 'Security & Protection', href: 'section-security-protection' },
-      { label: 'Key Features', href: 'section-features' },
-    ]
+    title: 'Inicio',
+    href: '/',
   },
   {
-    title: 'Developers',
-    icon: 'Code',
-    IconComponent: Code,
-    items: [
-      { label: 'Documentation', href: 'docs.safecircle.tech', external: true, comingSoon: true },
-      { label: 'API Reference', href: '/api', external: true, comingSoon: true },
-      { label: 'GitHub', href: 'https://github.com/safecircleia', external: true },
-    ]
+    title: 'Nosotros',
+    href: '#about-us',
   },
   {
-    title: 'Community',
-    icon: 'Users',
-    IconComponent: Users,
+    title: 'Comunidad',
+    description: 'Únete a nuestra comunidad y mantente al día con las últimas novedades de SafeCircle.',
     items: [
-      { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', external: true },
-      { label: 'Forum', href: '/forum', comingSoon: true},
-      { label: 'Blog', href: '/blog', comingSoon: true },
+      { 
+        label: 'Discord', 
+        href: 'https://discord.gg/Ubr6AcAupr', 
+        external: true,
+        icon: MessageCircle,
+        description: 'Únete a nuestra comunidad de Discord'
+      },
+      { 
+        label: 'Telegram', 
+        href: 'https://t.me/safecircleai', 
+        external: true,
+        icon: Send,
+        description: 'Síguenos en Telegram'
+      },
+      {
+        label: 'Twitter',
+        href: 'https://twitter.com/safecircleai',
+        external: true,
+        icon: Twitter,
+        description: 'Síguenos en Twitter'
+      },
+      { 
+        label: 'Foro', 
+        href: '/forum', 
+        comingSoon: true,
+        icon: MessageSquare,
+        description: 'Discute y comparte ideas'
+      },
+      { 
+        label: 'Blog', 
+        href: '/blog', 
+        comingSoon: true,
+        icon: BookText,
+        description: 'Lee nuestras últimas actualizaciones'
+      },
     ]
   },
   {
     title: 'Token',
-    icon: 'Coins',
-    IconComponent: Coins,
-    items: [
-      { label: 'Tokenomics', href: '/token' },
-      { label: 'Governance', href: '/governance' },
-      { label: 'Staking', href: '/staking' },
-    ]
+    href: '/token',
   }
 ];
 
-export const links = [
-  {
-    title: 'How it Works',
-    href: '#section-how-it-works',
-  },
-  {
-    title: 'Features',
-    href: '#section-features',
-  },
-  {
-    title: 'Privacy',
-    href: '#section-privacy',
-  },
-  {
-    title: 'Security',
-    href: '#section-security-protection',
-  },
-] as const;
-
-export const legalLinks = [
-  {
-    title: 'Privacy Policy',
-    href: '/privacy',
-  },
-  {
-    title: 'Terms of Service',
-    href: '/terms',
-  },
-] as const;

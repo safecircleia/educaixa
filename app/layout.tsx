@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import '../styles/globals.css';
 import { CounterProvider } from '../context/CounterContext';
 import { WalletProviders } from '@/providers/WalletProviders';
+import { Toaster as UiToaster } from "@/components/ui/toaster";
 
 const nothingFont = localFont({
   src: '../public/nothing.ttf',
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode 
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${nothingFont.variable}`}>
+    <html lang="en" className={`scroll-smooth ${GeistSans.variable} ${nothingFont.variable}`}>
       <head />
       <body className="font-sans bg-black text-white min-h-screen flex flex-col">
         <WalletProviders>
@@ -31,6 +32,7 @@ export default function RootLayout({
               {children}
             </CounterProvider>
             <Toaster position="bottom-right" theme="dark" />
+            <UiToaster />
           </Suspense>
         </WalletProviders>
       </body>

@@ -12,6 +12,28 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'dd.dexscreener.com',
+        pathname: '/ds-data/tokens/**',
+      }
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://dexscreener.com https://*.dexscreener.com;"
+          }
+        ],
+      },
+    ]
+  }
 };
 
 export default nextConfig;

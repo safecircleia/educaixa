@@ -3,13 +3,14 @@
 import { motion, LayoutGroup } from "framer-motion";
 import { AnimatedCounter } from "./Counter";
 import { WaitlistButton } from "../whitelist/WaitlistButton";
-import { useRef } from "react";
-import { Circle, ShieldBanIcon, ChevronDown } from "lucide-react";
+import { useRef, useState } from "react";
+import { Circle, ChevronDown, Beaker } from "lucide-react";
 import RotatingText from "../ui/RotatingText";
 import ShinyText from "../ui/shiny-text";
 import { cn } from "@/lib/utils";
-
-
+import StarBorder from "@/components/ui/starborder";
+import DemoWarningDialog from "./DemoWarningDialog";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 function ElegantShape({
 	className,
 	delay = 0,
@@ -229,6 +230,16 @@ function HeroGeometric({
 export const Hero = () => {
 	const counterRef = useRef(null);
 	const rotatingWords = ["Privacidad", "Seguridad", "Velocidad"];
+	const [showDemoWarning, setShowDemoWarning] = useState(false);
+
+	const handleDemoClick = () => {
+		setShowDemoWarning(true);
+	};
+
+	const handleAcceptDemo = () => {
+		setShowDemoWarning(false);
+		window.location.href = 'https://demo.safecircle.tech/demo';
+	};
 
 	const scrollToSection = (sectionId: string) => {
 		const element = document.getElementById(sectionId);
@@ -261,6 +272,39 @@ export const Hero = () => {
 							className="flex flex-col sm:flex-row items-center justify-center gap-6"
 						>
 							<WaitlistButton />
+								<HoverCard openDelay={200}>
+									<HoverCardTrigger asChild>
+										<StarBorder
+											onClick={handleDemoClick}
+											className="group cursor-pointer hover:opacity-90"
+											color="violet"
+											speed="4s"
+										>
+											<span className="flex items-center gap-2 px-4">
+												<div className="flex items-center gap-3">
+													<span>Probar Demo</span>
+													<span className="group-hover:translate-x-1 transition-transform">→</span>
+												</div>
+											</span>
+										</StarBorder>
+									</HoverCardTrigger>
+									<HoverCardContent className="w-80 bg-black/95 border border-white/10">
+										<div className="flex justify-between space-x-4">
+											<div className="space-y-1">
+												<h4 className="text-sm font-semibold flex items-center gap-2">
+													<Beaker className="h-4 w-4 text-red-400" />
+													Versión Demo
+												</h4>
+												<p className="text-sm text-white/70">
+													Prueba las funcionalidades principales de SafeCircle en un entorno de demostración.
+												</p>
+												<div className="flex items-center pt-2 text-xs text-white/50">
+													<span>Acceso limitado a funciones básicas</span>
+												</div>
+											</div>
+										</div>
+									</HoverCardContent>
+								</HoverCard>
 						</motion.div>
 					</div>
 				</div>
@@ -284,6 +328,12 @@ export const Hero = () => {
 				<span className="text-white/60 text-sm">Desplázate hacia abajo</span>
 				<ChevronDown className="w-6 h-6 text-white/60" />
 			</motion.div>
+
+			<DemoWarningDialog 
+				isOpen={showDemoWarning}
+				onClose={() => setShowDemoWarning(false)}
+				onAccept={handleAcceptDemo}
+			/>
 		</div>
 	);
 };
