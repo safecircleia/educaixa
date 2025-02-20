@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { Info, FileText, Users, Target, Briefcase, Heart, Building2, Scale, Handshake, Globe } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import Image from 'next/image';
+import { ODSContent }  from './ODSContent';
 
 export const AboutUs = () => {
   const teamMembers = [
@@ -14,38 +16,33 @@ export const AboutUs = () => {
     {
       name: "Victor Muñoz",
       role: "Co-fundador",
-      description: "Victor"
+      description: "Jefe de Marketing y Comunicación de SafeCircle"
     },
-    // {
-    //   name: "Miguel Sánchez",
-    //   role: "Jefe de Investigación",
-    //   description: "Especialista en detección de amenazas y protección de menores"
-    // }
   ];
 
   const odsData = [
     {
       number: 3,
       title: "Salud y Bienestar",
-      icon: Heart,
+      imageUrl: "/ods/3.png",
       description: "Promovemos el bienestar digital y la salud mental de los menores en el entorno online"
     },
     {
       number: 8,
       title: "Trabajo Decente",
-      icon: Building2,
+      imageUrl: "/ods/8.png",
       description: "Impulsamos el desarrollo tecnológico sostenible y el crecimiento económico responsable"
     },
     {
       number: 16,
       title: "Paz y Justicia",
-      icon: Scale,
+      imageUrl: "/ods/16.png",
       description: "Contribuimos a crear un internet más seguro y justo para todos"
     },
     {
       number: 17,
       title: "Alianzas",
-      icon: Handshake,
+      imageUrl: "/ods/17.png",
       description: "Colaboramos con instituciones para fortalecer la seguridad digital"
     }
   ];
@@ -111,7 +108,7 @@ export const AboutUs = () => {
                     <h3 className="text-2xl font-bold text-white/90">Quiénes Somos</h3>
                   </div>
                   <p className="text-white/70 leading-relaxed">
-                    Somos un equipo apasionado de expertos en tecnología y seguridad digital, comprometidos con la protección de menores en el entorno digital. Nuestra experiencia combinada en inteligencia artificial, ciberseguridad y desarrollo de software nos permite crear soluciones innovadoras que protegen sin invadir la privacidad.
+                      Somos un equipo apasionado llamado “Empresaurios” de expertos en tecnología y seguridad digital, comprometidos con la protección de menores en el entorno digital y con ganas de hacer este mundo un lugar más seguro. Nuestra experiencia combinada en inteligencia artificial, ciberseguridad y desarrollo de software nos permite crear soluciones innovadoras que protegen sin invadir la privacidad.
                   </p>
                 </div>
               </div>
@@ -186,35 +183,7 @@ export const AboutUs = () => {
           >
             <SpotlightCard spotlightColor="rgba(34, 197, 94, 0.2)" className="h-full">
               <div className="p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white/90">Objetivos de Desarrollo Sostenible</h3>
-                </div>
-
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                  {odsData.map((ods, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="p-4 rounded-xl bg-gradient-to-br from-green-500/5 to-emerald-500/5 backdrop-blur-sm border border-green-500/10"
-                    >
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                          <ods.icon className="w-4 h-4 text-emerald-400" />
-                        </div>
-                        <span className="font-mono text-lg text-emerald-400">
-                          {ods.number}
-                        </span>
-                      </div>
-                      <h4 className="font-bold text-sm text-white/90 mb-1">{ods.title}</h4>
-                      <p className="text-xs text-white/60 leading-relaxed">{ods.description}</p>
-                    </motion.div>
-                  ))}
-                </div>
+                <ODSContent />
               </div>
             </SpotlightCard>
           </motion.div>
