@@ -26,6 +26,10 @@ export const navItems: NavItem[] = [
     href: '#about-us',
   },
   {
+    title: 'Necesidades',
+    href: '/necesidades',
+  },
+  {
     title: 'Comunidad',
     description: 'Únete a nuestra comunidad y mantente al día con las últimas novedades de SafeCircle.',
     items: [

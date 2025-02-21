@@ -94,23 +94,23 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
               </div>
               
               <div className="text-base font-medium tracking-wide text-white/80 group-hover:text-white/90 transition-colors">
-                Early Access Spots
+                Acceso Anticipado
               </div>
             </div>
           </div>
         </HoverCardTrigger>
-        <HoverCardContent sideOffset={8} className="w-80 bg-black/95 border border-white/10">
+        <HoverCardContent side="top" sideOffset={8} className="w-80 bg-black/95 border border-white/10">
           <div className="flex justify-between space-x-4">
             <div className="space-y-2.5">
               <h4 className="text-sm font-semibold flex items-center gap-2">
                 <Users className="h-4 w-4 text-cyan-400" />
-                Early Access Program
+                Programa de Acceso Anticipado
               </h4>
               <p className="text-sm leading-relaxed text-white/80">
-                Join our exclusive early access program to help the project and test it before public release. Limited to {total.toLocaleString()} participants who will get first access to SafeCircle.
+                Únete a nuestro programa exclusivo de acceso anticipado para ayudar al proyecto y probarlo antes del lanzamiento público. Limitado a {total.toLocaleString()} participantes que obtendrán acceso prioritario a SafeCircle.
               </p>
               <div className="flex items-center pt-1 text-xs font-medium text-cyan-400/90">
-                <span>{Math.round(percentage)}% spots filled</span>
+                <span>{Math.round(percentage)}% de cupos ocupados</span>
               </div>
             </div>
           </div>
