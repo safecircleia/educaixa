@@ -3,38 +3,38 @@ import { Bot, Zap, Brain, Cpu, Network, LineChart, CircleSlashed, Code2 } from '
 export const features = [
   {
     icon: CircleSlashed,
-    title: 'Threat Blocking',
-    description: 'Intelligent blocking of harmful content',
-    stats: '99.9% blocked'
+    title: 'Bloqueo de Amenazas',
+    description: 'Bloqueo inteligente de contenido dañino',
+    stats: '99.9% bloqueado'
   },
   {
     icon: Bot,
-    title: 'Smart Detection',
-    description: 'Advanced pattern recognition for threats',
-    stats: '500M+ patterns'
+    title: 'Detección Inteligente',
+    description: 'Reconocimiento avanzado de patrones de amenazas',
+    stats: '+500M patrones'
   },
   {
     icon: Code2,
-    title: 'In-House AI',
-    description: 'Custom-built proprietary AI models',
-    stats: '100% proprietary'
+    title: 'IA Propietaria',
+    description: 'Modelos de IA desarrollados internamente',
+    stats: '100% propio'
   },
   {
     icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Industry-leading response time',
-    stats: '<5ms latency'
+    title: 'Alta Velocidad',
+    description: 'Tiempo de respuesta líder en la industria',
+    stats: '<5ms latencia'
   },
   {
     icon: Cpu,
-    title: 'Neural Processing',
-    description: 'Deep learning architecture',
-    stats: '99.9% accuracy'
+    title: 'Procesamiento Neural',
+    description: 'Arquitectura de aprendizaje profundo',
+    stats: '99.9% precisión'
   },
   {
     icon: Network,
-    title: 'AI Network',
-    description: 'Distributed threat detection',
-    stats: 'Global coverage'
+    title: 'Red de IA',
+    description: 'Detección distribuida de amenazas',
+    stats: 'Cobertura global'
   }
 ];

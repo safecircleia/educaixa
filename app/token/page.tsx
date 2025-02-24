@@ -88,10 +88,6 @@ export default function TokenPage() {
             variants={itemVariants}
             className="text-center space-y-6 mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4">
-              <Coins className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-blue-400">Token SC</span>
-            </div>
             <h1 className="text-6xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">
               {tokenContent.hero.title}
             </h1>

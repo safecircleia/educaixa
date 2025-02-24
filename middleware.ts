@@ -1,18 +1,28 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(req: Request) {
+export function middleware(req: NextRequest) {
   const { pathname } = new URL(req.url);
+  const response = NextResponse.next();
 
-  // Disable dashboard if the custom flag is set to 'true'
-  if (process.env.NEXT_PUBLIC_DISABLE_DASHBOARD === 'true' && pathname.startsWith('/dashboard')) {
-    return new NextResponse('Dashboard is under construction', { status: 503 });
-  }
-  
-  return NextResponse.next();
+  // Set Content Security Policy headers
+  response.headers.set(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "frame-src 'self' https://dexscreener.com https://*.dexscreener.com https://www.youtube-nocookie.com https://www.youtube.com",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.dexscreener.com",
+    ].join('; ')
+  );
+
+  return response;
 }
 
-// Apply middleware only for /dashboard routes
+// Apply middleware to all routes
 export const config = {
-  matcher: '/dashboard/:path*',
+  matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
 };

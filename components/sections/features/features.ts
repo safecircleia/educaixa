@@ -3,38 +3,38 @@ import { Lock, Clock, Bell, Shield, Users, Zap } from 'lucide-react';
 export const features = [
   {
     icon: Shield,
-    title: 'Smart Protection',
-    description: 'Advanced threat detection and prevention',
-    stats: '24/7 monitoring'
+    title: 'Protección Inteligente',
+    description: 'Detección y prevención avanzada de amenazas',
+    stats: 'Monitoreo 24/7'
   },
   {
     icon: Clock,
-    title: 'Screen Time Control',
-    description: 'Flexible scheduling and usage limits',
-    stats: 'Custom schedules'
+    title: 'Control de Tiempo',
+    description: 'Límites de uso y programación flexible',
+    stats: 'Horarios personalizados'
   },
   {
     icon: Bell,
-    title: 'Real-time Alerts',
-    description: 'Instant notifications for any threats',
-    stats: '<1s response'
+    title: 'Alertas en Tiempo Real',
+    description: 'Notificaciones instantáneas de amenazas',
+    stats: 'Respuesta <1s'
   },
   {
     icon: Lock,
-    title: 'Access Control',
-    description: 'Granular content filtering settings',
-    stats: 'Custom rules'
+    title: 'Control de Acceso',
+    description: 'Configuración granular de filtrado de contenido',
+    stats: 'Reglas personalizadas'
   },
   {
     icon: Users,
-    title: 'Family Management',
-    description: 'Multiple profiles and device control',
-    stats: 'Unlimited devices'
+    title: 'Gestión Familiar',
+    description: 'Control de múltiples perfiles y dispositivos',
+    stats: 'Dispositivos ilimitados'
   },
   {
     icon: Zap,
-    title: 'Quick Actions',
-    description: 'One-click security responses',
-    stats: 'Instant blocks'
+    title: 'Acciones Rápidas',
+    description: 'Respuestas de seguridad con un clic',
+    stats: 'Bloqueos instantáneos'
   }
 ];

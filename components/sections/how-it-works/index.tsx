@@ -1,118 +1,103 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Shield, Lock, Activity, Terminal } from 'lucide-react';
-import { ProcessStep } from '../shared/ProcessStep';
-import { VideoCard } from '@/components/ui/video-card';
-import { useRef } from 'react';
-
-const features = [
-  { 
-    title: 'Sign Up & Setup',
-    description: 'Create your account and set up your security preferences in minutes with our intuitive onboarding process.',
-    icon: Shield
-  },
-  { 
-    title: 'AI-Powered Protection',
-    description: 'Our advanced AI monitors online activity for potential threats without accessing private data, ensuring maximum security.',
-    icon: Terminal
-  },
-  { 
-    title: 'Real-time Monitoring',
-    description: 'Get instant alerts about suspicious activities while maintaining complete privacy through our zero-knowledge architecture.',
-    icon: Activity
-  },
-  { 
-    title: 'Stay Protected',
-    description: 'Enjoy peace of mind with continuous protection, regular security updates, and proactive threat prevention.',
-    icon: Lock
-  }
-];
+import { motion } from 'framer-motion';
+import { Workflow } from 'lucide-react';
 
 export const HowItWorksSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 0]);
-
   return (
-    <div ref={containerRef} className="relative py-32 overflow-hidden">
-      {/* Enhanced Background Effects */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
-        style={{ opacity: backgroundOpacity }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent" />
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
-      </motion.div>
-      
-      <div className="container mx-auto px-4">
+    <div className="relative py-16 md:py-24 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-blue-500/5" />
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-25 mix-blend-overlay" />
+      </div>
+
+      <div className="container mx-auto px-4 space-y-12">
+        {/* Centered Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="text-center max-w-3xl mx-auto space-y-6 mb-20"
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center space-y-6"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-200 via-blue-100 to-gray-200">
-              How SafeCircle Works
-            </h1>
-          </motion.div>
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg md:text-xl text-gray-400 leading-relaxed"
-          >
-            Experience next-generation digital protection that respects your privacy. 
-            Our zero-knowledge architecture ensures your data stays private while keeping you protected.
-          </motion.p>
+          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400">
+            Cómo Funciona
+          </h2>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto">
+            Descubre cómo nuestra tecnología avanzada protege a tu familia
+          </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <div className="relative space-y-6">
-            {features.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ 
-                  duration: 0.5, 
-                  delay: i * 0.15,
-                  type: "spring",
-                  stiffness: 50
-                }}
-              >
-                <ProcessStep
-                  number={i + 1}
-                  title={feature.title}
-                  description={feature.description}
-                  icon={feature.icon}
-                  isLast={i === features.length - 1}
-                />
-              </motion.div>
-            ))}
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Main Info Column */}
+          <div className="lg:col-span-6 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
+                  Proceso Simplificado
+                </h3>
+                <p className="text-white/70 leading-relaxed">
+                  Nuestro sistema está diseñado para ser fácil de usar y altamente efectivo. 
+                  Desde la configuración inicial hasta la protección continua, te guiamos 
+                  en cada paso del camino.
+                </p>
+              </div>
+
+              {/* How It Works Stats */}
+              <div className="grid grid-cols-2 gap-4">
+                <motion.div 
+                  className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 backdrop-blur-sm"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <div className="font-mono text-2xl text-blue-400">5 min</div>
+                  <div className="text-sm text-white/60 mt-1">Configuración</div>
+                </motion.div>
+                <motion.div 
+                  className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 backdrop-blur-sm"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <div className="font-mono text-2xl text-blue-400">24/7</div>
+                  <div className="text-sm text-white/60 mt-1">Protección</div>
+                </motion.div>
+              </div>
+
+              {/* How It Works Benefits */}
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-2 h-2 rounded-full bg-blue-500" />
+                  Configuración rápida y sencilla
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-2 h-2 rounded-full bg-blue-500" />
+                  Monitoreo en tiempo real
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-2 h-2 rounded-full bg-blue-500" />
+                  Alertas instantáneas
+                </li>
+              </ul>
+            </motion.div>
           </div>
 
-          <div className="lg:sticky lg:top-24">
-            <VideoCard
-              title="See How It Works"
-              subtitle="Watch our quick demo video"
-              duration="2:30"
-              thumbnailUrl="/video-thumbnail.jpg"
-              className="w-full"
-            />
+          {/* YouTube Embed */}
+          <div className="lg:col-span-6">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+                src="https://www.youtube-nocookie.com/embed/njX2bu-_Vw4?rel=0&modestbranding=1"
+                title="SafeCircle - How it works"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
           </div>
         </div>
       </div>

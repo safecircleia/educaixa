@@ -1,42 +1,40 @@
-import { Shield, Lock, FileCheck, Network } from 'lucide-react';
+import { Shield, Lock, FileCheck, Network, Eye, Key } from 'lucide-react';
 
 export const features = [
-  // Security Features
   {
     icon: Shield,
-    title: 'Defense in Depth',
-    description: 'Multiple layers of security protection',
-    stats: '24/7 monitoring'
+    title: 'Protección Multicapa',
+    description: 'Sistema de defensa en profundidad con múltiples capas de seguridad',
+    stats: 'Protección 360°'
   },
   {
     icon: Lock,
-    title: 'Encryption Protocol',
-    description: 'Advanced data encryption standards',
+    title: 'Cifrado Avanzado',
+    description: 'Encriptación de grado militar para todos tus datos',
     stats: 'AES-256 & RSA'
   },
   {
-    icon: FileCheck,
-    title: 'Security Audits',
-    description: 'Regular third-party security testing',
-    stats: 'SOC2 certified'
+    icon: Eye,
+    title: 'Monitoreo Privado',
+    description: 'Vigilancia continua sin comprometer la privacidad',
+    stats: 'Conocimiento cero'
   },
-  // Protection Features
   {
-    icon: Shield,
-    title: 'Multi-Layer Defense',
-    description: 'Multiple security layers working in harmony',
-    stats: '24/7 active'
+    icon: Key,
+    title: 'Control de Acceso',
+    description: 'Gestión granular de permisos y autenticación',
+    stats: 'IAM avanzado'
   },
   {
     icon: Network,
-    title: 'Network Shield',
-    description: 'Secure connection on any network',
-    stats: 'Global coverage'
+    title: 'Escudo de Red',
+    description: 'Protección en cualquier red o dispositivo',
+    stats: 'VPN incluida'
   },
   {
     icon: FileCheck,
-    title: 'Smart Filtering',
-    description: 'Intelligent content filtering',
-    stats: 'Real-time'
+    title: 'Auditoría Continua',
+    description: 'Verificación constante de la seguridad del sistema',
+    stats: 'SOC2 certificado'
   }
 ];

@@ -2,33 +2,34 @@
 
 import { motion } from 'framer-motion';
 import { MessageCircleMore, Github, Twitter, MessageCircle, ExternalLink, BookOpen, Shield, FileText, Mail } from 'lucide-react';
-import { RiTelegram2Line, RiDiscordFill } from "react-icons/ri";
+import { RiTelegram2Line, RiDiscordFill, RiLinkedinFill } from "react-icons/ri";
 import { ParticlesEffect } from '../client/ParticlesEffect';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const footerLinks = {
   resources: [
-    { label: 'Documentation', href: '/docs', icon: BookOpen },
-    { label: 'Privacy Policy', href: '/privacy', icon: Shield },
-    { label: 'Terms of Service', href: '/terms', icon: FileText },
+    { label: 'Documentación', href: '/docs', icon: BookOpen },
+    { label: 'Política de Privacidad', href: '/privacy', icon: Shield },
+    { label: 'Términos de Servicio', href: '/terms', icon: FileText },
   ],
   community: [
     { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', icon: RiDiscordFill, external: true },
     { label: 'Telegram', href: 'https://t.me/safecircleai', icon: RiTelegram2Line, external: true },
     { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
   ],
   developers: [
-    { label: 'API Reference', href: '/api', icon: BookOpen },
+    { label: 'Referencia API', href: '/api', icon: BookOpen },
     { label: 'GitHub', href: 'https://github.com/safecircleia', icon: Github, external: true },
-    { label: 'Documentation', href: '/docs', icon: FileText },
+    { label: 'Documentación', href: '/docs', icon: FileText },
   ],
   support: [
     { 
-      label: 'Email Support',
+      label: 'Soporte por Email',
       href: 'mailto:support@safecircle.tech',
       icon: Mail,
-      description: 'Get help from our team'
+      description: 'Obtén ayuda de nuestro equipo'
     }
   ]
 };
@@ -64,7 +65,7 @@ export const Footer = () => {
                 <div className="relative w-8 h-8">
                   <Image
                     src="/logo-nbg.png"
-                    alt="SafeCircle Logo"
+                    alt="Logo de SafeCircle"
                     width={32}
                     height={32}
                     className="relative z-10"
@@ -73,13 +74,13 @@ export const Footer = () => {
                 <span className="font-nothing text-xl text-white/90">SafeCircle</span>
               </motion.div>
               <p className="text-white/60">
-                Protecting children online through AI and privacy-first technology.
+                Protegiendo a los niños en línea a través de IA y tecnología que prioriza la privacidad.
               </p>
             </div>
             
             {/* Resources */}
             <div className="md:col-span-2">
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="font-semibold mb-4">Recursos</h4>
               <ul className="space-y-2">
                 {footerLinks.resources.map((link) => (
                   <li key={link.label}>
@@ -97,7 +98,7 @@ export const Footer = () => {
 
             {/* Developers */}
             <div className="md:col-span-2">
-              <h4 className="font-semibold mb-4">Developers</h4>
+              <h4 className="font-semibold mb-4">Desarrolladores</h4>
               <ul className="space-y-2">
                 {footerLinks.developers.map((link) => (
                   <li key={link.label}>
@@ -120,7 +121,7 @@ export const Footer = () => {
 
             {/* Support & Social */}
             <div className="md:col-span-4">
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="font-semibold mb-4">Soporte</h4>
               <div className="space-y-4">
                 <motion.a
                   href="mailto:support@safecircle.tech"
@@ -131,7 +132,7 @@ export const Footer = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Mail className="w-5 h-5 opacity-60 group-hover:opacity-100" />
-                  <span>Contact Support</span>
+                  <span>Contactar Soporte</span>
                 </motion.a>
 
                 <div className="flex items-center justify-between pt-6">

@@ -19,10 +19,10 @@ export const CallToAction = () => (
         className="max-w-3xl mx-auto space-y-8 text-center"
       >
         <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-          Protect Your Family&apos;s Digital Life
+          Proteja la Vida Digital de su Familia
         </h2>
         <p className="text-lg md:text-xl text-white/60">
-          Join thousands of families already using SafeCircle for complete online protection.
+          Únase a miles de familias que ya usan SafeCircle para una protección en línea completa.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -32,7 +32,7 @@ export const CallToAction = () => (
             className="group flex items-center gap-2 px-6 py-3 rounded-lg text-white/80 hover:text-white transition-colors"
             whileHover={{ y: -2 }}
           >
-            See How It Works
+            Ver Cómo Funciona
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </motion.a>
         </div>
@@ -44,9 +44,9 @@ export const CallToAction = () => (
           className="pt-8 flex flex-wrap items-center justify-center gap-8"
         >
           {[
-            { icon: Shield, text: 'Military-grade Security' },
-            { icon: Lock, text: 'Privacy First' },
-            { icon: Zap, text: 'Real-time Protection' }
+            { icon: Shield, text: 'Seguridad de Grado Militar' },
+            { icon: Lock, text: 'Privacidad Primero' },
+            { icon: Zap, text: 'Protección en Tiempo Real' }
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-2 text-white/40">
               <item.icon className="w-4 h-4" />
