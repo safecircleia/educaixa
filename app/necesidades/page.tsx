@@ -81,7 +81,10 @@ export default function NecesidadesPage() {
                 </div>
 
                 <p className="text-white/60 text-sm mt-4 text-center">
-                  La seguridad de las familias es nuestra razón de ser. El gráfico muestra un preocupante aumento en los casos de grooming durante la última década, con un incremento significativo desde 2013 hasta alcanzar su máximo en 2023.
+                  La seguridad de las familias es nuestra razón de ser. En el siguiéntes gráfico se muestra datos del "Periodico el voluntariado". Esto nos sirve para conocer la tendencia y la evolución de las causas expuestas.
+                </p>
+                <p className="text-white/50 text-xs mt-2 text-center italic">
+                  Gráfico: Periodico del Voluntariado • Fuente: Ministerio del Interior
                 </p>
               </SpotlightCard>
             </motion.div>
