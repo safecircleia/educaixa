@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
               <Shield className="w-6 h-6 text-cyan-500" />
               <h2 className="text-2xl font-semibold">Our Commitment to Privacy</h2>
             </div>
-            <p className="mb-4">At SafeCircle, we prioritize the privacy and security of your family's data. Our platform is built on a zero-knowledge architecture, ensuring that your personal information remains completely private and under your control.</p>
+            <p className="mb-4">At SafeCircle, we prioritize the privacy and security of your family&apos;s data. Our platform is built on a zero-knowledge architecture, ensuring that your personal information remains completely private and under your control.</p>
           </section>
 
           <GlowyDivider />

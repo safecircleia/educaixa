@@ -23,7 +23,7 @@ export default function TermsOfService() {
               <FileText className="w-6 h-6 text-amber-500" />
               <h2 className="text-2xl font-semibold">Agreement to Terms</h2>
             </div>
-            <p className="mb-4">By accessing or using SafeCircle's services, you agree to be bound by these Terms of Service and our Privacy Policy. Our services are designed to protect families while respecting privacy and data ownership rights.</p>
+            <p className="mb-4">By accessing or using SafeCircle&apos;s services, you agree to be bound by these Terms of Service and our Privacy Policy. Our services are designed to protect families while respecting privacy and data ownership rights.</p>
           </section>
 
           <GlowyDivider />

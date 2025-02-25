@@ -7,7 +7,12 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import TierGrid from './TierGrid';
 
 export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    email: string;
+    wallet_address: string;
+    tier: number | null;
+    amount_paid: number;
+  }>({
     email: '',
     wallet_address: '',
     tier: null,
@@ -86,18 +91,22 @@ export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
         <div className="rounded-2xl border border-white/10 overflow-hidden bg-black/90 backdrop-blur-xl">
           <Stepper
             initialStep={1}
-            onStepChange={(step: number) => console.log('Current step:', step)}
+            onStepChange={(step: number) => {
+              console.log('Current step:', step);
+              // Force re-render to update button state
+              setFormData(prev => ({...prev}));
+            }}
             onFinalStepCompleted={handleSubmit}
             backButtonText="Previous"
             nextButtonText="Continue"
-            nextButtonProps={(step: number) => ({
-              disabled: !validateStep(step),
+            nextButtonProps={{
+              disabled: !validateStep(formData.tier ?? 0),
               className: `px-4 py-2 rounded-lg font-medium transition-all ${
-                validateStep(step)
+                validateStep(formData.tier ?? 0)
                   ? 'bg-[#4dc8ff] hover:bg-[#4dc8ff]/90 text-black'
                   : 'bg-white/5 text-white/20 cursor-not-allowed'
               }`
-            })}
+            }}
             backButtonProps={{
               className: "px-4 py-2 text-white/60 hover:text-white transition-colors"
             }}

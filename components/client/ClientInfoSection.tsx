@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import * as Icons from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 interface ClientInfoSectionProps {
   title: string;
@@ -18,7 +19,7 @@ export function ClientInfoSection({
   gradient, 
   isReversed = false 
 }: ClientInfoSectionProps) {
-  const Icon = Icons[iconName];
+  const Icon = Icons[iconName] as LucideIcon;
 
   return (
     <section className="py-24 border-b border-white/10">

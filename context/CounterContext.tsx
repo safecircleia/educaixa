@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 type CounterContextType = {
   count: number;
@@ -14,6 +15,11 @@ const CounterContext = createContext<CounterContextType>({
   total: 5000,
   percentage: 0,
 });
+
+type WaitlistCountRecord = {
+  id: number;
+  count: number;
+};
 
 export function CounterProvider({ children }: { children: React.ReactNode }) {
   const [count, setCount] = useState(0);
@@ -39,15 +45,16 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
     const channel = supabase
       .channel('counter-changes')
       .on(
-        'postgres_changes',
+        'postgres_changes' as const,
         {
           event: '*',
           schema: 'public',
           table: 'waitlist_count',
         },
-        (payload) => {
-          if (payload.new?.count !== undefined) {
-            setCount(payload.new.count);
+        (payload: RealtimePostgresChangesPayload<{ [key: string]: any }>) => {
+          const newRecord = payload.new as WaitlistCountRecord;
+          if (typeof newRecord?.count === 'number') {
+            setCount(newRecord.count);
           }
         }
       )

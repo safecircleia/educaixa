@@ -2,7 +2,19 @@ import { motion } from 'framer-motion';
 import { tiers } from '@/lib/constants';
 import React from 'react';
 
-const TierGrid = ({ formData, setFormData }) => (
+interface FormData {
+  email: string;
+  wallet_address: string;
+  tier: number | null;
+  amount_paid: number;
+}
+
+interface TierGridProps {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+}
+
+const TierGrid: React.FC<TierGridProps> = ({ formData, setFormData }) => (
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
     {tiers.map((tier, index) => (
       <motion.button

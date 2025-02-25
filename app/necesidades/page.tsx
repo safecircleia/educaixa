@@ -81,7 +81,7 @@ export default function NecesidadesPage() {
                 </div>
 
                 <p className="text-white/60 text-sm mt-4 text-center">
-                  La seguridad de las familias es nuestra razón de ser. En el siguiéntes gráfico se muestra datos del "Periodico el voluntariado". Esto nos sirve para conocer la tendencia y la evolución de las causas expuestas.
+                  La seguridad de las familias es nuestra razón de ser. En el siguiéntes gráfico se muestra datos del &quot;Periodico el voluntariado&quot;. Esto nos sirve para conocer la tendencia y la evolución de las causas expuestas.
                 </p>
                 <p className="text-white/50 text-xs mt-2 text-center italic">
                   Gráfico: Periodico del Voluntariado • Fuente: Ministerio del Interior

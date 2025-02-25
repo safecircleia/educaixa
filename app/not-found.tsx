@@ -30,7 +30,7 @@ export default function NotFound() {
           </div>
           <h2 className="text-3xl font-bold">Page Not Found</h2>
           <p className="text-lg text-gray-300">
-            We can't seem to find the page you&apos;re looking for. It may have been removed or is temporarily unavailable.
+            We can&apos;t seem to find the page you&apos;re looking for. It may have been removed or is temporarily unavailable.
           </p>
           <Link href="/">
             <motion.button
