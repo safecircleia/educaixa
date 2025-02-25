@@ -1,40 +1,40 @@
-import { Bot, Zap, Brain, Cpu, Network, LineChart, CircleSlashed, Code2 } from 'lucide-react';
+import { Bot, Zap, Cpu, Network, CircleSlashed, Code2 } from 'lucide-react';
 
 export const features = [
   {
     icon: CircleSlashed,
-    title: 'Bloqueo de Amenazas',
-    description: 'Bloqueo inteligente de contenido dañino',
-    stats: '99.9% bloqueado'
+    title: 'Código Abierto',
+    description: 'Transparencia total en nuestra tecnología',
+    stats: '100% verificable'
   },
   {
     icon: Bot,
-    title: 'Detección Inteligente',
-    description: 'Reconocimiento avanzado de patrones de amenazas',
-    stats: '+500M patrones'
+    title: 'IA Especializada',
+    description: 'Diseñada específicamente para seguridad',
+    stats: 'Optimización perfecta'
   },
   {
     icon: Code2,
-    title: 'IA Propietaria',
-    description: 'Modelos de IA desarrollados internamente',
-    stats: '100% propio'
+    title: 'Desarrollo Propio',
+    description: 'Construido desde cero por nuestro equipo',
+    stats: 'Made in-house'
   },
   {
     icon: Zap,
-    title: 'Alta Velocidad',
-    description: 'Tiempo de respuesta líder en la industria',
-    stats: '<5ms latencia'
+    title: 'Alta Eficiencia',
+    description: 'Optimizado para transacciones blockchain',
+    stats: '<3ms latencia'
   },
   {
     icon: Cpu,
-    title: 'Procesamiento Neural',
-    description: 'Arquitectura de aprendizaje profundo',
-    stats: '99.9% precisión'
+    title: 'Arquitectura Modular',
+    description: 'Sistema modular y extensible',
+    stats: '95% personalizable'
   },
   {
     icon: Network,
-    title: 'Red de IA',
-    description: 'Detección distribuida de amenazas',
-    stats: 'Cobertura global'
+    title: 'Comunidad Activa',
+    description: 'Contribuciones y auditoría comunitaria',
+    stats: '+1000 colaboradores'
   }
 ];
