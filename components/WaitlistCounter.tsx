@@ -1,23 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import UICounter from '@/components/ui/counter';
+import { supabase, supabaseApi } from '@/lib/supabase';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
-export const WaitlistCounter = () => {
-  const [count, setCount] = useState(4912);
-  const total = 5000;
+export default function WaitlistCounter() {
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
+    // Initial count fetch using secure API route
+    supabaseApi<{ count: number }>('getWaitlistCount')
+      .then(({ count }) => setCount(count ?? 0))
+      .catch(console.error);
+
+    // Real-time subscription
     const subscription = supabase
-      .channel('waitlist-counter')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'waitlist' 
-      }, () => {
-        setCount(prev => prev + 1);
-      })
+      .channel('waitlist_changes')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'waitlist' 
+        }, 
+        async (payload: RealtimePostgresChangesPayload<{ id: number }>) => {
+          // Fetch the updated count from secure API when changes occur
+          const { count: newCount } = await supabaseApi<{ count: number }>('getWaitlistCount');
+          setCount(newCount ?? 0);
+        }
+      )
       .subscribe();
 
     return () => {
@@ -26,17 +36,8 @@ export const WaitlistCounter = () => {
   }, []);
 
   return (
-    <div className="flex items-baseline gap-2 mb-8">
-      <UICounter
-        value={count}
-        places={[1000, 100, 10, 1]}
-        fontSize={32}
-        padding={3}
-        gap={4}
-        textColor="rgb(34, 211, 238)"
-        fontWeight={700}
-      />
-      <span className="text-gray-400 text-xl">/{total.toLocaleString()} Slots Filled</span>
+    <div className="font-mono text-2xl">
+      {count.toLocaleString()}
     </div>
   );
-};
+}
