@@ -1,28 +1,27 @@
 'use client';
 
-import { AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { AlertTriangle } from "lucide-react";
 
 interface ErrorStateProps {
-  message: string;
-  retry?: () => void;
+  error?: Error;
+  reset?: () => void;
 }
 
-export const ErrorState = ({ message, retry }: ErrorStateProps) => {
+export default function ErrorState({ error, reset }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center p-8 rounded-xl bg-red-500/10 border border-red-500/20 backdrop-blur-sm">
-      <AlertCircle className="w-12 h-12 text-red-400 mb-4" />
-      <h3 className="text-xl font-bold text-white/90 mb-2">Error</h3>
-      <p className="text-white/70 text-center mb-4">{message}</p>
-      {retry && (
-        <Button
-          variant="outline"
-          onClick={retry}
-          className="border-red-500/20 hover:bg-red-500/10"
+    <div className="flex flex-col items-center justify-center p-8 rounded-xl bg-red-500/10 border border-red-500/20">
+      <AlertTriangle className="w-12 h-12 text-red-500 mb-4" aria-hidden="true" />
+      <h2 className="text-xl font-bold text-white/90 mb-4">
+        {error?.message || "Algo salió mal"}
+      </h2>
+      {reset && (
+        <button
+          onClick={reset}
+          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
         >
-          Reintentar
-        </Button>
+          Intentar de nuevo
+        </button>
       )}
     </div>
   );
-};
+}

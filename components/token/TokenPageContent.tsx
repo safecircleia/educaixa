@@ -10,7 +10,7 @@ import { PixelCard } from "@/components/ui/pixelcard";
 import { GlowingDots } from "@/components/ui/glowing-dots";
 import { useTokenData } from "@/hooks/useTokenData";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
-import { ErrorState } from "@/components/ui/error-state";
+import ErrorState from "@/components/ui/error-state";
 import Image from "next/image";
 import { DexScreenerWrapper } from "@/components/ui/DexScreenerWrapper";
 
@@ -46,7 +46,7 @@ export function TokenPageContent() {
   if (error) {
     return (
       <div className="container mx-auto px-4">
-        <ErrorState message={error} retry={retry} />
+        <ErrorState error={new Error(error)} reset={retry} />
       </div>
     );
   }
