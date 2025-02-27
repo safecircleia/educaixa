@@ -72,9 +72,9 @@ function Header1() {
         <header className={`w-full z-40 fixed top-0 left-0 transition-all duration-300 ${
             scrolled ? 'bg-background/40 backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'
         }`}>
-            <div className="container relative mx-auto min-h-20 flex items-center justify-between px-4">
+            <div className="container relative mx-auto min-h-20 flex items-center px-4">
                 {/* Logo Section */}
-                <div className="flex items-center">
+                <div className="flex-shrink-0">
                     <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
                         <Image 
                             src="/logo-nbg.png" 
@@ -90,7 +90,7 @@ function Header1() {
                 </div>
 
                 {/* Navigation Section */}
-                <div className="hidden lg:flex items-center justify-center flex-1">
+                <div className="hidden lg:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     <NavigationMenu>
                         <NavigationMenuList>
                             {navItems.map((item) => (
@@ -190,7 +190,7 @@ function Header1() {
                 </div>
 
                 {/* Actions Section */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-shrink-0 ml-auto">
                     {user ? (
                         <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
@@ -200,7 +200,7 @@ function Header1() {
                                         alt="User Avatar" 
                                         width={40} 
                                         height={40} 
-                                        className="rounded-full"
+                                        className="rounded-full w-10 h-10 aspect-square object-cover"
                                     />
                                 </button>
                             </DropdownMenu.Trigger>

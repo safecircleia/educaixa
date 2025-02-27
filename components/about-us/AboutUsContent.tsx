@@ -40,39 +40,53 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode; titl
   </div>
 );
 
-const TeamMemberCard = ({ member, index }: { member: any; index: number }) => (
+// Define a proper type for team members
+interface TeamMember {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  twitter?: string;
+  linkedin?: string;
+  github?: string;
+  email?: string;
+}
+
+const TeamMemberCard = ({ member, index }: { member: TeamMember; index: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+    transition={{ duration: 0.5, delay: 0.2 + (index % 6) * 0.1 }}
     viewport={{ once: true }}
+    className="h-full"
   >
-    <div className="p-6 rounded-xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 transition-all duration-300 hover:border-white/20 group">
-      <div className="flex items-center gap-4">
-        <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500/20 via-violet-500/20 to-purple-500/20 transform group-hover:scale-110 transition-all duration-300">
+    <div className="p-6 rounded-xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 transition-all duration-300 hover:border-white/20 group h-full flex flex-col">
+      <div className="flex flex-col items-center text-center mb-4 md:mb-6">
+        <div className="relative w-24 h-24 md:w-28 md:h-28 mb-4 overflow-hidden bg-gradient-to-br from-blue-500/20 via-violet-500/20 to-purple-500/20 transform group-hover:scale-105 transition-all duration-300 rounded-full flex items-center justify-center">
           <Image
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover"
-            sizes="(max-width: 64px) 100vw, 64px"
+            className="object-cover rounded-full"
+            sizes="(max-width: 768px) 96px, 112px"
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-full" />
         </div>
-        <div className="flex-grow space-y-2">
-          <div>
-            <h4 className="text-xl font-bold text-white/90 group-hover:text-white transition-colors">
-              {member.name}
-            </h4>
-            <p className="text-sm bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent font-semibold">
-              {member.role}
-            </p>
-          </div>
-          <p className="text-sm text-white/60 group-hover:text-white/80 transition-colors leading-relaxed">
-            {member.description}
+        <div className="space-y-1">
+          <h4 className="text-xl font-bold text-white/90 group-hover:text-white transition-colors">
+            {member.name}
+          </h4>
+          <p className="text-sm bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent font-semibold">
+            {member.role}
           </p>
         </div>
       </div>
+      
+      <p className="text-sm text-white/60 group-hover:text-white/80 transition-colors leading-relaxed text-center flex-grow">
+        {member.description}
+      </p>
+      
       <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-green-400/60" />
@@ -80,39 +94,48 @@ const TeamMemberCard = ({ member, index }: { member: any; index: number }) => (
             Activo en SafeCircle
           </span>
         </div>
-        {member.twitter && (
-          <a
-            href={`https://twitter.com/${member.twitter}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-          >
-            <Twitter className="w-4 h-4 text-blue-400" />
-          </a>
-        )}
+        <div className="flex gap-2">
+          {member.twitter && (
+            <a
+              href={`https://twitter.com/${member.twitter}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              aria-label={`Twitter de ${member.name}`}
+            >
+              <Twitter className="w-4 h-4 text-blue-400" />
+            </a>
+          )}
+          {/* Additional social icons can be added here */}
+        </div>
       </div>
     </div>
   </motion.div>
 );
 
 export function AboutUsContent() {
-  const teamMembers = [
+  const teamMembers: TeamMember[] = [
     {
       name: "Tomas Palma Sanchez",
       role: "Fundador & CEO",
       description: "Desarrollador web y diseñador principal de SafeCircle. Experto en seguridad digital y desarrollo de soluciones innovadoras.",
-      icon: <Sparkles className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors" />,
-      image: "/team/tomaspfp.jpg",
+      image: "/team/tomaspfp.png",
       twitter: "toomas_ps"
     },
     {
       name: "Victor Muñoz Salazar",
       role: "Co-fundador & CMO",
       description: "Jefe de Marketing y Comunicación. Especialista en estrategias de crecimiento y relaciones públicas.",
-      icon: <Globe className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors" />,
-      image: "/team/victorpfp.jpg",
+      image: "/team/victorpfp.png",
       twitter: "_mnozz"
     },
+    {
+      name: "Fabio Bernal Garcia",
+      role: "Ayudante",
+      description: "Ayudante de ideas y decisiones. Aporta su visión y creatividad al equipo de SafeCircle.",
+      image: "/team/fabiopfp.png",
+      twitter: "",
+    }
   ];
 
 const values = [
@@ -241,20 +264,24 @@ const values = [
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-              Nuestro Equipo
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto mb-8">
-              Conoce a las mentes creativas detrás de SafeCircle
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {teamMembers.map((member, index) => (
-              <TeamMemberCard key={member.name} member={member} index={index} />
-            ))}
-          </div>
+          <SpotlightCard spotlightColor="rgba(59, 130, 246, 0.2)" className="h-full overflow-hidden">
+            <div className="p-8">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
+                  Nuestro Equipo
+                </h2>
+                <p className="text-white/60 max-w-2xl mx-auto mb-8">
+                  Conoce a las mentes creativas detrás de SafeCircle
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {teamMembers.map((member, index) => (
+                  <TeamMemberCard key={member.name} member={member} index={index} />
+                ))}
+              </div>
+            </div>
+          </SpotlightCard>
         </motion.div>
 
         <motion.div
