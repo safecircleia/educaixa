@@ -1,37 +1,40 @@
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
-interface SquaresProps {
-  direction?: 'right' | 'left' | 'up' | 'down' | 'diagonal';
-  speed?: number;
-  borderColor?: string;
-  squareSize?: number;
-  hoverFillColor?: string;
-}
+type CanvasStrokeStyle = string | CanvasGradient | CanvasPattern;
 
-interface HoveredSquare {
+interface GridOffset {
   x: number;
   y: number;
 }
 
-const Squares = ({
+interface SquaresProps {
+  direction?: 'diagonal' | 'up' | 'right' | 'down' | 'left';
+  speed?: number;
+  borderColor?: CanvasStrokeStyle;
+  squareSize?: number;
+  hoverFillColor?: CanvasStrokeStyle;
+}
+
+const Squares: React.FC<SquaresProps> = ({
   direction = 'right',
   speed = 1,
-  borderColor = 'rgba(153, 153, 153, 0.1)', // Made borders more transparent
+  borderColor = '#999',
   squareSize = 40,
-  hoverFillColor = 'rgba(34, 34, 34, 0.4)', // Made hover effect more subtle
-}: SquaresProps) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const requestRef = useRef<number>(0);
+  hoverFillColor = '#222',
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const requestRef = useRef<number | null>(null);
   const numSquaresX = useRef<number>(0);
   const numSquaresY = useRef<number>(0);
-  const gridOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [hoveredSquare, setHoveredSquare] = useState<HoveredSquare | null>(null);
+  const gridOffset = useRef<GridOffset>({ x: 0, y: 0 });
+  const [hoveredSquare, setHoveredSquare] = useState<GridOffset | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+
     if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
 
     const resizeCanvas = () => {
       canvas.width = canvas.offsetWidth;
@@ -44,19 +47,17 @@ const Squares = ({
     resizeCanvas();
 
     const drawGrid = () => {
+      if (!ctx) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       const startX = Math.floor(gridOffset.current.x / squareSize) * squareSize;
       const startY = Math.floor(gridOffset.current.y / squareSize) * squareSize;
 
-      // Loop over columns and rows to draw squares
       for (let x = startX; x < canvas.width + squareSize; x += squareSize) {
         for (let y = startY; y < canvas.height + squareSize; y += squareSize) {
           const squareX = x - (gridOffset.current.x % squareSize);
           const squareY = y - (gridOffset.current.y % squareSize);
-
-          // Draw darker base squares
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'; // Added dark base color
-          ctx.fillRect(squareX, squareY, squareSize, squareSize);
 
           if (
             hoveredSquare &&
@@ -72,24 +73,22 @@ const Squares = ({
         }
       }
 
-      // Create a darker radial gradient
       const gradient = ctx.createRadialGradient(
         canvas.width / 2,
         canvas.height / 2,
         0,
         canvas.width / 2,
         canvas.height / 2,
-        Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
+        Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2)) / 2
       );
-      gradient.addColorStop(0, 'rgba(0, 0, 0, 0.7)'); // Made center darker
-      gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)'); // Made edges almost black
+      gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      gradient.addColorStop(1, '#060606');
 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
 
     const updateAnimation = () => {
-      // Ensure the effective speed is never too low
       const effectiveSpeed = Math.max(speed, 0.1);
       switch (direction) {
         case 'right':
@@ -116,7 +115,7 @@ const Squares = ({
       requestRef.current = requestAnimationFrame(updateAnimation);
     };
 
-    // Track mouse hover to highlight a square.
+    // Track mouse hover
     const handleMouseMove = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
@@ -142,13 +141,13 @@ const Squares = ({
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(requestRef.current);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [direction, speed, borderColor, hoverFillColor, hoveredSquare, squareSize]);
 
-  return <canvas ref={canvasRef} className="w-full h-full border-none block fixed top-0 left-0 -z-10" />;
+  return <canvas ref={canvasRef} className="w-full h-full border-none block"></canvas>;
 };
 
 export default Squares;

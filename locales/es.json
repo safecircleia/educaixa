@@ -1,0 +1,34 @@
+{
+	"hero": {
+		"title": "Seguridad infantil con tecnología de inteligencia artificial",
+		"subtitle": "Sin concesiones",
+		"rotatingWords": ["Privacidad", "Seguridad", "Protección"],
+		"learnMore": "Más información"
+	},
+	"sections": {
+		"howItWorks": {
+			"title": "Cómo funciona SafeCircle",
+			"description": "Proteja a su familia con tecnología avanzada de inteligencia artificial y blockchain",
+			"features": {
+				"monitoring": {
+					"title": "Monitoreo en tiempo real",
+					"description": "Nuestra inteligencia artificial analiza constantemente la actividad en línea en busca de posibles amenazas"
+				},
+				"protection": {
+					"title": "Protección inteligente",
+					"description": "Bloqueo automático de contenido dañino y actividades sospechosas"
+				},
+				"privacy": {
+					"title": "Diseño que prioriza la privacidad",
+					"description": "Las pruebas de conocimiento cero garantizan la privacidad total de los datos"
+				}
+			}
+		}
+	},
+	"cta": {
+		"title": "¿Está listo para proteger a su familia?",
+		"description": "Únase a miles de familias que ya usan SafeCircle para garantizar la seguridad en línea de sus hijos.",
+		"joinWaitlist": "Únase a la lista de espera",
+		"learnMore": "Obtenga más información"
+	}
+}

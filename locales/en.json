@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "title": "AI-Powered Child Safety",
+    "subtitle": "Without Compromising",
+    "rotatingWords": ["Privacy", "Security", "Protection"],
+    "learnMore": "Learn More"
+  },
+  "sections": {
+    "howItWorks": {
+      "title": "How SafeCircle Works",
+      "description": "Protecting your family with advanced AI and blockchain technology",
+      "features": {
+        "monitoring": {
+          "title": "Real-time Monitoring",
+          "description": "Our AI constantly analyzes online activity for potential threats"
+        },
+        "protection": {
+          "title": "Smart Protection",
+          "description": "Automated blocking of harmful content and suspicious activities"
+        },
+        "privacy": {
+          "title": "Privacy-First Design",
+          "description": "Zero-knowledge proofs ensure complete data privacy"
+        }
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Protect Your Family?",
+    "description": "Join thousands of families already using SafeCircle to ensure their children's online safety.",
+    "joinWaitlist": "Join Waitlist",
+    "learnMore": "Learn More"
+  }
+}

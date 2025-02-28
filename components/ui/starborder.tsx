@@ -1,30 +1,25 @@
 import React, { ElementType, ReactNode } from "react";
 
-type StarBorderProps<T extends ElementType = "button"> = {
-  /** The element or component to render as (defaults to "button") */
+interface Props<T extends ElementType = "button"> {
   as?: T;
-  /** Additional class names */
-  className?: string;
-  /** The color to use in the radial gradient */
-  color?: string;
-  /** The animation duration (e.g. "6s") */
-  speed?: string;
-  /** Children to render inside the StarBorder */
   children?: ReactNode;
-} & React.ComponentPropsWithoutRef<T>;
+  className?: string;
+  color?: string;
+  speed?: string;
+}
 
-const StarBorder = <T extends ElementType = "button">({
-  as: Component = "button",
-  className = "",
-  color = "white",
-  speed = "6s",
-  children,
-  ...rest
-}: StarBorderProps<T>) => {
+type StarBorderProps<T extends ElementType = "button"> = Props<T> &
+  Omit<React.ComponentPropsWithoutRef<T>, keyof Props>;
+
+const StarBorder = <T extends ElementType = "button">(
+  { as, className = "", color = "white", speed = "6s", children, ...props }: StarBorderProps<T>
+) => {
+  const Component = as || "button";
+
   return (
     <Component
       className={`relative inline-block py-[1px] overflow-hidden rounded-[20px] ${className}`}
-      {...rest}
+      {...props}
     >
       <div
         className="absolute w-[300%] h-[50%] opacity-70 bottom-[-11px] right-[-250%] rounded-full animate-star-movement-bottom z-0"

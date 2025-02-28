@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 
@@ -39,8 +37,9 @@ export default function DecryptedText({
     const [hasAnimated, setHasAnimated] = useState<boolean>(false)
     const containerRef = useRef<HTMLSpanElement>(null)
 
+    let interval: NodeJS.Timeout
+
     useEffect(() => {
-        let interval: number
         let currentIteration = 0
 
         const getNextIndex = (revealedSet: Set<number>): number => {
