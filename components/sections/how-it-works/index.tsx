@@ -17,7 +17,7 @@ export const HowItWorksSection = () => {
           className="max-w-3xl mx-auto text-center space-y-6"
         >
           <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400">
-            Cómo Funciona
+            Mas información
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Descubre cómo nuestra tecnología avanzada protege a tu familia en este breve video explicativo
@@ -37,7 +37,7 @@ export const HowItWorksSection = () => {
             <div className="relative w-full bg-black/40 backdrop-blur-sm" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube-nocookie.com/embed/njX2bu-_Vw4?rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/KMNUBzgh64I?si=bUGGFmyFq8ppZBnC"
                 title="SafeCircle - How it works"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 loading="lazy"

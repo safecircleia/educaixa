@@ -2,7 +2,7 @@ export const tokenContent = {
   hero: {
     title: "Token SC",
     subtitle: "Impulsando la seguridad digital mediante gobernanza descentralizada",
-    description: "El token SC es el núcleo de nuestro ecosistema, permitiendo a los holders participar en la toma de decisiones y beneficiarse del crecimiento de la plataforma."
+    description: "El token de SafeCircle impulsa un ecosistema seguro y descentralizado, recompensando a los usuarios por proteger su privacidad y fomentar una comunidad digital ética."
   },
   sections: {
     overview: {

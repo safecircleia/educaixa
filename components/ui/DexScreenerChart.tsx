@@ -95,6 +95,7 @@ export function DexScreenerChart({ pairAddress }: DexScreenerChartProps) {
           title="DEX Screener Chart"
           referrerPolicy="no-referrer"
           sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads"
+          allowFullScreen={true}
         />
       </div>
     </div>

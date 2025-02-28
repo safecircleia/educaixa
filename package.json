@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -62,7 +62,7 @@
     "lucide-react": "^0.475.0",
     "meshline": "^3.3.1",
     "motion": "^12.4.0",
-    "next": "15.1.7",
+    "next": "^15.2.0",
     "next-themes": "^0.4.4",
     "pino-pretty": "^13.0.0",
     "qrcode": "^1.5.4",

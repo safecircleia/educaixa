@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/tooltip";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { supabase } from '@/lib/supabase';
+import AnimatedLogo from "@/components/logo/animated-logo";
 
 function Header1() {
     const [isOpen, setOpen] = useState(false);
@@ -76,13 +77,7 @@ function Header1() {
                 {/* Logo Section */}
                 <div className="flex-shrink-0">
                     <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-                        <Image 
-                            src="/logo-nbg.png" 
-                            alt="SafeCircle Logo" 
-                            width={40} 
-                            height={40} 
-                            className="w-10 h-10"
-                        />
+                        <AnimatedLogo size={70} className="rounded-full" />
                         <span className="font-semibold text-xl bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
                             SafeCircle
                         </span>

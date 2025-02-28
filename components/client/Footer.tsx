@@ -2,10 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { MessageCircleMore, Github, Twitter, MessageCircle, ExternalLink, BookOpen, Shield, FileText, Mail } from 'lucide-react';
-import { RiTelegram2Line, RiDiscordFill, RiLinkedinFill } from "react-icons/ri";
+import { RiTelegram2Line, RiDiscordFill, RiLinkedinFill, RiYoutubeFill } from "react-icons/ri";
 import { ParticlesEffect } from '../client/ParticlesEffect';
 import Image from 'next/image';
 import Link from 'next/link';
+import AnimatedLogo from '@/components/logo/animated-logo'; 
 
 const footerLinks = {
   resources: [
@@ -18,6 +19,7 @@ const footerLinks = {
     { label: 'Telegram', href: 'https://t.me/safecircleai', icon: RiTelegram2Line, external: true },
     { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
+    { label: 'YouTube', href: 'https://www.youtube.com/@safecircleai', icon: RiYoutubeFill, external: true },
   ],
   developers: [
     { label: 'Referencia API', href: '/api', icon: BookOpen },
@@ -27,7 +29,7 @@ const footerLinks = {
   support: [
     { 
       label: 'Soporte por Email',
-      href: 'mailto:support@safecircle.tech',
+      href: 'mailto:contact@safecircle.tech',
       icon: Mail,
       description: 'Obtén ayuda de nuestro equipo'
     }
@@ -62,16 +64,10 @@ export const Footer = () => {
             {/* Brand & Description */}
             <div className="md:col-span-4">
               <motion.div className="flex items-center space-x-3 mb-4 group">
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/logo-nbg.png"
-                    alt="Logo de SafeCircle"
-                    width={32}
-                    height={32}
-                    className="relative z-10"
-                  />
+                <div className="relative flex items-center justify-center w-15 h-15 overflow-hidden">
+                  <AnimatedLogo size={80} className="rounded-full" />
                 </div>
-                <span className="font-nothing text-xl text-white/90">SafeCircle</span>
+                <span className="font-nothing text-3xl text-white/90">SafeCircle</span>
               </motion.div>
               <p className="text-white/60">
                 Protegiendo a los niños en línea a través de IA y tecnología que prioriza la privacidad.

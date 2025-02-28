@@ -28,14 +28,14 @@ const DemoWarningDialog = ({ isOpen, onClose, onAccept }: DemoWarningDialogProps
                   <AlertTriangle className="w-6 h-6 text-red-400" />
                 </div>
                 <DialogTitle className="text-center text-red-50">Aviso Importante</DialogTitle>
-                <DialogDescription className="text-center space-y-2">
+                <div className="text-center space-y-2 text-sm text-muted-foreground">
                   <p className="text-red-200/90">
                     Esta es una versión de demostración del producto que está en desarrollo activo y está sujeta a cambios.
                   </p>
                   <p className="text-red-200/90">
                     El análisis de IA actual no está completamente refinado y su precisión puede variar. Los resultados no deben considerarse definitivos.
                   </p>
-                </DialogDescription>
+                </div>
               </DialogHeader>
               <div className="flex flex-col gap-4 mt-4">
                 <Button 

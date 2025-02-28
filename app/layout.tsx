@@ -7,14 +7,17 @@ import '../styles/globals.css';
 import { CounterProvider } from '../context/CounterContext';
 import { WalletProviders } from '@/providers/WalletProviders';
 import { Toaster as UiToaster } from "@/components/ui/toaster";
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 
+// Optimize font loading with display swap
 const nothingFont = localFont({
   src: '../public/nothing.ttf',
   variable: '--font-nothing',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://safecircle.tech'),
   title: {
     default: 'SafeCircle | AI-Powered Child Safety Without Compromising Privacy',
     template: '%s | SafeCircle'
@@ -57,11 +60,6 @@ export const metadata: Metadata = {
     creator: '@safecircleai',
     images: ['/logo-nbg.png'],
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -75,6 +73,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Separate viewport export as per Next.js requirements
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({ 
   children 
 }: { 
@@ -83,17 +88,27 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${GeistSans.variable} ${nothingFont.variable}`}>
       <head>
+        {/* Preload critical assets */}
+        <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
+        
+        {/* Analytics script with defer for non-critical operations */}
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
           <Script
             src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
             data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
             strategy="afterInteractive"
+            defer
           />
         )}
       </head>
       <body className="font-sans bg-black text-white min-h-screen flex flex-col">
         <WalletProviders>
-          <Suspense fallback={null}>
+          {/* Use Suspense boundary around the entire app content for better streaming and loading UX */}
+          <Suspense fallback={
+            <div className="flex items-center justify-center min-h-screen">
+              <div className="w-8 h-8 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
+            </div>
+          }>
             <CounterProvider>
               {children}
             </CounterProvider>
