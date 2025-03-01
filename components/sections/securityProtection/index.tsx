@@ -12,8 +12,6 @@ export const SecurityProtectionSection = () => {
     <div className="relative py-16 md:py-24 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 via-transparent to-emerald-500/5" />
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-25 mix-blend-overlay" />
         {/* Animated security pattern */}
         <div className="absolute inset-0 opacity-10">
           {Array.from({ length: 3 }).map((_, i) => (

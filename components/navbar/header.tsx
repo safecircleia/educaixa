@@ -69,21 +69,21 @@ function Header1() {
     }, []);
 
     return (
-        <header className={`w-full z-40 fixed top-0 left-0 transition-all duration-300 ${
-            scrolled ? 'bg-background/40 backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'
+        <header className={`w-full z-50 fixed top-0 left-0 transition-all duration-300 ${
+            scrolled ? 'bg-background/40 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}>
-            <div className="container relative mx-auto min-h-20 flex items-center px-4">
+            <div className="container relative mx-auto min-h-16 sm:min-h-20 flex items-center px-4">
                 {/* Logo Section */}
                 <div className="flex-shrink-0">
-                    <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                    <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-opacity">
                         <Image
                             src="/logo-nbg.png" 
                             alt="SafeCircle Logo" 
-                            width={60} 
-                            height={60} 
-                            className="w-15 h-15"
+                            width={50} 
+                            height={50} 
+                            className="w-10 h-10 sm:w-15 sm:h-15"
                         />
-                        <span className="font-semibold text-xl bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+                        <span className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
                             SafeCircle
                         </span>
                     </Link>
@@ -190,7 +190,7 @@ function Header1() {
                 </div>
 
                 {/* Actions Section */}
-                <div className="flex items-center gap-4 flex-shrink-0 ml-auto">
+                <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0 ml-auto">
                     {user ? (
                         <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
@@ -200,7 +200,7 @@ function Header1() {
                                         alt="User Avatar" 
                                         width={40} 
                                         height={40} 
-                                        className="rounded-full w-10 h-10 aspect-square object-cover"
+                                        className="rounded-full w-8 h-8 sm:w-10 sm:h-10 aspect-square object-cover"
                                     />
                                 </button>
                             </DropdownMenu.Trigger>
@@ -223,7 +223,7 @@ function Header1() {
                     ) : (
                         <Button 
                             onClick={() => setShowAuthModal(true)} 
-                            className="px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+                            className="px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
                         >
                             Iniciar Sesión
                         </Button>
@@ -242,7 +242,7 @@ function Header1() {
 
                 {/* Mobile Menu */}
                 {isOpen && (
-                    <div className="absolute top-full left-0 right-0 border-t border-white/10 bg-background/95 backdrop-blur-md shadow-lg lg:hidden">
+                    <div className="absolute top-full left-0 right-0 border-t border-white/10 bg-background/95 backdrop-blur-md shadow-lg lg:hidden max-h-[80vh] overflow-y-auto">
                         <div className="container mx-auto py-4 px-4 space-y-4">
                             {navItems.map((item) => (
                                 <div key={item.title} className="border-b border-white/10 last:border-none pb-4">

@@ -36,6 +36,8 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPasswordReset, setIsPasswordReset] = useState(false);
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState("");
 
   const onSubmit = async (data: AuthFormData) => {
     setLoading(true);
@@ -51,11 +53,22 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
         if (error) throw error;
       } else {
         // Signup logic
-        const { error } = await supabase.auth.signUp({
+        const { data: signUpData, error } = await supabase.auth.signUp({
           email: data.email,
-          password: data.password
+          password: data.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`
+          }
         });
+        
         if (error) throw error;
+        
+        if (signUpData.user && !signUpData.user.identities?.length) {
+          throw new Error("Este correo ya está registrado");
+        }
+
+        setVerificationEmail(data.email);
+        setIsVerificationSent(true);
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "Authentication error");
@@ -110,6 +123,36 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
     }
   };
 
+  const handleResendVerification = async () => {
+    if (!verificationEmail) return;
+    
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: verificationEmail,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Email enviado",
+        description: "Se ha reenviado el correo de verificación"
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error instanceof Error ? error.message : "No se pudo reenviar el correo"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (isPasswordReset) {
     return (
       <Dialog open={true} onOpenChange={onClose}>
@@ -133,6 +176,52 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
             >
               Entendido
             </Button>
+          </motion.div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (isVerificationSent) {
+    return (
+      <Dialog 
+        open={true} 
+        onOpenChange={() => {}} // This prevents the dialog from closing on backdrop click
+      >
+        <DialogContent className="sm:max-w-md mx-auto bg-black/80 rounded-xl p-6 shadow-xl backdrop-blur-md border border-white/10">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <DialogHeader className="space-y-2 text-center mb-4">
+              <DialogTitle className="text-2xl font-bold text-white">
+                Verifica tu correo
+              </DialogTitle>
+              <DialogDescription className="text-sm text-gray-400">
+                Te hemos enviado un correo de verificación a {verificationEmail}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-3">
+              <Button 
+                onClick={handleResendVerification}
+                disabled={loading}
+                variant="outline"
+                className="w-full bg-transparent border border-white/10 hover:bg-white/5"
+              >
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  'Reenviar correo de verificación'
+                )}
+              </Button>
+              <Button 
+                onClick={onClose}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+              >
+                Cerrar
+              </Button>
+            </div>
           </motion.div>
         </DialogContent>
       </Dialog>

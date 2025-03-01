@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Stepper, { Step } from '../ui/stepper';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createBrowserClient } from '@supabase/ssr';
 import TierGrid from './TierGrid';
 
 export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
@@ -19,17 +19,35 @@ export const WaitlistOnboarding = ({ onClose }: { onClose: () => void }) => {
     amount_paid: 0
   });
   const [user, setUser] = useState<{ id: string, email?: string } | null>(null);
-  const supabase = createClientComponentClient();
+  
+  // Create the Supabase client using the new API
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   useEffect(() => {
-    const { auth } = supabase;
-    auth.getSession().then(({ data: { session } }) => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user);
         setFormData(prev => ({ ...prev, email: session.user.email || '' }));
       }
     });
-  }, [supabase]);
+
+    // Set up auth state change listener
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        setFormData(prev => ({ ...prev, email: session.user.email || '' }));
+      }
+    });
+
+    // Cleanup subscription
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleSubmit = async () => {
     if (!user) return;
