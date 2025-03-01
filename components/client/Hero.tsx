@@ -287,30 +287,30 @@ export const Hero = () => {
 				title2="Sin Comprometer la"
 				rotatingWords={rotatingWords}
 			/>
-			<div className="absolute bottom-32 left-0 right-0 z-20">
-				<div className="w-full max-w-6xl mx-auto px-6 md:px-8">
-					<div className="space-y-12">
-						<div ref={counterRef} className="max-w-lg mx-auto">
+			<div className="absolute bottom-16 sm:bottom-24 md:bottom-32 left-0 right-0 z-20">
+				<div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+					<div className="space-y-8 sm:space-y-12">
+						<div ref={counterRef} className="max-w-xs sm:max-w-sm md:max-w-lg mx-auto">
 							<AnimatedCounter containerRef={counterRef} />
 						</div>
 						<motion.div
 							initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: prefersReducedMotion ? 0.1 : 0.4 }}
-							className="flex flex-col sm:flex-row items-center justify-center gap-6"
+							className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
 						>
 							<WaitlistButton />
 							<HoverCard openDelay={200}>
 								<HoverCardTrigger asChild>
 									<StarBorder
 										onClick={handleDemoClick}
-										className="group cursor-pointer hover:opacity-90"
+										className="group cursor-pointer hover:opacity-90 scale-90 sm:scale-100"
 										color="violet"
 										speed="4s"
 									>
-										<span className="flex items-center gap-2 px-4">
-											<div className="flex items-center gap-3">
-												<span>Probar Demo</span>
+										<span className="flex items-center gap-2 px-2 sm:px-4">
+											<div className="flex items-center gap-2 sm:gap-3">
+												<span className="text-sm sm:text-base">Probar Demo</span>
 												<span className="group-hover:translate-x-1 transition-transform">→</span>
 											</div>
 										</span>
@@ -348,10 +348,10 @@ export const Hero = () => {
 					duration: 0.5,
 					delay: 1,
 				}}
-				className="absolute bottom-8 inset-x-0 mx-auto z-20 flex flex-col items-center gap-2 cursor-pointer"
+				className="absolute bottom-4 sm:bottom-8 inset-x-0 mx-auto z-20 flex flex-col items-center gap-1 sm:gap-2 cursor-pointer"
 				onClick={() => scrollToSection("about-us")}
 			>
-				<span className="text-white/60 text-sm">Desplázate hacia abajo</span>
+				<span className="text-white/60 text-xs sm:text-sm">Desplázate hacia abajo</span>
 				<motion.div
 					animate={{ 
 						y: prefersReducedMotion ? 0 : [0, 6, 0] 
@@ -363,7 +363,7 @@ export const Hero = () => {
 						repeatDelay: 0.5,
 					}}
 				>
-					<ChevronDown className="w-6 h-6 text-white/60" />
+					<ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" />
 				</motion.div>
 			</motion.div>
 

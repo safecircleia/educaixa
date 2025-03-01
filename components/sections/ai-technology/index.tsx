@@ -30,11 +30,6 @@ const AIVisual = () => (
 export const AITechnologySection = () => {
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#4dc8ff]/5 via-transparent to-[#4dc8ff]/5" />
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-25 mix-blend-overlay" />
-      </div>
 
       <div className="container mx-auto px-4 space-y-12">
         {/* Centered Section Header */}

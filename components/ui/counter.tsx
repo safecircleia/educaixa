@@ -1,5 +1,6 @@
 import { MotionValue, motion, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface NumberProps {
   mv: MotionValue<number>;
@@ -76,6 +77,7 @@ interface CounterProps {
   containerStyle?: React.CSSProperties;
   counterStyle?: React.CSSProperties;
   digitStyle?: React.CSSProperties;
+  className?: string; // Add className prop support
 }
 
 export default function Counter({
@@ -91,6 +93,7 @@ export default function Counter({
   containerStyle,
   counterStyle,
   digitStyle,
+  className, // Add className parameter
 }: CounterProps) {
   const height = fontSize + padding;
 
@@ -113,7 +116,10 @@ export default function Counter({
   };
 
   return (
-    <div style={{ ...defaultContainerStyle, ...containerStyle }}>
+    <div 
+      className={className}
+      style={{ ...defaultContainerStyle, ...containerStyle }}
+    >
       <div style={{ ...defaultCounterStyle, ...counterStyle }}>
         {places.map((place) => (
           <Digit
