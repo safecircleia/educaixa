@@ -50,7 +50,7 @@ export const getNavItems = (t: (key: string) => string): NavItem[] => [
   //     },
   //     { 
   //       label: t('navigation.community.telegram.label'), 
-  //       href: 'https://t.me/safecircleai', 
+  //       href: 'https://t.me/safecircleia', 
   //       external: true,
   //       icon: Send,
   //       description: t('navigation.community.telegram.description')

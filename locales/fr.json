@@ -446,7 +446,13 @@
 		"language": "Langue",
 		"comingSoon": "Bientôt disponible",
 		"comingSoonDesc": "Cette fonctionnalité sera bientôt disponible!",
-		"externalLink": "S'ouvre dans un nouvel onglet"
+		"externalLink": "S'ouvre dans un nouvel onglet",
+		"telegramWarning": {
+			"title": "Lien Telegram Officiel",
+			"description": "Notre lien Telegram officiel est",
+			"warning": "Tous les autres liens sont des arnaques !",
+			"close": "Fermer la notification"
+		}
 	},
 	"languages": {
 		"es": "Español",

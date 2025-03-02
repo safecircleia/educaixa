@@ -22,7 +22,7 @@ export const Footer = () => {
     ],
     community: [
       { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', icon: RiDiscordFill, external: true },
-      { label: 'Telegram', href: 'https://t.me/safecircleai', icon: RiTelegram2Line, external: true },
+      { label: 'Telegram', href: 'https://t.me/safecircleia', icon: RiTelegram2Line, external: true },
       { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
       { label: 'YouTube', href: 'https://www.youtube.com/@safecircleai', icon: RiYoutubeFill, external: true },
