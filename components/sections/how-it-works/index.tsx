@@ -2,11 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { PlayCircle } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const HowItWorksSection = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
-
       <div className="container mx-auto px-4 space-y-12 max-w-5xl">
         {/* Section Header */}
         <motion.div
@@ -17,10 +19,10 @@ export const HowItWorksSection = () => {
           className="max-w-3xl mx-auto text-center space-y-6"
         >
           <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400">
-            Mas información
+            {t('sections.howItWorks.title')}
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Descubre cómo nuestra tecnología avanzada protege a tu familia en este breve video explicativo
+            {t('sections.howItWorks.description')}
           </p>
         </motion.div>
 
@@ -56,16 +58,28 @@ export const HowItWorksSection = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6"
         >
           <div className="bg-blue-500/5 backdrop-blur-sm border border-blue-500/10 rounded-xl p-5 hover:bg-blue-500/10 transition-all duration-300">
-            <div className="font-medium text-blue-400 mb-1">Configuración Rápida</div>
-            <div className="text-white/70 text-sm">Comienza a proteger a tu familia en menos de 5 minutos</div>
+            <div className="font-medium text-blue-400 mb-1">
+              {t('sections.howItWorks.benefits.quickSetup.title')}
+            </div>
+            <div className="text-white/70 text-sm">
+              {t('sections.howItWorks.benefits.quickSetup.description')}
+            </div>
           </div>
           <div className="bg-blue-500/5 backdrop-blur-sm border border-blue-500/10 rounded-xl p-5 hover:bg-blue-500/10 transition-all duration-300">
-            <div className="font-medium text-blue-400 mb-1">Protección 24/7</div>
-            <div className="text-white/70 text-sm">Monitoreo constante y alertas en tiempo real</div>
+            <div className="font-medium text-blue-400 mb-1">
+              {t('sections.howItWorks.benefits.protection247.title')}
+            </div>
+            <div className="text-white/70 text-sm">
+              {t('sections.howItWorks.benefits.protection247.description')}
+            </div>
           </div>
           <div className="bg-blue-500/5 backdrop-blur-sm border border-blue-500/10 rounded-xl p-5 hover:bg-blue-500/10 transition-all duration-300">
-            <div className="font-medium text-blue-400 mb-1">Uso Intuitivo</div>
-            <div className="text-white/70 text-sm">Interfaz sencilla diseñada para todos los usuarios</div>
+            <div className="font-medium text-blue-400 mb-1">
+              {t('sections.howItWorks.benefits.easyToUse.title')}
+            </div>
+            <div className="text-white/70 text-sm">
+              {t('sections.howItWorks.benefits.easyToUse.description')}
+            </div>
           </div>
         </motion.div>
       </div>

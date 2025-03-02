@@ -7,36 +7,41 @@ import { ParticlesEffect } from '../client/ParticlesEffect';
 import Image from 'next/image';
 import Link from 'next/link';
 import AnimatedLogo from '@/components/logo/animated-logo'; 
-
-const footerLinks = {
-  resources: [
-    { label: 'Documentación', href: '/docs', icon: BookOpen },
-    { label: 'Política de Privacidad', href: '/privacy', icon: Shield },
-    { label: 'Términos de Servicio', href: '/terms', icon: FileText },
-  ],
-  community: [
-    { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', icon: RiDiscordFill, external: true },
-    { label: 'Telegram', href: 'https://t.me/safecircleai', icon: RiTelegram2Line, external: true },
-    { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
-    { label: 'YouTube', href: 'https://www.youtube.com/@safecircleai', icon: RiYoutubeFill, external: true },
-  ],
-  developers: [
-    { label: 'Referencia API', href: '/api', icon: BookOpen },
-    { label: 'GitHub', href: 'https://github.com/safecircleia', icon: Github, external: true },
-    { label: 'Documentación', href: '/docs', icon: FileText },
-  ],
-  support: [
-    { 
-      label: 'Soporte por Email',
-      href: 'mailto:contact@safecircle.tech',
-      icon: Mail,
-      description: 'Obtén ayuda de nuestro equipo'
-    }
-  ]
-};
+import { useLanguage } from '@/context/LanguageContext';
+import { useMemo } from 'react';
 
 export const Footer = () => {
+  const { t } = useLanguage();
+
+  // Use useMemo to avoid recreating footerLinks on every render
+  const footerLinks = useMemo(() => ({
+    resources: [
+      { label: t('footer.documentation') || 'Documentation', href: '/docs', icon: BookOpen },
+      { label: t('footer.privacy') || 'Privacy Policy', href: '/privacy', icon: Shield },
+      { label: t('footer.terms') || 'Terms of Service', href: '/terms', icon: FileText },
+    ],
+    community: [
+      { label: 'Discord', href: 'https://discord.gg/Ubr6AcAupr', icon: RiDiscordFill, external: true },
+      { label: 'Telegram', href: 'https://t.me/safecircleai', icon: RiTelegram2Line, external: true },
+      { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
+      { label: 'YouTube', href: 'https://www.youtube.com/@safecircleai', icon: RiYoutubeFill, external: true },
+    ],
+    developers: [
+      { label: t('footer.apiReference') || 'API Reference', href: '/api', icon: BookOpen },
+      { label: 'GitHub', href: 'https://github.com/safecircleia', icon: Github, external: true },
+      { label: t('footer.documentation') || 'Documentation', href: '/docs', icon: FileText },
+    ],
+    support: [
+      { 
+        label: t('footer.emailSupport') || 'Email Support',
+        href: 'mailto:contact@safecircle.tech',
+        icon: Mail,
+        description: t('footer.getHelp') || 'Get help from our team'
+      }
+    ]
+  }), [t]);
+
   return (
     <motion.footer className="relative overflow-hidden">
       {/* Glow Effect Layer */}
@@ -70,13 +75,13 @@ export const Footer = () => {
                 <span className="font-nothing text-3xl text-white/90">SafeCircle</span>
               </motion.div>
               <p className="text-white/60">
-                Protegiendo a los niños en línea a través de IA y tecnología que prioriza la privacidad.
+                {t('footer.description') || 'Protecting children online through AI and privacy-focused technology.'}
               </p>
             </div>
             
             {/* Resources */}
             <div className="md:col-span-2">
-              <h4 className="font-semibold mb-4">Recursos</h4>
+              <h4 className="font-semibold mb-4">{t('footer.resourcesTitle') || 'Resources'}</h4>
               <ul className="space-y-2">
                 {footerLinks.resources.map((link) => (
                   <li key={link.label}>
@@ -94,7 +99,7 @@ export const Footer = () => {
 
             {/* Developers */}
             <div className="md:col-span-2">
-              <h4 className="font-semibold mb-4">Desarrolladores</h4>
+              <h4 className="font-semibold mb-4">{t('footer.developersTitle') || 'Developers'}</h4>
               <ul className="space-y-2">
                 {footerLinks.developers.map((link) => (
                   <li key={link.label}>
@@ -117,7 +122,7 @@ export const Footer = () => {
 
             {/* Support & Social */}
             <div className="md:col-span-4">
-              <h4 className="font-semibold mb-4">Soporte</h4>
+              <h4 className="font-semibold mb-4">{t('footer.supportTitle') || 'Support'}</h4>
               <div className="space-y-4">
                 <motion.a
                   href="mailto:support@safecircle.tech"
@@ -128,7 +133,7 @@ export const Footer = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Mail className="w-5 h-5 opacity-60 group-hover:opacity-100" />
-                  <span>Contactar Soporte</span>
+                  <span>{t('footer.contactSupport') || 'Contact Support'}</span>
                 </motion.a>
 
                 <div className="flex items-center justify-between pt-6">
@@ -147,9 +152,12 @@ export const Footer = () => {
                       </motion.a>
                     ))}
                   </div>
-                  <span className="text-sm text-white/40">
-                    © {new Date().getFullYear()} SafeCircle
-                  </span>
+                  <motion.span 
+                    className="text-sm bg-gradient-to-r from-white/60 to-white/40 bg-clip-text text-transparent hover:from-white/80 hover:to-white/60 transition-all duration-300 ease-out ml-8"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    {t('footer.copyright') || `© ${new Date().getFullYear()} SafeCircle`}
+                  </motion.span>
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface DemoWarningDialogProps {
   isOpen: boolean;
@@ -12,6 +13,8 @@ interface DemoWarningDialogProps {
 }
 
 const DemoWarningDialog = ({ isOpen, onClose, onAccept }: DemoWarningDialogProps) => {
+  const { t } = useLanguage();
+  
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <AnimatePresence>
@@ -27,13 +30,15 @@ const DemoWarningDialog = ({ isOpen, onClose, onAccept }: DemoWarningDialogProps
                 <div className="mx-auto w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-red-400" />
                 </div>
-                <DialogTitle className="text-center text-red-50">Aviso Importante</DialogTitle>
+                <DialogTitle className="text-center text-red-50">
+                  {t('demoWarning.title')}
+                </DialogTitle>
                 <div className="text-center space-y-2 text-sm text-muted-foreground">
                   <p className="text-red-200/90">
-                    Esta es una versión de demostración del producto que está en desarrollo activo y está sujeta a cambios.
+                    {t('demoWarning.description1')}
                   </p>
                   <p className="text-red-200/90">
-                    El análisis de IA actual no está completamente refinado y su precisión puede variar. Los resultados no deben considerarse definitivos.
+                    {t('demoWarning.description2')}
                   </p>
                 </div>
               </DialogHeader>
@@ -42,14 +47,14 @@ const DemoWarningDialog = ({ isOpen, onClose, onAccept }: DemoWarningDialogProps
                   onClick={onAccept}
                   className="w-full bg-red-500 hover:bg-red-600 text-white border-none transition-transform transform hover:scale-105"
                 >
-                  Entiendo y deseo continuar
+                  {t('demoWarning.continue')}
                 </Button>
                 <Button 
                   onClick={onClose}
                   variant="ghost" 
                   className="w-full text-red-200 hover:text-red-100 hover:bg-red-500/10 transition-transform transform hover:scale-105"
                 >
-                  Cancelar
+                  {t('demoWarning.cancel')}
                 </Button>
               </div>
             </motion.div>

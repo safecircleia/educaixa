@@ -1,16 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Lock, KeyRound, Fingerprint } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
-import { features } from './features';
+import { getFeatures } from './features';
+import { useMemo } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const PrivacySection = () => {
+  const { t } = useLanguage();
+  const features = useMemo(() => getFeatures(t), [t]);
+
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
-
       <div className="container mx-auto px-4 space-y-12">
-        {/* Centered Section Header */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +30,7 @@ export const PrivacySection = () => {
           >
             <div className="relative w-20 h-20">
               <div className="absolute inset-0 flex items-center justify-center">
-                <Fingerprint className="w-10 h-10 text-purple-400" />
+                <Lock className="w-10 h-10 text-purple-500" />
               </div>
               {Array.from({ length: 3 }).map((_, i) => (
                 <motion.div
@@ -47,11 +51,11 @@ export const PrivacySection = () => {
             </div>
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            Privacidad Primero
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500 bg-clip-text text-transparent">
+            {t('sections.privacy.title')}
           </h2>
           <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Tus datos te pertenecen, única y exclusivamente a ti
+            {t('sections.privacy.description')}
           </p>
         </motion.div>
 
@@ -66,14 +70,11 @@ export const PrivacySection = () => {
                 className="space-y-6"
               >
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
-                    Privacidad Total de Datos
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-purple-400 bg-clip-text text-transparent">
+                    {t('sections.privacy.title')}
                   </h3>
                   <p className="text-white/70 leading-relaxed">
-                    La privacidad de tu familia es primordial. Con nuestra arquitectura 
-                    de conocimiento cero, mantienes el control total sobre tu información 
-                    personal. Creemos que la privacidad no es solo una característica, 
-                    es un derecho fundamental.
+                    {t('sections.privacy.description1')}
                   </p>
                 </div>
 
@@ -84,32 +85,32 @@ export const PrivacySection = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <div className="font-mono text-2xl text-purple-400">100%</div>
-                    <div className="text-sm text-white/60 mt-1">Control de datos</div>
+                    <div className="font-mono text-2xl text-purple-500">100%</div>
+                    <div className="text-sm text-white/60 mt-1">{t('sections.privacy.datacontrol')}</div>
                   </motion.div>
                   <motion.div 
-                    className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/10 backdrop-blur-sm"
+                    className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/10 backdrop-blur-sm"
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <div className="font-mono text-2xl text-violet-400">E2E</div>
-                    <div className="text-sm text-white/60 mt-1">Cifrado</div>
+                    <div className="font-mono text-2xl text-purple-500">E2E</div>
+                    <div className="text-sm text-white/60 mt-1">{t('sections.privacy.encryption')}</div>
                   </motion.div>
                 </div>
 
-                {/* Privacy Benefits */}
+                {/* Privacy Points */}
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-purple-500" />
-                    Arquitectura de conocimiento cero
+                    {t('sections.privacy.point1')}
                   </li>
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-purple-500" />
-                    Cifrado de extremo a extremo
+                    {t('sections.privacy.point2')}
                   </li>
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-purple-500" />
-                    Control total de la información
+                    {t('sections.privacy.point3')}
                   </li>
                 </ul>
               </motion.div>
@@ -127,27 +128,27 @@ export const PrivacySection = () => {
                     transition={{ delay: index * 0.1 }}
                   >
                     <SpotlightCard 
-                      spotlightColor={feature.glowColor}
+                      spotlightColor="rgba(168, 85, 247, 0.1)"
                       className="group h-full p-6 hover:border-purple-500/20 transition-all duration-300"
                     >
                       <div className="flex gap-4">
                         <div className="flex-shrink-0">
                           <motion.div 
-                            className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} p-2.5`}
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-400/20 p-2.5"
                             whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                           >
-                            <feature.icon className="w-full h-full text-white" />
+                            <feature.icon className="w-full h-full text-purple-500 group-hover:text-purple-400 transition-colors" />
                           </motion.div>
                         </div>
                         <div>
-                          <h4 className="font-medium text-lg mb-2 group-hover:text-purple-300 transition-colors">
+                          <h4 className="font-medium text-lg mb-2 group-hover:text-purple-400 transition-colors">
                             {feature.title}
                           </h4>
                           <p className="text-sm text-white/60 mb-2 group-hover:text-white/70 transition-colors">
                             {feature.description}
                           </p>
-                          <div className="text-xs font-mono text-purple-400">{feature.stats}</div>
+                          <div className="text-xs font-mono text-purple-500">{feature.stats}</div>
                         </div>
                       </div>
                     </SpotlightCard>

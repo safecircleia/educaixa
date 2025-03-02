@@ -1,40 +1,52 @@
-import { Lock, Clock, Bell, Shield, Users, Zap } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
+import { 
+  Brain, 
+  Shield, 
+  Clock, 
+  BellRing, 
+  Users, 
+  Sliders 
+} from 'lucide-react';
 
-export const features = [
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  stats: string;
+}
+
+const baseFeatures = [
   {
-    icon: Shield,
-    title: 'Protección Inteligente',
-    description: 'Detección y prevención avanzada de amenazas',
-    stats: 'Monitoreo 24/7'
+    icon: Brain,
+    key: 'intelligentprotection'
   },
   {
-    icon: Clock,
-    title: 'Control de Tiempo',
-    description: 'Límites de uso y programación flexible',
-    stats: 'Horarios personalizados'
-  },
-  {
-    icon: Bell,
-    title: 'Alertas en Tiempo Real',
-    description: 'Notificaciones instantáneas de amenazas',
-    stats: 'Respuesta <1s'
-  },
-  {
-    icon: Lock,
-    title: 'Control de Acceso',
-    description: 'Configuración granular de filtrado de contenido',
-    stats: 'Reglas personalizadas'
+    icon: BellRing,
+    key: 'realtimealerts'
   },
   {
     icon: Users,
-    title: 'Gestión Familiar',
-    description: 'Control de múltiples perfiles y dispositivos',
-    stats: 'Dispositivos ilimitados'
+    key: 'familymanagement'
   },
   {
-    icon: Zap,
-    title: 'Acciones Rápidas',
-    description: 'Respuestas de seguridad con un clic',
-    stats: 'Bloqueos instantáneos'
+    icon: Clock,
+    key: 'timecontrol'
+  },
+  {
+    icon: Shield,
+    key: 'accesscontrol'
+  },
+  {
+    icon: Sliders,
+    key: 'fastactions'
   }
-];
+] as const;
+
+export const getFeatures = (t: (key: string) => string): Feature[] => {
+  return baseFeatures.map(({ icon, key }) => ({
+    icon,
+    title: t(`sections.characteristics.features.${key}.title`),
+    description: t(`sections.characteristics.features.${key}.description`),
+    stats: t(`sections.characteristics.features.${key}.slug`)
+  }));
+};

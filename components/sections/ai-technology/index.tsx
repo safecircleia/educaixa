@@ -3,9 +3,10 @@
 import { motion } from 'framer-motion';
 import { Brain, CircuitBoard } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
-import { features } from './features';
+import { getFeatures } from './features';
 import { useMemo } from 'react';
 import { useWindowSize } from '../../../hooks/use-window-size';
+import { useLanguage } from '@/context/LanguageContext';
 
 const AIVisual = () => (
   <div className="relative w-full h-full flex items-center justify-center">
@@ -28,6 +29,11 @@ const AIVisual = () => (
 );
 
 export const AITechnologySection = () => {
+  const { t } = useLanguage();
+  
+  // Memoize features to prevent unnecessary recalculations
+  const features = useMemo(() => getFeatures(t), [t]);
+
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
 
@@ -70,10 +76,10 @@ export const AITechnologySection = () => {
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#4dc8ff] via-[#4dc8ff]/80 to-[#4dc8ff] bg-clip-text text-transparent">
-            Tecnología de IA Avanzada
+            {t('sections.aiTechnology.title')}
           </h2>
           <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Detección de amenazas de próxima generación impulsada por redes neuronales y aprendizaje profundo
+            {t('sections.aiTechnology.description')}
           </p>
         </motion.div>
 
@@ -89,13 +95,10 @@ export const AITechnologySection = () => {
               >
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-[#4dc8ff] to-[#4dc8ff]/80 bg-clip-text text-transparent">
-                    Tecnología AI Propietaria
+                    {t('sections.aiTechnology.title')}
                   </h3>
                   <p className="text-white/70 leading-relaxed">
-                    Nuestros modelos de IA desarrollados internamente procesan millones de datos por segundo, 
-                    construidos desde cero pensando en la seguridad de los niños. Nuestros algoritmos propietarios 
-                    identifican y bloquean las amenazas antes de que lleguen a tus hijos, manteniendo una 
-                    privacidad total.
+                  {t('sections.aiTechnology.description1')}
                   </p>
                 </div>
 
@@ -107,7 +110,7 @@ export const AITechnologySection = () => {
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     <div className="font-mono text-2xl text-[#4dc8ff]">99.9%</div>
-                    <div className="text-sm text-white/60 mt-1">Tasa de Detección</div>
+                    <div className="text-sm text-white/60 mt-1">{t('sections.aiTechnology.detectionrate')}</div>
                   </motion.div>
                   <motion.div 
                     className="p-4 rounded-xl bg-[#4dc8ff]/5 border border-[#4dc8ff]/10 backdrop-blur-sm"
@@ -115,7 +118,7 @@ export const AITechnologySection = () => {
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     <div className="font-mono text-2xl text-[#4dc8ff]">&lt;5ms</div>
-                    <div className="text-sm text-white/60 mt-1">Latencia</div>
+                    <div className="text-sm text-white/60 mt-1">{t('sections.aiTechnology.latency')}</div>
                   </motion.div>
                 </div>
 
@@ -123,15 +126,15 @@ export const AITechnologySection = () => {
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-[#4dc8ff]" />
-                    Procesamiento neural distribuido
+                    {t('sections.aiTechnology.point1')}
                   </li>
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-[#4dc8ff]" />
-                    Detección predictiva de amenazas
+                    {t('sections.aiTechnology.point2')}
                   </li>
                   <li className="flex items-center gap-3 text-white/70">
                     <div className="w-2 h-2 rounded-full bg-[#4dc8ff]" />
-                    Aprendizaje continuo y adaptativo
+                    {t('sections.aiTechnology.point3')}
                   </li>
                 </ul>
               </motion.div>

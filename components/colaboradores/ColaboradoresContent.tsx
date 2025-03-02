@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Users, Building2, GraduationCap, Shield, Zap, Globe, Code2, Lock, Award } from 'lucide-react';
+import { useLanguage, LanguageProvider } from '@/context/LanguageContext';
 
 interface PartnerCardProps {
   title: string;
@@ -38,7 +39,6 @@ const BenefitCard = ({ icon, title, description }: { icon: React.ReactNode; titl
   <div className="p-4 rounded-lg bg-gradient-to-br from-white/5 to-transparent border border-white/10 hover:border-white/20 transition-all duration-300">
     <div className="flex items-center gap-3 mb-2">
       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-        {icon}
       </div>
       <h4 className="font-semibold text-white">{title}</h4>
     </div>
@@ -47,49 +47,50 @@ const BenefitCard = ({ icon, title, description }: { icon: React.ReactNode; titl
 );
 
 export function ColaboradoresContent() {
+  const { t } = useLanguage();
   const partners = [
     {
-      title: "Gigantes Tecnológicos",
+      title: t('collaborators.sections.techGiants.title'),
       icon: <Building2 className="w-5 h-5 text-blue-400" />,
       items: [
-        { name: "Meta", description: "Integración directa con Facebook, Instagram, WhatsApp" },
-        { name: "Google", description: "Implementación en Chrome y servicios de IA" }
+        { name: "Meta", description: t('collaborators.sections.techGiants.items.meta.description') },
+        { name: "Google", description: t('collaborators.sections.techGiants.items.google.description') }
       ]
     },
     {
-      title: "Instituciones Educativas",
+      title: t('collaborators.sections.educational.title'),
       icon: <GraduationCap className="w-5 h-5 text-blue-400" />,
       items: [
-        { name: "Universidades líderes", description: "Investigación y desarrollo" },
-        { name: "Colegios", description: "Programas piloto en centros privados y públicos" },
-        { name: "Asociaciones de profesores", description: "Formación y feedback" }
+        { name: t('collaborators.sections.educational.items.universities.name'), description: t('collaborators.sections.educational.items.universities.description') },
+        { name: t('collaborators.sections.educational.items.schools.name'), description: t('collaborators.sections.educational.items.schools.description') },
+        { name: t('collaborators.sections.educational.items.teachers.name'), description: t('collaborators.sections.educational.items.teachers.description') }
       ]
     },
     {
-      title: "Organizaciones de Protección",
+      title: t('collaborators.sections.protection.title'),
       icon: <Shield className="w-5 h-5 text-blue-400" />,
       items: [
-        { name: "UNICEF", description: "Respaldo y validación de metodologías" },
-        { name: "Save the Children", description: "Implementación en programas de protección" }
+        { name: t('collaborators.sections.protection.items.unicef.name'), description: t('collaborators.sections.protection.items.unicef.description') },
+        { name: t('collaborators.sections.protection.items.saveChildren.name'), description: t('collaborators.sections.protection.items.saveChildren.description') }
       ]
     }
   ];
-
+  
   const benefits = [
-    { icon: <Zap className="w-4 h-4 text-blue-400" />, title: "Tecnología de Vanguardia", description: "Acceso a las últimas innovaciones en IA y ciberseguridad" },
-    { icon: <Globe className="w-4 h-4 text-blue-400" />, title: "Cobertura Global", description: "Alcance internacional para proteger a más usuarios" },
-    { icon: <Code2 className="w-4 h-4 text-blue-400" />, title: "Mejora Continua", description: "Algoritmos en constante evolución y optimización" },
-    { icon: <Award className="w-4 h-4 text-blue-400" />, title: "Validación Experta", description: "Metodologías respaldadas por especialistas" },
-    { icon: <Lock className="w-4 h-4 text-blue-400" />, title: "Máxima Seguridad", description: "Cumplimiento de los estándares más exigentes" }
+    { icon: <Zap className="w-4 h-4 text-blue-400" />, title: t('collaborators.benefits.items.technology.title'), description: t('collaborators.benefits.items.technology.description') },
+    { icon: <Globe className="w-4 h-4 text-blue-400" />, title: t('collaborators.benefits.items.coverage.title'), description: t('collaborators.benefits.items.coverage.description') },
+    { icon: <Code2 className="w-4 h-4 text-blue-400" />, title: t('collaborators.benefits.items.improvement.title'), description: t('collaborators.benefits.items.improvement.description') },
+    { icon: <Award className="w-4 h-4 text-blue-400" />, title: t('collaborators.benefits.items.validation.title'), description: t('collaborators.benefits.items.validation.description') },
+    { icon: <Lock className="w-4 h-4 text-blue-400" />, title: t('collaborators.benefits.items.security.title'), description: t('collaborators.benefits.items.security.description') }
   ];
-
+  
   return (
     <motion.div 
-      className="container mx-auto px-4"
+    className="container mx-auto px-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-    >
+      >
       {/* Header Section */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -103,10 +104,10 @@ export function ColaboradoresContent() {
           </div>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-          Colaboradores
+        {t('collaborators.title')}
         </h1>
         <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto">
-          Creamos alianzas estratégicas con líderes de la industria para maximizar nuestro impacto en la protección digital
+        {t('collaborators.subtitle')}
         </p>
       </motion.div>
 
@@ -131,10 +132,10 @@ export function ColaboradoresContent() {
       >
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-            Beneficios de la Colaboración
+            {t('collaborators.benefits.title')}
           </h2>
           <p className="text-white/60">
-            Cada socio aporta su experiencia única y recursos específicos, fortaleciendo nuestra misión
+            {t('collaborators.benefits.subtitle')}
           </p>
         </div>
 
