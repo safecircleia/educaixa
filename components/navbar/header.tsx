@@ -33,13 +33,43 @@ function Header1() {
     const [scrolled, setScrolled] = useState(false);
     const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
     const [user, setUser] = useState<any>(null);
-    const [showTelegramAlert, setShowTelegramAlert] = useState(true);
+    const [showTelegramAlert, setShowTelegramAlert] = useState(() => {
+        // Initialize from localStorage, default to true if not set
+        if (typeof window !== 'undefined') {
+            const stored = localStorage.getItem('hideTelegramAlert');
+            return stored ? false : true;
+        }
+        return true;
+    });
     const [progressValue, setProgressValue] = useState(100);
     const [isHovered, setIsHovered] = useState(false);
-    const { t } = useLanguage();
+    const { t, isLoading, language } = useLanguage();
 
-    // Memoize nav items to prevent unnecessary recalculations
-    const navItems = useMemo(() => getNavItems(t), [t]);
+    // Memoize nav items to prevent unnecessary recalculations when translations are ready
+    const navItems = useMemo(() => !isLoading ? getNavItems(t) : [], [t, isLoading]);
+
+    // Function to handle hiding the alert
+    const hideTelegramAlert = useCallback(() => {
+        setShowTelegramAlert(false);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('hideTelegramAlert', 'true');
+        }
+    }, []);
+
+    // Reset localStorage when user exits webpage
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('hideTelegramAlert');
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     useEffect(() => {
         const getUserSession = async () => {
@@ -72,7 +102,7 @@ function Header1() {
                 setProgressValue(prev => {
                     const newValue = Math.max(prev - decrementPerInterval, 0);
                     if (newValue === 0) {
-                        setShowTelegramAlert(false);
+                        hideTelegramAlert();
                     }
                     return newValue;
                 });
@@ -85,7 +115,7 @@ function Header1() {
             // Reset progress when hovered
             setProgressValue(100);
         }
-    }, [showTelegramAlert, isHovered]);
+    }, [showTelegramAlert, isHovered, hideTelegramAlert]);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
@@ -107,7 +137,7 @@ function Header1() {
     return (
         <>
             {/* Telegram Warning Banner */}
-            {showTelegramAlert && (
+            {!isLoading && showTelegramAlert && (
                 <div 
                     className="fixed w-full z-[60] top-0 left-0 bg-gradient-to-r from-red-950/80 via-background/95 to-red-950/80 text-white shadow-lg backdrop-blur-md border-b border-red-500/20"
                     onMouseEnter={() => setIsHovered(true)}
@@ -133,7 +163,7 @@ function Header1() {
                                 </p>
                             </div>
                             <button 
-                                onClick={() => setShowTelegramAlert(false)}
+                                onClick={hideTelegramAlert}
                                 className="text-white/60 hover:text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg p-1.5 transition-colors hover:bg-white/5"
                                 aria-label={t('navbar.telegramWarning.close')}
                             >
@@ -166,7 +196,7 @@ function Header1() {
                 </div>
             )}
             
-            <header className={`w-full z-50 fixed ${showTelegramAlert ? 'top-[52px] sm:top-[52px]' : 'top-0'} left-0 transition-all duration-300 ${
+            <header className={`w-full z-50 fixed ${showTelegramAlert && !isLoading ? 'top-[52px] sm:top-[52px]' : 'top-0'} left-0 transition-all duration-300 ${
                 scrolled ? 'bg-background/40 backdrop-blur-md shadow-lg' : 'bg-transparent'
             }`}>
                 <div className="container relative mx-auto min-h-16 sm:min-h-20 flex items-center px-4">
@@ -188,102 +218,104 @@ function Header1() {
 
                     {/* Navigation Section */}
                     <div className="hidden lg:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <NavigationMenu>
-                            <NavigationMenuList>
-                                {navItems.map((item) => (
-                                    <NavigationMenuItem key={item.title} className="relative">
-                                        {item.href ? (
-                                            <Link 
-                                                href={item.href} 
-                                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                                            >
-                                                {item.title}
-                                            </Link>
-                                        ) : (
-                                            <>
-                                                <NavigationMenuTrigger className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white data-[state=open]:bg-white/5 rounded-lg transition-all">
+                        {!isLoading && (
+                            <NavigationMenu>
+                                <NavigationMenuList>
+                                    {navItems.map((item) => (
+                                        <NavigationMenuItem key={item.title} className="relative">
+                                            {item.href ? (
+                                                <Link 
+                                                    href={item.href} 
+                                                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                                                >
                                                     {item.title}
-                                                </NavigationMenuTrigger>
-                                                <NavigationMenuContent>
-                                                    <div className="min-w-[400px] lg:min-w-[500px] p-4">
-                                                        <ul className="min-w-[400px] lg:min-w-[500px] p-4">
-                                                            <div className="flex flex-col gap-4">
-                                                                <div className="space-y-2">
-                                                                    <h3 className="text-lg font-semibold text-white">
-                                                                        {item.title}
-                                                                    </h3>
-                                                                    <p className="text-sm text-white/90 leading-relaxed">
-                                                                        {item.description}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="grid gap-2">
-                                                                    {item.items?.map((subItem) => {
-                                                                        const Icon = subItem.icon as LucideIcon;
-                                                                        const MenuLink = (
-                                                                            <Link
-                                                                                key={subItem.label}
-                                                                                href={subItem.comingSoon ? "#" : subItem.href}
-                                                                                className="group flex items-center justify-between p-2 rounded-lg hover:bg-white/10 transition-all"
-                                                                                onClick={(e) => {
-                                                                                    if (subItem.comingSoon) {
-                                                                                        e.preventDefault();
-                                                                                    }
-                                                                                }}
-                                                                                target={subItem.external ? "_blank" : undefined}
-                                                                                rel={subItem.external ? "noopener noreferrer" : undefined}
-                                                                            >
-                                                                                <div className="flex items-center gap-3 flex-1">
-                                                                                    {Icon && (
-                                                                                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center group-hover:from-blue-500/20 group-hover:to-cyan-500/20 transition-colors">
-                                                                                            <Icon className="w-4 h-4 text-blue-400" />
-                                                                                        </div>
-                                                                                    )}
-                                                                                    <div className="flex flex-col">
-                                                                                        <span className="text-sm font-medium text-white group-hover:text-white/90">
-                                                                                            {subItem.label}
-                                                                                        </span>
-                                                                                        {subItem.description && (
-                                                                                            <span className="text-xs text-white/60 group-hover:text-white/70">
-                                                                                                {subItem.description}
-                                                                                            </span>
+                                                </Link>
+                                            ) : (
+                                                <>
+                                                    <NavigationMenuTrigger className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white data-[state=open]:bg-white/5 rounded-lg transition-all">
+                                                        {item.title}
+                                                    </NavigationMenuTrigger>
+                                                    <NavigationMenuContent>
+                                                        <div className="min-w-[400px] lg:min-w-[500px] p-4">
+                                                            <ul className="min-w-[400px] lg:min-w-[500px] p-4">
+                                                                <div className="flex flex-col gap-4">
+                                                                    <div className="space-y-2">
+                                                                        <h3 className="text-lg font-semibold text-white">
+                                                                            {item.title}
+                                                                        </h3>
+                                                                        <p className="text-sm text-white/90 leading-relaxed">
+                                                                            {item.description}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="grid gap-2">
+                                                                        {item.items?.map((subItem) => {
+                                                                            const Icon = subItem.icon as LucideIcon;
+                                                                            const MenuLink = (
+                                                                                <Link
+                                                                                    key={subItem.label}
+                                                                                    href={subItem.comingSoon ? "#" : subItem.href}
+                                                                                    className="group flex items-center justify-between p-2 rounded-lg hover:bg-white/10 transition-all"
+                                                                                    onClick={(e) => {
+                                                                                        if (subItem.comingSoon) {
+                                                                                            e.preventDefault();
+                                                                                        }
+                                                                                    }}
+                                                                                    target={subItem.external ? "_blank" : undefined}
+                                                                                    rel={subItem.external ? "noopener noreferrer" : undefined}
+                                                                                >
+                                                                                    <div className="flex items-center gap-3 flex-1">
+                                                                                        {Icon && (
+                                                                                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center group-hover:from-blue-500/20 group-hover:to-cyan-500/20 transition-colors">
+                                                                                                <Icon className="w-4 h-4 text-blue-400" />
+                                                                                            </div>
                                                                                         )}
+                                                                                        <div className="flex flex-col">
+                                                                                            <span className="text-sm font-medium text-white group-hover:text-white/90">
+                                                                                                {subItem.label}
+                                                                                            </span>
+                                                                                            {subItem.description && (
+                                                                                                <span className="text-xs text-white/60 group-hover:text-white/70">
+                                                                                                    {subItem.description}
+                                                                                                </span>
+                                                                                            )}
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                {subItem.comingSoon ? (
-                                                                                    <span className="ml-2 text-xs px-2 py-1 rounded-full bg-blue-950/60 text-blue-300 border border-blue-500/30">
-                                                                                        {t('navbar.comingSoon')}
-                                                                                    </span>
-                                                                                ) : (
-                                                                                    <MoveRight className="w-4 h-4 text-white/40 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all" />
-                                                                                )}
-                                                                            </Link>
-                                                                        );
+                                                                                    {subItem.comingSoon ? (
+                                                                                        <span className="ml-2 text-xs px-2 py-1 rounded-full bg-blue-950/60 text-blue-300 border border-blue-500/30">
+                                                                                            {t('navbar.comingSoon')}
+                                                                                        </span>
+                                                                                    ) : (
+                                                                                        <MoveRight className="w-4 h-4 text-white/40 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all" />
+                                                                                    )}
+                                                                                </Link>
+                                                                            );
 
-                                                                        return subItem.external || subItem.comingSoon ? (
-                                                                            <TooltipProvider key={subItem.label}>
-                                                                                <Tooltip>
-                                                                                    <TooltipTrigger asChild>
-                                                                                        {MenuLink}
-                                                                                    </TooltipTrigger>
-                                                                                    <TooltipContent>
-                                                                                        {subItem.external ? t('navbar.externalLink') : 
-                                                                                        subItem.comingSoon ? t('navbar.comingSoonDesc') : null}
-                                                                                    </TooltipContent>
-                                                                                </Tooltip>
-                                                                            </TooltipProvider>
-                                                                        ) : MenuLink;
-                                                                    })}
+                                                                            return subItem.external || subItem.comingSoon ? (
+                                                                                <TooltipProvider key={subItem.label}>
+                                                                                    <Tooltip>
+                                                                                        <TooltipTrigger asChild>
+                                                                                            {MenuLink}
+                                                                                        </TooltipTrigger>
+                                                                                        <TooltipContent>
+                                                                                            {subItem.external ? t('navbar.externalLink') : 
+                                                                                            subItem.comingSoon ? t('navbar.comingSoonDesc') : null}
+                                                                                        </TooltipContent>
+                                                                                    </Tooltip>
+                                                                                </TooltipProvider>
+                                                                            ) : MenuLink;
+                                                                        })}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </ul>
-                                                    </div>
-                                                </NavigationMenuContent>
-                                            </>
-                                        )}
-                                    </NavigationMenuItem>
-                                ))}
-                            </NavigationMenuList>
-                        </NavigationMenu>
+                                                            </ul>
+                                                        </div>
+                                                    </NavigationMenuContent>
+                                                </>
+                                            )}
+                                        </NavigationMenuItem>
+                                    ))}
+                                </NavigationMenuList>
+                            </NavigationMenu>
+                        )}
                     </div>
 
                     {/* Actions Section */}
@@ -349,12 +381,12 @@ function Header1() {
                                 {/* Language Switcher in Mobile Menu */}
                                 <div className="sm:hidden px-4 py-2 border-b border-white/10">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm text-white/70">{t('navbar.language')}</span>
+                                        <span className="text-sm text-white/70">{!isLoading ? t('navbar.language') : 'Language'}</span>
                                         <LanguageSwitcher />
                                     </div>
                                 </div>
                                 
-                                {navItems.map((item) => (
+                                {!isLoading && navItems.map((item) => (
                                     <div key={item.title} className="border-b border-white/10 last:border-none pb-4">
                                         <div className="flex flex-col gap-2 px-4">
                                             {item.href ? (
