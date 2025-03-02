@@ -204,7 +204,7 @@ function Header1() {
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-opacity">
                             <Image
-                                src="/logo-nbg.png" 
+                                src="/logo-nbg.webp" 
                                 alt="SafeCircle Logo" 
                                 width={50} 
                                 height={50} 

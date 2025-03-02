@@ -67,28 +67,28 @@ export const ODSContent = () => {
         title: "Salud y Bienestar",
         description: "Promovemos el bienestar digital y la salud mental de los menores en el entorno online. Nuestras soluciones ayudan a crear un ambiente digital saludable y seguro para el desarrollo de los niños y adolescentes.",
         href: "https://www.un.org/sustainabledevelopment/es/health/",
-        image: "/ods/3.png"
+        image: "/ods/3.webp"
       },
       {
         id: "ods-8",
         title: "Trabajo Decente",
         description: "Impulsamos el desarrollo tecnológico sostenible y el crecimiento económico responsable. Creamos oportunidades para la innovación en ciberseguridad y protección digital.",
         href: "https://www.un.org/sustainabledevelopment/es/economic-growth/",
-        image: "/ods/8.png"
+        image: "/ods/8.webp"
       },
       {
         id: "ods-16",
         title: "Paz y Justicia",
         description: "Contribuimos a crear un internet más seguro y justo para todos. Trabajamos para prevenir el ciberacoso y proteger a los menores de contenidos dañinos, promoviendo la justicia en el entorno digital.",
         href: "https://www.un.org/sustainabledevelopment/es/peace-justice/",
-        image: "/ods/16.png"
+        image: "/ods/16.webp"
       },
       {
         id: "ods-17",
         title: "Alianzas para los Objetivos",
         description: "Colaboramos con instituciones para fortalecer la seguridad digital. Establecemos alianzas estratégicas con organizaciones comprometidas con la protección de menores en internet.",
         href: "https://www.un.org/sustainabledevelopment/es/globalpartnerships/",
-        image: "/ods/17.png"
+        image: "/ods/17.webp"
       }
     ]
   };

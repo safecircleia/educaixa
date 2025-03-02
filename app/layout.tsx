@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description: 'Protect your children online with SafeCircle\'s AI-powered safety technology that maintains complete privacy. Real-time monitoring, threat detection, and parental controls.',
     siteName: 'SafeCircle',
     images: [{
-      url: '/logo-nbg.png',
+      url: '/logo-nbg.webp',
       width: 800,
       height: 600,
       alt: 'SafeCircle Logo',
@@ -59,12 +59,12 @@ export const metadata: Metadata = {
     description: 'AI-powered child safety technology that maintains complete privacy',
     site: '@safecircleai',
     creator: '@safecircleai',
-    images: ['/logo-nbg.png'],
+    images: ['/logo-nbg.webp'],
   },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
-    apple: '/logo-nbg.png',
+    apple: '/logo-nbg.webp',
   },
   verification: {
     google: 'your-google-site-verification', // Add your Google verification code

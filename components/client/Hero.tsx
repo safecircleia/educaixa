@@ -266,7 +266,7 @@ export const Hero = () => {
 		document.documentElement.classList.add('js-loaded');
 		
 		// Pre-load images to avoid layout shifts
-		const preloadImages = ['/logo.svg', '/logo-nbg.png'];
+		const preloadImages = ['/logo.svg', '/logo-nbg.webp'];
 		preloadImages.forEach(src => {
 			const img = new Image();
 			img.src = src;
