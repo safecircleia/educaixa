@@ -6,11 +6,14 @@ import StarBorder from "@/components/ui/starborder";
 import { WaitlistOnboarding } from './WaitlistOnboarding';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { CalendarDays, Sparkles } from "lucide-react";
+import { LanguageProvider } from '@/context/LanguageContext';
+import { useLanguage } from "@/context/LanguageContext";
 
 const isProduction = process.env.NEXT_PUBLIC_DISABLE_WAITLIST === 'true';
 
 export const WaitlistButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -28,7 +31,7 @@ export const WaitlistButton = () => {
           >
             <span className="flex items-center gap-2 px-4">
               <div className="flex items-center gap-3">
-                <span className={isProduction ? 'text-gray-400' : ''}>Unirse a la lista de espera</span>
+                <span className={isProduction ? 'text-gray-400' : ''}>{t('waitlist.button.title')}</span>
                 {!isProduction && (
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 )}
@@ -42,13 +45,14 @@ export const WaitlistButton = () => {
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-blue-400" />
-                  Proximamente
+                  {t('waitlist.button.comingSoon')}
                 </h4>
                 <p className="text-sm text-white/70">
-                  Nuestro equipo está trabajando duro para ofrecerte algo especial. ¡Únete pronto a nuestra lista de espera!                </p>
+                  {t('waitlist.button.description')}
+                </p>
                 <div className="flex items-center pt-2 text-xs text-white/50">
                   <CalendarDays className="mr-2 h-4 w-4" />
-                  <span>Proximamente Q1 2025</span>
+                  <span>{t('waitlist.button.comingq1')}</span>
                 </div>
               </div>
             </div>

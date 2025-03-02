@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FileText, Shield, Lock, AlertCircle, Mail, Home, Check, AlertTriangle } from 'lucide-react';
 import { GlowyDivider } from '@/components/ui/GlowyDivider';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 const fadeInUpVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -40,25 +41,27 @@ const ListItem = ({ icon: Icon, text }: { icon: any, text: string }) => (
 );
 
 export function TermsContent() {
+  const { t } = useLanguage();
+  
   const serviceFeatures = [
-    { text: "Real-time monitoring of online activity" },
-    { text: "Smart protection and content filtering" },
-    { text: "Privacy-first design with zero-knowledge architecture" },
-    { text: "End-to-end encrypted data protection" }
+    { text: t('terms.features.monitoring') },
+    { text: t('terms.features.protection') },
+    { text: t('terms.features.privacy') },
+    { text: t('terms.features.encryption') }
   ];
 
   const userResponsibilities = [
-    { text: "Maintain the confidentiality of your account credentials" },
-    { text: "Use the service in compliance with all applicable laws" },
-    { text: "Respect the privacy rights of all users" },
-    { text: "Not attempt to circumvent or disable any security features" }
+    { text: t('terms.responsibilities.credentials') },
+    { text: t('terms.responsibilities.compliance') },
+    { text: t('terms.responsibilities.privacy') },
+    { text: t('terms.responsibilities.security') }
   ];
 
   const liabilityLimitations = [
-    { text: "Internet connectivity issues or service interruptions" },
-    { text: "Actions taken by users in violation of these terms" },
-    { text: "Content that may bypass our filtering systems" },
-    { text: "Any indirect, consequential, or incidental damages" }
+    { text: t('terms.limitations.connectivity') },
+    { text: t('terms.limitations.violations') },
+    { text: t('terms.limitations.filtering') },
+    { text: t('terms.limitations.damages') }
   ];
 
   return (
@@ -66,36 +69,35 @@ export function TermsContent() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="container mx-auto px-4 py-12"
+      className="container mx-auto px-4 pt-32 pb-12"
     >
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <motion.h1 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent"
-        >
-          Terms of Service
-        </motion.h1>
-        <Link 
-          href="/" 
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-        >
-          <Home className="w-5 h-5" aria-hidden="true" />
-          <span>Home</span>
-        </Link>
-      </div>
+      <motion.div 
+        className="text-center mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center backdrop-blur-sm border border-amber-500/10">
+            <FileText className="w-7 h-7 text-amber-400" />
+          </div>
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
+          {t('footer.terms')}
+        </h1>
+      </motion.div>
       
-      <div className="space-y-4">
-        <TermsSection icon={FileText} title="Agreement to Terms" delay={0.1}>
+      <div className="space-y-6">
+        <TermsSection icon={FileText} title={t('terms.sections.agreement')} delay={0.1}>
           <p className="mb-4 text-white/80 leading-relaxed">
-            By accessing or using SafeCircle&apos;s services, you agree to be bound by these Terms of Service and our Privacy Policy. Our services are designed to protect families while respecting privacy and data ownership rights.
+            {t('terms.agreement.description')}
           </p>
         </TermsSection>
 
         <GlowyDivider />
 
-        <TermsSection icon={Shield} title="Service Description" delay={0.2}>
-          <p className="mb-4 text-white/80">SafeCircle provides AI-powered child safety monitoring services that include:</p>
+        <TermsSection icon={Shield} title={t('terms.sections.service')} delay={0.2}>
+          <p className="mb-4 text-white/80">{t('terms.service.description')}</p>
           <motion.ul 
             className="grid gap-3 sm:grid-cols-2"
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
@@ -108,7 +110,7 @@ export function TermsContent() {
 
         <GlowyDivider />
 
-        <TermsSection icon={Lock} title="User Responsibilities" delay={0.3}>
+        <TermsSection icon={Lock} title={t('terms.sections.responsibilities')} delay={0.3}>
           <motion.ul 
             className="grid gap-3 sm:grid-cols-2"
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
@@ -121,8 +123,8 @@ export function TermsContent() {
 
         <GlowyDivider />
 
-        <TermsSection icon={AlertTriangle} title="Limitation of Liability" delay={0.4}>
-          <p className="mb-4 text-white/80">While we strive to provide the highest level of protection, SafeCircle is not liable for:</p>
+        <TermsSection icon={AlertTriangle} title={t('terms.sections.liability')} delay={0.4}>
+          <p className="mb-4 text-white/80">{t('terms.liability.description')}</p>
           <motion.ul 
             className="grid gap-3 sm:grid-cols-2"
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
@@ -135,18 +137,18 @@ export function TermsContent() {
 
         <GlowyDivider />
 
-        <TermsSection icon={FileText} title="Changes to Terms" delay={0.5}>
+        <TermsSection icon={FileText} title={t('terms.sections.changes')} delay={0.5}>
           <p className="text-white/80">
-            We reserve the right to modify these terms at any time. Users will be notified of significant changes via email or through the service interface.
+            {t('terms.changes.description')}
           </p>
         </TermsSection>
 
         <GlowyDivider />
 
-        <TermsSection icon={Mail} title="Contact Information" delay={0.6}>
+        <TermsSection icon={Mail} title={t('terms.sections.contact')} delay={0.6}>
           <div className="flex flex-col items-start gap-4">
             <p className="text-white/80">
-              For questions about these terms, please contact our legal team:
+              {t('terms.contact.description')}
             </p>
             <a 
               href="mailto:legal@safecircle.com"

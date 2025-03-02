@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Info, LineChart, Shield, Lock, Brain, Bell, Users, Settings } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { SecurityStatsChart } from '@/components/client/SecurityStatsChart';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface FeatureCardProps {
   title: string;
@@ -40,45 +41,47 @@ const StepCard = ({ number, title, description }: StepCardProps) => (
 );
 
 export function NecesidadesContent() {
+  const { t } = useLanguage();
+
   const features = [
     {
       icon: <Lock className="w-6 h-6 text-blue-400" />,
-      title: "Privacidad Absoluta",
-      description: "Sistema de análisis en tiempo real que no almacena conversaciones, protegiendo la privacidad del usuario."
+      title: t('needs.solution.features.privacy.title'),
+      description: t('needs.solution.features.privacy.description')
     },
     {
       icon: <Brain className="w-6 h-6 text-blue-400" />,
-      title: "IA Avanzada",
-      description: "Tecnología de detección sofisticada que reduce falsos positivos mientras mantiene alta efectividad."
+      title: t('needs.solution.features.ai.title'),
+      description: t('needs.solution.features.ai.description')
     },
     {
       icon: <Bell className="w-6 h-6 text-blue-400" />,
-      title: "Alertas Inteligentes",
-      description: "Sistema de notificaciones en tiempo real que alerta sobre comportamientos sospechosos."
+      title: t('needs.solution.features.alerts.title'),
+      description: t('needs.solution.features.alerts.description')
     },
     {
       icon: <Users className="w-6 h-6 text-blue-400" />,
-      title: "Enfoque Múltiple",
-      description: "Solución diseñada tanto para padres y tutores como para instituciones educativas."
+      title: t('needs.solution.features.approach.title'),
+      description: t('needs.solution.features.approach.description')
     }
   ];
 
   const implementationSteps = [
     {
-      title: "Registro en la Plataforma",
-      description: "Proceso simple y rápido para comenzar a proteger a tus seres queridos"
+      title: t('needs.implementation.steps.register.title'),
+      description: t('needs.implementation.steps.register.description')
     },
     {
-      title: "Instalación de la Extensión",
-      description: "Fácil instalación en los dispositivos que deseas proteger"
+      title: t('needs.implementation.steps.install.title'),
+      description: t('needs.implementation.steps.install.description')
     },
     {
-      title: "Configuración Básica",
-      description: "Personaliza las preferencias según tus necesidades específicas"
+      title: t('needs.implementation.steps.setup.title'),
+      description: t('needs.implementation.steps.setup.description')
     },
     {
-      title: "Activación de Protección",
-      description: "Comienza a recibir protección inmediata tras la configuración"
+      title: t('needs.implementation.steps.activate.title'),
+      description: t('needs.implementation.steps.activate.description')
     }
   ];
 
@@ -102,10 +105,10 @@ export function NecesidadesContent() {
           </div>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-          Necesidades
+          {t('needs.title')}
         </h1>
         <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto">
-          Análisis y soluciones para la seguridad en redes sociales
+          {t('needs.subtitle')}
         </p>
       </motion.div>
 
@@ -117,9 +120,9 @@ export function NecesidadesContent() {
         className="grid md:grid-cols-2 gap-8 mb-16"
       >
         <SpotlightCard className="p-8">
-          <h2 className="text-2xl font-bold mb-4">Contexto Actual</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('needs.context.title')}</h2>
           <p className="text-white/70 leading-relaxed">
-            SafeCircle aborda el problema que existe en la actualidad respecto a la seguridad en las RR.SS. Las redes sociales y el internet son una parte importante de la vida de muchas personas, pero también pueden ser peligrosas si no se usan con cuidado. Algunos de los problemas derivados de este ambito son la poca seguridad que hay en las Redes, con SafeCircle confiamos en que podemos solucionar este problema de una manera sencilla y efectiva.
+            {t('needs.context.description')}
           </p>
         </SpotlightCard>
 
@@ -129,8 +132,8 @@ export function NecesidadesContent() {
               <LineChart className="w-6 h-6 text-indigo-400" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Evolución del Grooming</h2>
-              <p className="text-white/60">Casos reportados 2013-2023</p>
+              <h2 className="text-2xl font-bold">{t('needs.stats.title')}</h2>
+              <p className="text-white/60">{t('needs.stats.subtitle')}</p>
             </div>
           </div>
           
@@ -138,10 +141,10 @@ export function NecesidadesContent() {
             <SecurityStatsChart />
           </div>
           <p className="text-white/60 text-sm mt-4 text-center">
-            La seguridad de las familias es nuestra razón de ser. En el siguiente gráfico se muestra datos del &quot;Periodico el voluntariado&quot;. Esto nos sirve para conocer la tendencia y la evolución de las causas expuestas.
+            {t('needs.stats.description')}
           </p>
           <p className="text-white/50 text-xs mt-2 text-center italic">
-            Gráfico: Periodico del Voluntariado • Fuente: Ministerio del Interior
+            {t('needs.stats.source')}
           </p>
         </SpotlightCard>
       </motion.div>
@@ -155,10 +158,10 @@ export function NecesidadesContent() {
       >
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-            Nuestra Solución
+            {t('needs.solution.title')}
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto">
-            Una plataforma innovadora que utiliza inteligencia artificial para proteger a los menores sin comprometer su privacidad
+            {t('needs.solution.subtitle')}
           </p>
         </div>
 
@@ -185,10 +188,10 @@ export function NecesidadesContent() {
       >
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent mb-4">
-            Proceso de Implementación
+            {t('needs.implementation.title')}
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto">
-            Un proceso sencillo y guiado para comenzar a proteger a tus seres queridos
+            {t('needs.implementation.subtitle')}
           </p>
         </div>
 
@@ -214,9 +217,9 @@ export function NecesidadesContent() {
       >
         <SpotlightCard className="p-8 text-center">
           <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-blue-400 mb-4">SC Token</h3>
+            <h3 className="text-2xl font-bold text-blue-400 mb-4">{t('needs.token.title')}</h3>
             <p className="text-white/70">
-              Pagando nuestro servicio con la SC token el usuario recibirá información exclusiva y anticipada sobre la aplicación, además de acceso a características premium y recompensas especiales.
+              {t('needs.token.description')}
             </p>
           </div>
         </SpotlightCard>

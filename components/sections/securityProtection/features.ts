@@ -1,40 +1,45 @@
-import { Shield, Lock, FileCheck, Network, Eye, Key } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
+import { ShieldCheck, Shield, Network, Lock, KeyRound, ClipboardCheck } from 'lucide-react';
 
-export const features = [
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  stats: string;
+}
+
+const baseFeatures = [
+  {
+    icon: ShieldCheck,
+    key: 'multilayerprotection'
+  },
   {
     icon: Shield,
-    title: 'Protección Multicapa',
-    description: 'Sistema de defensa en profundidad con múltiples capas de seguridad',
-    stats: 'Protección 360°'
-  },
-  {
-    icon: Lock,
-    title: 'Cifrado Avanzado',
-    description: 'Encriptación de grado militar para todos tus datos',
-    stats: 'AES-256 & RSA'
-  },
-  {
-    icon: Eye,
-    title: 'Monitoreo Privado',
-    description: 'Vigilancia continua sin comprometer la privacidad',
-    stats: 'Conocimiento cero'
-  },
-  {
-    icon: Key,
-    title: 'Control de Acceso',
-    description: 'Gestión granular de permisos y autenticación',
-    stats: 'IAM avanzado'
+    key: 'privactemonitoring'
   },
   {
     icon: Network,
-    title: 'Escudo de Red',
-    description: 'Protección en cualquier red o dispositivo',
-    stats: 'VPN incluida'
+    key: 'networkshield'
   },
   {
-    icon: FileCheck,
-    title: 'Auditoría Continua',
-    description: 'Verificación constante de la seguridad del sistema',
-    stats: 'SOC2 certificado'
+    icon: Lock,
+    key: 'advancedencryption'
+  },
+  {
+    icon: KeyRound,
+    key: 'accesscontrol'
+  },
+  {
+    icon: ClipboardCheck,
+    key: 'continueauditory'
   }
-];
+] as const;
+
+export const getFeatures = (t: (key: string) => string): Feature[] => {
+  return baseFeatures.map(({ icon, key }) => ({
+    icon,
+    title: t(`sections.securityprotection.features.${key}.title`),
+    description: t(`sections.securityprotection.features.${key}.description`),
+    stats: t(`sections.securityprotection.features.${key}.slug`)
+  }));
+};

@@ -8,12 +8,14 @@ type CounterContextType = {
   count: number;
   total: number;
   percentage: number;
+  incrementCount: () => void;
 };
 
 const CounterContext = createContext<CounterContextType>({
   count: 0,
   total: 5000,
   percentage: 0,
+  incrementCount: () => {},
 });
 
 type WaitlistCountRecord = {
@@ -25,6 +27,10 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
   const [count, setCount] = useState(0);
   const total = 1000;
   const percentage = Math.min((count / total) * 100, 100);
+
+  const incrementCount = () => {
+    setCount(prevCount => Math.min(prevCount + 1, total));
+  };
 
   useEffect(() => {
     const fetchInitialCount = async () => {
@@ -66,7 +72,7 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <CounterContext.Provider value={{ count, total, percentage }}>
+    <CounterContext.Provider value={{ count, total, percentage, incrementCount }}>
       {children}
     </CounterContext.Provider>
   );

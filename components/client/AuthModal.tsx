@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from '@/context/LanguageContext';
 
 interface AuthFormData {
   email: string;
@@ -29,6 +30,7 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({ onClose }: AuthModalProps) => {
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -45,14 +47,12 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
     
     try {
       if (activeTab === "login") {
-        // Login logic
         const { error } = await supabase.auth.signInWithPassword({
           email: data.email,
           password: data.password
         });
         if (error) throw error;
       } else {
-        // Signup logic
         const { data: signUpData, error } = await supabase.auth.signUp({
           email: data.email,
           password: data.password,
@@ -64,14 +64,14 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
         if (error) throw error;
         
         if (signUpData.user && !signUpData.user.identities?.length) {
-          throw new Error("Este correo ya está registrado");
+          throw new Error(t('auth.errors.emailExists'));
         }
 
         setVerificationEmail(data.email);
         setIsVerificationSent(true);
       }
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Authentication error");
+      setErrorMessage(error instanceof Error ? error.message : t('auth.errors.authError'));
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
       const { error } = await supabase.auth.signInWithOAuth({ provider });
       if (error) throw error;
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Authentication error");
+      setErrorMessage(error instanceof Error ? error.message : t('auth.errors.authError'));
     } finally {
       setLoading(false);
     }
@@ -93,8 +93,8 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
     if (!email) {
       toast({
         variant: "destructive", 
-        title: "Error", 
-        description: "Por favor, ingresa tu correo electrónico"
+        title: t('auth.passwordReset.error.title'), 
+        description: t('auth.passwordReset.error.emailRequired')
       });
       return;
     }
@@ -108,15 +108,15 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
       if (error) throw error;
       
       toast({
-        title: "Email enviado",
-        description: "Revisa tu correo para restablecer tu contraseña"
+        title: t('auth.passwordReset.success.title'),
+        description: t('auth.passwordReset.success.description')
       });
       setIsPasswordReset(true);
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "No se pudo enviar el correo de recuperación"
+        title: t('auth.passwordReset.error.title'),
+        description: error instanceof Error ? error.message : t('auth.passwordReset.error.sendFailed')
       });
     } finally {
       setLoading(false);
@@ -139,14 +139,14 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
       if (error) throw error;
       
       toast({
-        title: "Email enviado",
-        description: "Se ha reenviado el correo de verificación"
+        title: t('auth.passwordReset.success.title'),
+        description: t('auth.verification.resendButton')
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "No se pudo reenviar el correo"
+        title: t('auth.passwordReset.error.title'),
+        description: error instanceof Error ? error.message : t('auth.passwordReset.error.sendFailed')
       });
     } finally {
       setLoading(false);
@@ -164,17 +164,17 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
           >
             <DialogHeader className="space-y-2 text-center mb-4">
               <DialogTitle className="text-2xl font-bold text-white">
-                Revisa tu correo
+                {t('auth.passwordReset.title')}
               </DialogTitle>
               <DialogDescription className="text-sm text-gray-400">
-                Te hemos enviado instrucciones para restablecer tu contraseña
+                {t('auth.passwordReset.description')}
               </DialogDescription>
             </DialogHeader>
             <Button 
               onClick={onClose}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
             >
-              Entendido
+              {t('auth.passwordReset.button')}
             </Button>
           </motion.div>
         </DialogContent>
@@ -196,10 +196,10 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
           >
             <DialogHeader className="space-y-2 text-center mb-4">
               <DialogTitle className="text-2xl font-bold text-white">
-                Verifica tu correo
+                {t('auth.verification.title')}
               </DialogTitle>
               <DialogDescription className="text-sm text-gray-400">
-                Te hemos enviado un correo de verificación a {verificationEmail}
+                {t('auth.verification.description').replace('{email}', verificationEmail)}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-3">
@@ -212,14 +212,14 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                 {loading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  'Reenviar correo de verificación'
+                  t('auth.verification.resendButton')
                 )}
               </Button>
               <Button 
                 onClick={onClose}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
               >
-                Cerrar
+                {t('auth.verification.closeButton')}
               </Button>
             </div>
           </motion.div>
@@ -242,13 +242,10 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
           >
             <DialogHeader className="space-y-2 text-center mb-6">
               <DialogTitle className="text-2xl font-bold text-white">
-                {activeTab === "login" ? 'Iniciar sesión' : 'Crear cuenta'}
+                {t(activeTab === "login" ? 'auth.login.title' : 'auth.register.title')}
               </DialogTitle>
               <DialogDescription className="text-sm text-gray-400">
-                {activeTab === "login" 
-                  ? 'Accede a tu cuenta para continuar' 
-                  : 'Únete a SafeCircle para empezar'
-                }
+                {t(activeTab === "login" ? 'auth.login.description' : 'auth.register.description')}
               </DialogDescription>
             </DialogHeader>
 
@@ -259,8 +256,8 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
               className="w-full mb-6"
             >
               <TabsList className="grid w-full grid-cols-2 bg-black/40">
-                <TabsTrigger value="login">Iniciar sesión</TabsTrigger>
-                <TabsTrigger value="register">Registrarse</TabsTrigger>
+                <TabsTrigger value="login">{t('auth.tabs.login')}</TabsTrigger>
+                <TabsTrigger value="register">{t('auth.tabs.register')}</TabsTrigger>
               </TabsList>
               
               <TabsContent value="login">
@@ -268,20 +265,20 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                   <div className="space-y-3">
                     <div className="space-y-1">
                       <Label htmlFor="email-login" className="text-sm text-gray-300">
-                        Correo electrónico
+                        {t('auth.login.emailLabel')}
                       </Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
                         <Input
                           id="email-login"
                           type="email"
-                          placeholder="tu@correo.com"
+                          placeholder={t('auth.login.emailPlaceholder')}
                           autoComplete="email"
                           {...register('email', { 
-                            required: 'Correo requerido',
+                            required: t('auth.errors.emailRequired'),
                             pattern: {
                               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Correo electrónico inválido'
+                              message: t('auth.errors.emailInvalid')
                             }
                           })}
                           className={cn(
@@ -300,14 +297,14 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                     <div className="space-y-1">
                       <div className="flex justify-between">
                         <Label htmlFor="password-login" className="text-sm text-gray-300">
-                          Contraseña
+                          {t('auth.login.passwordLabel')}
                         </Label>
                         <button
                           type="button"
                           onClick={() => handleForgotPassword(getValues("email"))}
                           className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
                         >
-                          ¿Olvidaste?
+                          {t('auth.login.forgotPassword')}
                         </button>
                       </div>
                       <div className="relative">
@@ -315,13 +312,13 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                         <Input
                           id="password-login"
                           type={showPassword ? "text" : "password"}
-                          placeholder="••••••••"
+                          placeholder={t('auth.login.passwordPlaceholder')}
                           autoComplete="current-password"
                           {...register('password', { 
-                            required: 'Contraseña requerida',
+                            required: t('auth.errors.passwordRequired'),
                             minLength: {
                               value: 6,
-                              message: 'Mínimo 6 caracteres'
+                              message: t('auth.errors.passwordLength')
                             }
                           })}
                           className={cn(
@@ -335,7 +332,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                          aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                          aria-label={showPassword ? t('auth.login.passwordLabel') : t('auth.login.passwordLabel')}
                         >
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
@@ -360,7 +357,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                     {loading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      'Iniciar sesión'
+                      t('auth.login.button')
                     )}
                   </Button>
                 </form>
@@ -371,20 +368,20 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                   <div className="space-y-3">
                     <div className="space-y-1">
                       <Label htmlFor="email-register" className="text-sm text-gray-300">
-                        Correo electrónico
+                        {t('auth.register.emailLabel')}
                       </Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
                         <Input
                           id="email-register"
                           type="email"
-                          placeholder="tu@correo.com"
+                          placeholder={t('auth.register.emailPlaceholder')}
                           autoComplete="email"
                           {...register('email', { 
-                            required: 'Correo requerido',
+                            required: t('auth.errors.emailRequired'),
                             pattern: {
                               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Correo electrónico inválido'
+                              message: t('auth.errors.emailInvalid')
                             }
                           })}
                           className={cn(
@@ -402,20 +399,20 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
 
                     <div className="space-y-1">
                       <Label htmlFor="password-register" className="text-sm text-gray-300">
-                        Contraseña
+                        {t('auth.register.passwordLabel')}
                       </Label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
                         <Input
                           id="password-register"
                           type={showPassword ? "text" : "password"}
-                          placeholder="••••••••"
+                          placeholder={t('auth.register.passwordPlaceholder')}
                           autoComplete="new-password"
                           {...register('password', { 
-                            required: 'Contraseña requerida',
+                            required: t('auth.errors.passwordRequired'),
                             minLength: {
                               value: 6,
-                              message: 'Mínimo 6 caracteres'
+                              message: t('auth.errors.passwordLength')
                             }
                           })}
                           className={cn(
@@ -429,7 +426,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                          aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                          aria-label={showPassword ? t('auth.register.passwordLabel') : t('auth.register.passwordLabel')}
                         >
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
@@ -454,7 +451,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                     {loading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      'Crear cuenta'
+                      t('auth.register.button')
                     )}
                   </Button>
                 </form>
@@ -467,7 +464,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
               </div>
               <div className="relative flex justify-center text-xs">
                 <span className="bg-black/80 px-2 text-gray-400">
-                  O continuar con
+                  {t('auth.oauth.continueWith')}
                 </span>
               </div>
             </div>
@@ -498,7 +495,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                     fill="#EA4335"
                   />
                 </svg>
-                Google
+                {t('auth.oauth.google')}
               </Button>
               <Button 
                 type="button"
@@ -508,7 +505,7 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
                 className="bg-transparent border border-white/10 hover:bg-white/5 text-white h-10"
               >
                 <Github className="mr-2 h-4 w-4" />
-                GitHub
+                {t('auth.oauth.github')}
               </Button>
             </div>
           </motion.div>

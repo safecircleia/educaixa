@@ -34,3 +34,20 @@ export async function updateEntryStatus(walletId: string, status: 'pending' | 'c
 
   if (error) throw error;
 }
+
+export async function addToWaitlist(email: string) {
+  try {
+    const { data, error } = await supabase
+      .from('waitlist')
+      .insert([{ email }]);
+
+    if (error) {
+      return { error };
+    }
+
+    await incrementWaitlistCount();
+    return { data };
+  } catch (error) {
+    return { error };
+  }
+}

@@ -16,66 +16,66 @@ interface NavItem {
   items?: NavSubItem[];
 }
 
-export const navItems: NavItem[] = [
+export const getNavItems = (t: (key: string) => string): NavItem[] => [
   {
-    title: 'Inicio',
+    title: t('navigation.home'),
     href: '/',
   },
   {
-    title: 'Nosotros',
+    title: t('navigation.about'),
     href: '/about-us',
   },
   {
-    title: 'Necesidades',
+    title: t('navigation.needs'),
     href: '/necesidades',
   },
   {
-    title: 'Colaboradores',
+    title: t('navigation.collaborators'),
     href: '/colaboradores',
   },
   {
-    title: 'Token',
+    title: t('navigation.token'),
     href: '/token',
   },
   // {
-  //   title: 'Comunidad',
-  //   description: 'Únete a nuestra comunidad y mantente al día con las últimas novedades de SafeCircle.',
+  //   title: t('navigation.community.title'),
+  //   description: t('navigation.community.description'),
   //   items: [
   //     { 
-  //       label: 'Discord', 
+  //       label: t('navigation.community.discord.label'), 
   //       href: 'https://discord.gg/Ubr6AcAupr', 
   //       external: true,
   //       icon: MessageCircle,
-  //       description: 'Únete a nuestra comunidad de Discord'
+  //       description: t('navigation.community.discord.description')
   //     },
   //     { 
-  //       label: 'Telegram', 
+  //       label: t('navigation.community.telegram.label'), 
   //       href: 'https://t.me/safecircleai', 
   //       external: true,
   //       icon: Send,
-  //       description: 'Síguenos en Telegram'
+  //       description: t('navigation.community.telegram.description')
   //     },
   //     {
-  //       label: 'Twitter',
+  //       label: t('navigation.community.twitter.label'),
   //       href: 'https://twitter.com/safecircleai',
   //       external: true,
   //       icon: Twitter,
-  //       description: 'Síguenos en Twitter'
+  //       description: t('navigation.community.twitter.description')
   //     },
-  //     // { 
-  //     //   label: 'Foro', 
-  //     //   href: '/forum', 
-  //     //   comingSoon: true,
-  //     //   icon: MessageSquare,
-  //     //   description: 'Discute y comparte ideas'
-  //     // },
-  //     // { 
-  //     //   label: 'Blog', 
-  //     //   href: '/blog', 
-  //     //   comingSoon: true,
-  //     //   icon: BookText,
-  //     //   description: 'Lee nuestras últimas actualizaciones'
-  //     // },
+  //     { 
+  //       label: t('navigation.community.forum.label'), 
+  //       href: '/forum', 
+  //       comingSoon: true,
+  //       icon: MessageSquare,
+  //       description: t('navigation.community.forum.description')
+  //     },
+  //     { 
+  //       label: t('navigation.community.blog.label'), 
+  //       href: '/blog', 
+  //       comingSoon: true,
+  //       icon: BookText,
+  //       description: t('navigation.community.blog.description')
+  //     },
   //   ]
   // },
 ];

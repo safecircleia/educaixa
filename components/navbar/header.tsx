@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Menu, MoveRight, X, ChevronDown } from "lucide-react";
-import { navItems } from "@/components/navbar/links";
+import { getNavItems } from "@/components/navbar/links";
 import AuthModal from "@/components/client/AuthModal";
 import { LucideIcon } from "lucide-react";
 import {
@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/tooltip";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { supabase } from '@/lib/supabase';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useLanguage } from '@/context/LanguageContext';
 
 function Header1() {
     const [isOpen, setOpen] = useState(false);
@@ -31,6 +33,10 @@ function Header1() {
     const [scrolled, setScrolled] = useState(false);
     const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
     const [user, setUser] = useState<any>(null);
+    const { t } = useLanguage();
+
+    // Memoize nav items to prevent unnecessary recalculations
+    const navItems = useMemo(() => getNavItems(t), [t]);
 
     useEffect(() => {
         const getUserSession = async () => {
@@ -154,7 +160,7 @@ function Header1() {
                                                                             </div>
                                                                             {subItem.comingSoon ? (
                                                                                 <span className="ml-2 text-xs px-2 py-1 rounded-full bg-blue-950/60 text-blue-300 border border-blue-500/30">
-                                                                                    Próximamente
+                                                                                    {t('navbar.comingSoon')}
                                                                                 </span>
                                                                             ) : (
                                                                                 <MoveRight className="w-4 h-4 text-white/40 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all" />
@@ -169,8 +175,8 @@ function Header1() {
                                                                                     {MenuLink}
                                                                                 </TooltipTrigger>
                                                                                 <TooltipContent>
-                                                                                    {subItem.external ? 'Opens in new tab' : 
-                                                                                     subItem.comingSoon ? 'This feature is coming soon!' : null}
+                                                                                    {subItem.external ? t('navbar.externalLink') : 
+                                                                                     subItem.comingSoon ? t('navbar.comingSoonDesc') : null}
                                                                                 </TooltipContent>
                                                                             </Tooltip>
                                                                         </TooltipProvider>
@@ -191,6 +197,11 @@ function Header1() {
 
                 {/* Actions Section */}
                 <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0 ml-auto">
+                    {/* Language Switcher */}
+                    <div className="hidden sm:block">
+                        <LanguageSwitcher />
+                    </div>
+                    
                     {user ? (
                         <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
@@ -216,7 +227,7 @@ function Header1() {
                                     className="px-2 py-1.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-md cursor-pointer outline-none"
                                     onSelect={handleLogout}
                                 >
-                                    Cerrar Sesión
+                                    {t('navbar.logout')}
                                 </DropdownMenu.Item>
                             </DropdownMenu.Content>
                         </DropdownMenu.Root>
@@ -225,7 +236,7 @@ function Header1() {
                             onClick={() => setShowAuthModal(true)} 
                             className="px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
                         >
-                            Iniciar Sesión
+                            {t('navbar.login')}
                         </Button>
                     )}
 
@@ -244,6 +255,14 @@ function Header1() {
                 {isOpen && (
                     <div className="absolute top-full left-0 right-0 border-t border-white/10 bg-background/95 backdrop-blur-md shadow-lg lg:hidden max-h-[80vh] overflow-y-auto">
                         <div className="container mx-auto py-4 px-4 space-y-4">
+                            {/* Language Switcher in Mobile Menu */}
+                            <div className="sm:hidden px-4 py-2 border-b border-white/10">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm text-white/70">{t('navbar.language')}</span>
+                                    <LanguageSwitcher />
+                                </div>
+                            </div>
+                            
                             {navItems.map((item) => (
                                 <div key={item.title} className="border-b border-white/10 last:border-none pb-4">
                                     <div className="flex flex-col gap-2 px-4">
@@ -309,7 +328,7 @@ function Header1() {
                                                                         </div>
                                                                         {subItem.comingSoon ? (
                                                                             <span className="text-xs px-2 py-1 rounded-full bg-blue-950/60 text-blue-300 border border-blue-500/30">
-                                                                                Próximamente
+                                                                                {t('navbar.comingSoon')}
                                                                             </span>
                                                                         ) : (
                                                                             <MoveRight className="w-4 h-4 stroke-1 group-hover:translate-x-0.5 transition-transform text-white/70" />
@@ -324,8 +343,8 @@ function Header1() {
                                                                                 {MobileLink}
                                                                             </TooltipTrigger>
                                                                             <TooltipContent>
-                                                                                {subItem.external ? 'Opens in new tab' : 
-                                                                                 subItem.comingSoon ? 'This feature is coming soon!' : null}
+                                                                                {subItem.external ? t('navbar.externalLink') : 
+                                                                                 subItem.comingSoon ? t('navbar.comingSoonDesc') : null}
                                                                             </TooltipContent>
                                                                         </Tooltip>
                                                                     </TooltipProvider>

@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import Script from 'next/script';
 import '../styles/globals.css';
 import { CounterProvider } from '../context/CounterContext';
+import { LanguageProvider } from '../context/LanguageContext';
 import { WalletProviders } from '@/providers/WalletProviders';
 import { Toaster as UiToaster } from "@/components/ui/toaster";
 import { Metadata, Viewport } from 'next';
@@ -109,9 +110,11 @@ export default function RootLayout({
               <div className="w-8 h-8 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
             </div>
           }>
-            <CounterProvider>
-              {children}
-            </CounterProvider>
+            <LanguageProvider>
+              <CounterProvider>
+                {children}
+              </CounterProvider>
+            </LanguageProvider>
             <Toaster position="bottom-right" theme="dark" />
             <UiToaster />
           </Suspense>

@@ -1,34 +1,729 @@
 {
-  "hero": {
-    "title": "AI-Powered Child Safety",
-    "subtitle": "Without Compromising",
-    "rotatingWords": ["Privacy", "Security", "Protection"],
-    "learnMore": "Learn More"
-  },
-  "sections": {
-    "howItWorks": {
-      "title": "How SafeCircle Works",
-      "description": "Protecting your family with advanced AI and blockchain technology",
-      "features": {
-        "monitoring": {
-          "title": "Real-time Monitoring",
-          "description": "Our AI constantly analyzes online activity for potential threats"
-        },
-        "protection": {
-          "title": "Smart Protection",
-          "description": "Automated blocking of harmful content and suspicious activities"
-        },
-        "privacy": {
-          "title": "Privacy-First Design",
-          "description": "Zero-knowledge proofs ensure complete data privacy"
-        }
-      }
-    }
-  },
-  "cta": {
-    "title": "Ready to Protect Your Family?",
-    "description": "Join thousands of families already using SafeCircle to ensure their children's online safety.",
-    "joinWaitlist": "Join Waitlist",
-    "learnMore": "Learn More"
-  }
+	"hero": {
+		"title": "Protect Your Children",
+		"subtitle": "Without Compromising",
+		"rotatingWords": ["Privacy", "Security", "Protection"],
+		"learnMore": "Learn More",
+		"badge": "Coming Soon",
+		"tryDemo": "Try Demo",
+		"demoVersion": "Demo Version",
+		"demoDescription": "Try SafeCircle's main features in a demonstration environment.",
+		"limitedAccess": "Limited access to basic features",
+		"scrollDown": "Scroll down",
+		"description": "AI Technology that keeps your children safe online while ensuring their personal data remains private and protected."
+	},
+	"sections": {
+		"howItWorks": {
+			"title": "More Information",
+			"description": "Discover how our advanced technology protects your family in this short explainer video",
+			"benefits": {
+				"quickSetup": {
+					"title": "Quick Setup",
+					"description": "Start protecting your family in less than 5 minutes"
+				},
+				"protection247": {
+					"title": "24/7 Protection",
+					"description": "Constant monitoring and real-time alerts"
+				},
+				"easyToUse": {
+					"title": "Intuitive Use",
+					"description": "Simple interface designed for all users"
+				}
+			},
+			"features": {
+				"monitoring": {
+					"title": "Real-time Monitoring",
+					"description": "Our AI constantly analyzes online activity for potential threats"
+				},
+				"protection": {
+					"title": "Smart Protection",
+					"description": "Automated blocking of harmful content and suspicious activities"
+				},
+				"privacy": {
+					"title": "Privacy-First Design",
+					"description": "Zero-knowledge proofs ensure complete data privacy"
+				}
+			}
+		},
+		"aiTechnology": {
+			"title": "AI Technology",
+			"description": "Our advanced AI systems are designed to protect your children while maintaining their privacy.",
+			"description1": "Our in-house developed AI models process millions of data points per second, built from the ground up with children's safety in mind. Our proprietary algorithms identify and block threats before they reach your children, ensuring total privacy.",
+			"detectionrate": "Detection Rate",
+			"latency": "Latency",
+			"point1": "Distributed neural processing",
+			"point2": "Predictive threat detection",
+			"point3": "Continuous and adaptive learning",
+			"features": {
+				"opensource": {
+					"title": "Open Source",
+					"description": "Complete transparency in our technology",
+					"slug": "100% verifiable"
+				},
+				"owndevelopment": {
+					"title": "In-House Development",
+					"description": "Built from scratch by our team",
+					"slug": "Made in-house"
+				},
+				"modulararq": {
+					"title": "Modular Architecture",
+					"description": "Modular and extensible system",
+					"slug": "95% customizable"
+				},
+				"aispecialized": {
+					"title": "Specialized AI",
+					"description": "Designed specifically for security",
+					"slug": "Perfect optimization"
+				},
+				"higheficiency": {
+					"title": "High Efficiency",
+					"description": "Fast and efficient processing",
+					"slug": "<3ms latency"
+				},
+				"activecommunity": {
+					"title": "Active Community",
+					"description": "Continuous collaboration and support",
+					"slug": "+1000 contributors"
+				}
+			}
+		},
+		"privacy": {
+			"title": "Privacy First",
+			"description": "Your data belongs to you, and only you.",
+			"description1": "Your family's privacy is paramount. With our zero-knowledge architecture, you retain full control over your personal information. We believe that privacy is not just a feature; it is a fundamental right.",
+			"point1": "Zero-knowledge architecture",
+			"point2": "End-to-end encryption",
+			"point3": "Full control over information",
+			"datacontrol": "Data Control",
+			"encryption": "Encryption",
+			"features": {
+				"dataprivacy": {
+					"title": "Data Privacy",
+					"description": "Full control and ownership of your personal data. We guarantee that your information remains private and secure.",
+					"slug": "Total control"
+				},
+				"transparency": {
+					"title": "Transparency",
+					"description": "Clear and direct policies on how your data is handled, processed, and protected.",
+					"slug": "GDPR compliant"
+				},
+				"portability": {
+					"title": "Portability",
+					"description": "Download or transfer your data anytime. Your data moves with you.",
+					"slug": "Complete control"
+				},
+				"zeroknowledge": {
+					"title": "Zero Knowledge",
+					"description": "Our zero-knowledge architecture means we never see or store your personal information.",
+					"slug": "Private by design"
+				},
+				"e2e": {
+					"title": "End-to-End Encryption",
+					"description": "Your data is protected at all times, from transmission to storage.",
+					"slug": "Always encrypted"
+				},
+				"privacysettings": {
+					"title": "Privacy Settings",
+					"description": "Customize your privacy preferences with detailed controls for data sharing and visibility.",
+					"slug": "Personalized controls"
+				}
+			}
+		},
+		"securityprotection": {
+			"title": "Security & Protection",
+			"description": "Comprehensive enterprise-level protection and complete online security for your family.",
+			"description1": "We combine military-grade security with 360° online protection. Our unified framework employs multi-layer defense, advanced encryption, and intelligent content filtering to safeguard every aspect of your digital life.",
+			"point1": "End-to-end encryption",
+			"point2": "Real-time threat analysis",
+			"point3": "Advanced multi-layer protection",
+			"encryption": "Encryption",
+			"monitoring": "Monitoring",
+			"features": {
+				"multilayerprotection": {
+					"title": "Multi-Layer Protection",
+					"description": "In-depth defense system with multiple layers of security.",
+					"slug": "360° protection"
+				},
+				"privactemonitoring": {
+					"title": "Private Monitoring",
+					"description": "Continuous monitoring without compromising privacy.",
+					"slug": "Zero knowledge"
+				},
+				"networkshield": {
+					"title": "Network Shield",
+					"description": "Protection on any network or device.",
+					"slug": "Enterprise-grade security"
+				},
+				"advancedencryption": {
+					"title": "Advanced Encryption",
+					"description": "Military-grade encryption for all your data.",
+					"slug": "AES-256 & RSA"
+				},
+				"accesscontrol": {
+					"title": "Access Control",
+					"description": "Granular management of permissions and authentication.",
+					"slug": "Advanced IAM"
+				},
+				"continueauditory": {
+					"title": "Continuous Auditing",
+					"description": "Ongoing verification of system security.",
+					"slug": "SOC2 certified"
+				}
+			}
+		},
+		"characteristics": {
+			"title": "Features",
+			"description": "Advanced tools designed to protect your family",
+			"description1": "Our platform offers you a complete set of tools, specifically designed to protect your family in the digital environment. With intuitive controls and advanced features, you can ensure the safety of your loved ones.",
+			"point1": "Advanced parental supervision",
+			"point2": "Real-time control",
+			"point3": "Intelligent content filtering",
+			"configuration": "Configurable",
+			"active": "Active",
+			"features": {
+				"intelligentprotection": {
+					"title": "Intelligent Protection",
+					"description": "Advanced threat detection and prevention",
+					"slug": "24/7 monitoring"
+				},
+				"realtimealerts": {
+					"title": "Real-Time Alerts",
+					"description": "Instant threat notifications",
+					"slug": "Response <1s"
+				},
+				"familymanagement": {
+					"title": "Family Management",
+					"description": "Control multiple profiles and devices",
+					"slug": "Unlimited devices"
+				},
+				"timecontrol": {
+					"title": "Time Control",
+					"description": "Usage limits and flexible scheduling",
+					"slug": "Custom schedules"
+				},
+				"accesscontrol": {
+					"title": "Access Control",
+					"description": "Granular content filtering settings",
+					"slug": "Custom rules"
+				},
+				"fastactions": {
+					"title": "Quick Actions",
+					"description": "One-click security responses",
+					"slug": "Instant blocks"
+				}
+			}
+		}
+	},
+	"cta": {
+		"title": "Ready to Protect Your Family?",
+		"description": "Join thousands of families already using SafeCircle to ensure their children's online safety.",
+		"joinWaitlist": "Join Waitlist",
+		"learnMore": "Learn More"
+	},
+	"navbar": {
+		"home": "Home",
+		"about": "About",
+		"features": "Features",
+		"contact": "Contact",
+		"login": "Login",
+		"signup": "Sign Up",
+		"logout": "Logout",
+		"language": "Language",
+		"comingSoon": "Coming Soon",
+		"comingSoonDesc": "This feature is coming soon!",
+		"externalLink": "Opens in new tab"
+	},
+	"languages": {
+		"es": "Español",
+		"en": "English",
+		"fr": "Français"
+	},
+	"footer": {
+		"copyright": "© 2025 SafeCircle. All rights reserved.",
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service",
+		"description": "Protecting children online through AI and privacy-focused technology.",
+		"resourcesTitle": "Resources",
+		"documentation": "Documentation",
+		"developersTitle": "Developers",
+		"apiReference": "API Reference",
+		"supportTitle": "Support",
+		"contactSupport": "Contact Support",
+		"emailSupport": "Email Support",
+		"getHelp": "Get help from our team"
+	},
+	"demoWarning": {
+		"title": "Important Notice",
+		"description1": "This is a demonstration version of the product that is under active development and subject to changes.",
+		"description2": "The current AI analysis is not fully refined and its accuracy may vary. Results should not be considered definitive.",
+		"continue": "I understand and want to continue",
+		"cancel": "Cancel"
+	},
+	"navigation": {
+		"home": "Home",
+		"about": "About Us",
+		"needs": "Needs",
+		"collaborators": "Collaborators",
+		"token": "Token",
+		"community": {
+			"title": "Community",
+			"description": "Join our community and stay up to date with the latest news from SafeCircle.",
+			"discord": {
+				"label": "Discord",
+				"description": "Join our Discord community"
+			},
+			"telegram": {
+				"label": "Telegram",
+				"description": "Follow us on Telegram"
+			},
+			"twitter": {
+				"label": "Twitter",
+				"description": "Follow us on Twitter"
+			},
+			"forum": {
+				"label": "Forum",
+				"description": "Discuss and share ideas"
+			},
+			"blog": {
+				"label": "Blog",
+				"description": "Read our latest updates"
+			}
+		}
+	},
+	"auth": {
+		"login": {
+			"title": "Sign in",
+			"description": "Access your account to continue",
+			"button": "Sign in",
+			"forgotPassword": "Forgot?",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Password",
+			"passwordPlaceholder": "••••••••"
+		},
+		"register": {
+			"title": "Create account",
+			"description": "Join SafeCircle to get started",
+			"button": "Create account",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Password",
+			"passwordPlaceholder": "••••••••"
+		},
+		"tabs": {
+			"login": "Sign in",
+			"register": "Register"
+		},
+		"oauth": {
+			"continueWith": "Or continue with",
+			"google": "Google",
+			"github": "GitHub"
+		},
+		"errors": {
+			"emailRequired": "Email required",
+			"emailInvalid": "Invalid email address",
+			"passwordRequired": "Password required",
+			"passwordLength": "Minimum 6 characters",
+			"emailExists": "Email already registered",
+			"authError": "Authentication error"
+		},
+		"verification": {
+			"title": "Verify your email",
+			"description": "We've sent you a verification email to {email}",
+			"resendButton": "Resend verification email",
+			"closeButton": "Close"
+		},
+		"passwordReset": {
+			"title": "Check your email",
+			"description": "We've sent you instructions to reset your password",
+			"button": "Got it",
+			"error": {
+				"emailRequired": "Please enter your email address",
+				"title": "Error",
+				"sendFailed": "Could not send recovery email"
+			},
+			"success": {
+				"title": "Email sent",
+				"description": "Check your email to reset your password"
+			}
+		}
+	},
+	"counter": {
+		"earlyAccess": "Early Access",
+		"milestone": "Milestone!",
+		"program": "Early Access Program",
+		"description": "Join our exclusive early access program to help the project and test it before the public launch. Limited to {total} participants who will get priority access to SafeCircle.",
+		"milestoneMessage": "Amazing! We've reached over 1000 registrations. Thank you for being part of this community!",
+		"slotsOccupied": "{percentage}% of slots taken"
+	},
+	"waitlist": {
+		"button": {
+			"title": "Join Waitlist",
+			"comingSoon": "Coming Soon",
+			"description": "Join our waitlist and be one of the first to access SafeCircle",
+			"comingq1": "Coming Q1 2025",
+			"defaultState": "Join Waitlist",
+			"processingState": "Processing...",
+			"successState": "Added to Waitlist!",
+			"errorState": "Error! Try Again"
+		},
+		"form": {
+			"email": {
+				"label": "Email address",
+				"placeholder": "your@email.com"
+			},
+			"submit": "Join",
+			"error": {
+				"required": "Email is required",
+				"invalid": "Invalid email format",
+				"exists": "Email already exists",
+				"generic": "Something went wrong"
+			},
+			"success": {
+				"title": "Welcome!",
+				"message": "You've been added to the waitlist"
+			}
+		}
+	},
+	"about": {
+		"title": "About Us",
+		"subtitle": "Discover our mission, team, and the values that drive our commitment to digital security",
+		"description": {
+			"title": "Description",
+			"content": "SafeCircle is a tool that detects suspicious messages (pedophilia, cyberbullying, financial security...) on messaging platforms and social networks, alerting parents in case of danger while respecting children's privacy. Through automated AI work and total confidentiality, SafeCircle offers peace of mind knowing that your children browse and interact safely and healthily, without the hassle of monitoring every application used by minors."
+		},
+		"values": {
+			"title": "Our Values",
+			"subtitle": "The principles that guide our work and commitment",
+			"privacy": {
+				"title": "Privacy",
+				"description": "Protection without compromising personal privacy"
+			},
+			"innovation": {
+				"title": "Innovation",
+				"description": "Cutting-edge technology for digital security"
+			},
+			"excellence": {
+				"title": "Excellence",
+				"description": "Constant pursuit of maximum quality"
+			},
+			"opensource": {
+				"title": "Open Source",
+				"description": "Transparency and collaboration through open source"
+			}
+		},
+		"team": {
+			"title": "Our Team",
+			"subtitle": "Meet the creative minds behind SafeCircle",
+			"activeStatus": "Active at SafeCircle",
+			"roles": {
+				"founder": "Founder & CEO",
+				"cofounder": "Co-founder & CMO",
+				"assistant": "Assistant"
+			},
+			"members": {
+				"tomas": {
+					"description": "Lead web developer and designer at SafeCircle. Expert in digital security and innovative solutions development."
+				},
+				"victor": {
+					"description": "Head of Marketing and Communications. Specialist in growth strategies and public relations."
+				},
+				"fabio": {
+					"description": "Assistant for ideas and decisions. Brings vision and creativity to the SafeCircle team."
+				}
+			}
+		},
+		"mission": {
+			"title": "Our Mission",
+			"content": "Our mission is to provide families with the necessary tools to protect their children in the digital world, maintaining a perfect balance between security and privacy. We believe in a safer internet for everyone, where minors can explore and learn without unnecessary risks.",
+			"support": {
+				"time": "24/7",
+				"text": "Protection & Support"
+			}
+		},
+		"ods": {
+			"title": "Sustainable Development Goals",
+			"goals": {
+				"health": {
+					"title": "Good Health and Well-being",
+					"description": "We promote digital well-being and mental health of minors in the online environment. Our solutions help create a healthy and safe digital environment for the development of children and adolescents."
+				},
+				"work": {
+					"title": "Decent Work",
+					"description": "We foster sustainable technological development and responsible economic growth. We create opportunities for innovation in cybersecurity and digital protection."
+				},
+				"peace": {
+					"title": "Peace and Justice",
+					"description": "We contribute to creating a safer and fairer internet for everyone. We work to prevent cyberbullying and protect minors from harmful content, promoting justice in the digital environment."
+				},
+				"partnerships": {
+					"title": "Partnerships for the Goals",
+					"description": "We collaborate with institutions to strengthen digital security. We establish strategic alliances with organizations committed to protecting minors on the internet."
+				}
+			}
+		}
+	},
+	"needs": {
+		"title": "Needs",
+		"subtitle": "Analysis and solutions for social media safety",
+		"context": {
+			"title": "Current Context",
+			"description": "SafeCircle addresses the current problem regarding safety on social media. Social networks and the internet are an important part of many people's lives, but they can also be dangerous if not used with caution. Some of the problems that arise from this field are the lack of security in networks. With SafeCircle, we trust that we can solve this problem simply and effectively."
+		},
+		"stats": {
+			"title": "Evolution of Grooming",
+			"subtitle": "Reported cases 2013-2023",
+			"description": "Family safety is our reason for being. The following graph shows data from the \"Volunteer Newspaper\". This helps us understand the trend and evolution of exposed cases.",
+			"source": "Graph: Volunteer Newspaper • Source: Ministry of Interior"
+		},
+		"solution": {
+			"title": "Our Solution",
+			"subtitle": "An innovative platform that uses artificial intelligence to protect minors without compromising their privacy",
+			"features": {
+				"privacy": {
+					"title": "Absolute Privacy",
+					"description": "Real-time analysis system that doesn't store conversations, protecting user privacy."
+				},
+				"ai": {
+					"title": "Advanced AI",
+					"description": "Sophisticated detection technology that reduces false positives while maintaining high effectiveness."
+				},
+				"alerts": {
+					"title": "Smart Alerts",
+					"description": "Real-time notification system that alerts about suspicious behaviors."
+				},
+				"approach": {
+					"title": "Multiple Approach",
+					"description": "Solution designed for both parents/guardians and educational institutions."
+				}
+			}
+		},
+		"implementation": {
+			"title": "Implementation Process",
+			"subtitle": "A simple and guided process to start protecting your loved ones",
+			"steps": {
+				"register": {
+					"title": "Platform Registration",
+					"description": "Quick and simple process to start protecting your loved ones"
+				},
+				"install": {
+					"title": "Extension Installation",
+					"description": "Easy installation on the devices you want to protect"
+				},
+				"setup": {
+					"title": "Basic Setup",
+					"description": "Customize preferences according to your specific needs"
+				},
+				"activate": {
+					"title": "Protection Activation",
+					"description": "Start receiving immediate protection after setup"
+				}
+			}
+		},
+		"token": {
+			"title": "SC Token",
+			"description": "By paying for our service with the SC token, users will receive exclusive and early information about the application, plus access to premium features and special rewards."
+		}
+	},
+	"collaborators": {
+		"title": "Partners",
+		"subtitle": "We create strategic alliances with industry leaders to maximize our impact on digital protection",
+		"sections": {
+			"techGiants": {
+				"title": "Technology Giants",
+				"items": {
+					"meta": {
+						"name": "Meta",
+						"description": "Direct integration with Facebook, Instagram, WhatsApp"
+					},
+					"google": {
+						"name": "Google",
+						"description": "Implementation in Chrome and AI services"
+					}
+				}
+			},
+			"educational": {
+				"title": "Educational Institutions",
+				"items": {
+					"universities": {
+						"name": "Leading Universities",
+						"description": "Research and development"
+					},
+					"schools": {
+						"name": "Schools",
+						"description": "Pilot programs in private and public centers"
+					},
+					"teachers": {
+						"name": "Teacher Associations",
+						"description": "Training and feedback"
+					}
+				}
+			},
+			"protection": {
+				"title": "Protection Organizations",
+				"items": {
+					"unicef": {
+						"name": "UNICEF",
+						"description": "Methodology support and validation"
+					},
+					"saveChildren": {
+						"name": "Save the Children",
+						"description": "Implementation in protection programs"
+					}
+				}
+			}
+		},
+		"benefits": {
+			"title": "Collaboration Benefits",
+			"subtitle": "Each partner brings their unique expertise and specific resources, strengthening our mission",
+			"items": {
+				"technology": {
+					"title": "Cutting-edge Technology",
+					"description": "Access to the latest innovations in AI and cybersecurity"
+				},
+				"coverage": {
+					"title": "Global Coverage",
+					"description": "International reach to protect more users"
+				},
+				"improvement": {
+					"title": "Continuous Improvement",
+					"description": "Constantly evolving and optimizing algorithms"
+				},
+				"validation": {
+					"title": "Expert Validation",
+					"description": "Methodologies backed by specialists"
+				},
+				"security": {
+					"title": "Maximum Security",
+					"description": "Compliance with the most demanding standards"
+				}
+			}
+		}
+	},
+	"token": {
+		"hero": {
+			"title": "SC Token",
+			"subtitle": "Driving digital security through decentralized governance",
+			"description": "SafeCircle's token powers a secure and decentralized ecosystem, rewarding users for protecting their privacy and fostering an ethical digital community."
+		},
+		"sections": {
+			"overview": {
+				"title": "Overview",
+				"description": "SC is a utility and governance token on the Solana network, designed to empower our community in decision-making about SafeCircle's future.",
+				"contractAddress": "CQcjASdDAvTMJsybZTJJ3hvfdwbi4uTqmtd2SNqYpump"
+			},
+			"features": [
+				{
+					"title": "Governance",
+					"description": "Participate in key decisions about SafeCircle's development and direction"
+				},
+				{
+					"title": "Staking",
+					"description": "Earn rewards for holding your tokens and contributing to network security"
+				},
+				{
+					"title": "Discounts",
+					"description": "Access preferential rates on SafeCircle services"
+				},
+				{
+					"title": "Voting",
+					"description": "Vote on improvement proposals and new platform features"
+				}
+			],
+			"metrics": {
+				"title": "Metrics & Analysis",
+				"description": "View SC token performance and adoption in real-time"
+			}
+		},
+		"stats": {
+			"price": "Price",
+			"volume": "24h Volume",
+			"liquidity": "Liquidity",
+			"totalUSD": "USD Total",
+			"tvl": "TVL"
+		}
+	},
+	"common": {
+		"copy": "Copy",
+		"loading": {
+			"tokenData": "Loading token data..."
+		}
+	},
+	"privacy": {
+		"title": "Privacy Policy",
+		"subtitle": "Your privacy is our top priority. Learn how we protect your data.",
+		"sections": {
+			"commitment": {
+				"title": "Our Commitment to Privacy",
+				"content": "At SafeCircle, we prioritize the privacy and security of your family's data. Our platform is built on a zero-knowledge architecture, ensuring that your personal information remains completely private and under your control."
+			},
+			"dataCollection": {
+				"title": "Data Collection and Use",
+				"items": {
+					"localMonitoring": "We never see or store your personal data - all monitoring is done locally",
+					"encryption": "All data is encrypted end-to-end using AES-256 & RSA encryption",
+					"control": "You maintain full ownership and control of your data",
+					"export": "Data can be exported or deleted at any time"
+				}
+			},
+			"features": {
+				"title": "Privacy Features",
+				"items": {
+					"zeroKnowledge": "Zero-knowledge architecture ensures complete privacy",
+					"controls": "Granular privacy controls for customizing data sharing",
+					"audits": "Regular third-party security audits",
+					"gdpr": "GDPR compliant data handling",
+					"transparency": "Transparent data processing policies"
+				}
+			},
+			"contact": {
+				"title": "Contact Us",
+				"content": "If you have any questions about our privacy policy or data practices, please contact our privacy team:",
+				"email": "privacy@safecircle.com"
+			}
+		}
+	},
+	"terms": {
+		"sections": {
+			"agreement": "Agreement to Terms",
+			"service": "Service Description",
+			"responsibilities": "User Responsibilities",
+			"liability": "Limitation of Liability",
+			"changes": "Changes to Terms",
+			"contact": "Contact Information"
+		},
+		"agreement": {
+			"description": "By accessing or using SafeCircle's services, you agree to be bound by these Terms of Service and our Privacy Policy. Our services are designed to protect families while respecting privacy and data ownership rights."
+		},
+		"service": {
+			"description": "SafeCircle provides AI-powered child safety monitoring services that include:"
+		},
+		"features": {
+			"monitoring": "Real-time monitoring of online activity",
+			"protection": "Smart protection and content filtering",
+			"privacy": "Privacy-first design with zero-knowledge architecture",
+			"encryption": "End-to-end encrypted data protection"
+		},
+		"responsibilities": {
+			"credentials": "Maintain the confidentiality of your account credentials",
+			"compliance": "Use the service in compliance with all applicable laws",
+			"privacy": "Respect the privacy rights of all users",
+			"security": "Not attempt to circumvent or disable any security features"
+		},
+		"liability": {
+			"description": "While we strive to provide the highest level of protection, SafeCircle is not liable for:"
+		},
+		"limitations": {
+			"connectivity": "Internet connectivity issues or service interruptions",
+			"violations": "Actions taken by users in violation of these terms",
+			"filtering": "Content that may bypass our filtering systems",
+			"damages": "Any indirect, consequential, or incidental damages"
+		},
+		"changes": {
+			"description": "We reserve the right to modify these terms at any time. Users will be notified of significant changes via email or through the service interface."
+		},
+		"contact": {
+			"description": "For questions about these terms, please contact our legal team:"
+		}
+	}
 }

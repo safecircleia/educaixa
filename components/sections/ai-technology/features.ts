@@ -1,40 +1,46 @@
-import { Bot, Zap, Cpu, Network, CircleSlashed, Code2 } from 'lucide-react';
+import { Code2, Brain, Settings, Blocks, Zap, Users } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
-export const features = [
-  {
-    icon: CircleSlashed,
-    title: 'Código Abierto',
-    description: 'Transparencia total en nuestra tecnología',
-    stats: '100% verificable'
-  },
-  {
-    icon: Bot,
-    title: 'IA Especializada',
-    description: 'Diseñada específicamente para seguridad',
-    stats: 'Optimización perfecta'
-  },
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  stats: string;
+}
+
+// Base features array with icons only
+const baseFeatures = [
   {
     icon: Code2,
-    title: 'Desarrollo Propio',
-    description: 'Construido desde cero por nuestro equipo',
-    stats: 'Made in-house'
+    key: 'opensource'
+  },
+  {
+    icon: Brain,
+    key: 'owndevelopment'
+  },
+  {
+    icon: Settings,
+    key: 'modulararq'
+  },
+  {
+    icon: Blocks,
+    key: 'aispecialized'
   },
   {
     icon: Zap,
-    title: 'Alta Eficiencia',
-    description: 'Optimizado para transacciones blockchain',
-    stats: '<3ms latencia'
+    key: 'higheficiency'
   },
   {
-    icon: Cpu,
-    title: 'Arquitectura Modular',
-    description: 'Sistema modular y extensible',
-    stats: '95% personalizable'
-  },
-  {
-    icon: Network,
-    title: 'Comunidad Activa',
-    description: 'Contribuciones y auditoría comunitaria',
-    stats: '+1000 colaboradores'
+    icon: Users,
+    key: 'activecommunity'
   }
-];
+] as const;
+
+export const getFeatures = (t: (key: string) => string): Feature[] => {
+  return baseFeatures.map(({ icon, key }) => ({
+    icon,
+    title: t(`sections.aiTechnology.features.${key}.title`),
+    description: t(`sections.aiTechnology.features.${key}.description`),
+    stats: t(`sections.aiTechnology.features.${key}.slug`)
+  }));
+};

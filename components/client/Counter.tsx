@@ -7,6 +7,7 @@ import { useCounter } from '../../context/CounterContext';
 import UICounter from '@/components/ui/counter';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Users, Info, CheckCircle2, PartyPopper } from "lucide-react";
+import { useLanguage } from '@/context/LanguageContext';
 
 interface AnimatedCounterProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -14,6 +15,7 @@ interface AnimatedCounterProps {
 
 export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
   const { count, total, percentage } = useCounter();
+  const { t } = useLanguage();
   const hasTriggeredConfetti = useRef(false);
   const prevCount = useRef(count);
   const controls = useAnimationControls();
@@ -234,7 +236,7 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
                   <CheckCircle2 className="w-3.5 h-3.5 text-amber-300" />
                 )}
                 <span>
-                  Acceso Anticipado {reachedMilestone ? "Milestone!" : ""}
+                  {t('counter.earlyAccess')} {reachedMilestone ? t('counter.milestone') : ""}
                 </span>
               </div>
             </div>
@@ -245,23 +247,23 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
             <div className="space-y-2.5">
               <h4 className="text-sm font-semibold flex items-center gap-2">
                 <Users className="h-4 w-4 text-cyan-400" />
-                Programa de Acceso Anticipado
+                {t('counter.program')}
                 {reachedMilestone && (
                   <span className="bg-yellow-500/20 text-yellow-300 text-xs px-2 py-0.5 rounded-full border border-yellow-500/30">
-                    Milestone
+                    {t('counter.milestone')}
                   </span>
                 )}
               </h4>
               <p className="text-sm leading-relaxed text-white/80">
-                Únete a nuestro programa exclusivo de acceso anticipado para ayudar al proyecto y probarlo antes del lanzamiento público. Limitado a {total.toLocaleString()} participantes que obtendrán acceso prioritario a SafeCircle.
+                {t('counter.description').replace('{total}', total.toLocaleString())}
                 {reachedMilestone && (
                   <span className="block mt-2 text-amber-300/90">
-                    ¡Increíble! Hemos alcanzado más de 1000 registros. ¡Gracias por ser parte de esta comunidad!
+                    {t('counter.milestoneMessage')}
                   </span>
                 )}
               </p>
               <div className="flex items-center pt-1 text-xs font-medium text-cyan-400/90">
-                <span>{Math.round(percentage)}% de cupos ocupados</span>
+                <span>{t('counter.slotsOccupied').replace('{percentage}', Math.round(percentage).toString())}</span>
               </div>
             </div>
           </div>

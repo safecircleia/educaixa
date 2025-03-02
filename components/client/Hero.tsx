@@ -2,7 +2,7 @@
 
 import { motion, LayoutGroup, useReducedMotion } from "framer-motion";
 import { AnimatedCounter } from "./Counter";
-import { WaitlistButton } from "../whitelist/WaitlistButton";
+import { WaitlistButton } from "../waitlist/WaitlistButton";
 import { useRef, useState, useMemo, useEffect } from "react";
 import { Circle, ChevronDown, Beaker } from "lucide-react";
 import RotatingText from "../ui/RotatingText";
@@ -12,6 +12,7 @@ import StarBorder from "@/components/ui/starborder";
 import DemoWarningDialog from "./DemoWarningDialog";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import styles from "@/styles/textGradient.module.css";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ElegantShape = ({
 	className,
@@ -89,15 +90,17 @@ const ElegantShape = ({
 
 // Memoized HeroGeometric component to prevent unnecessary re-renders
 const HeroGeometric = ({
-	badge = "Seguridad Impulsada por IA",
-	title1 = "Protege a tus Hijos",
-	title2 = "Sin Comprometer la",
-	rotatingWords = ["Privacidad", "Seguridad", "Velocidad"],
+	badge,
+	title1,
+	title2,
+	rotatingWords,
+	description
 }: {
 	badge?: string;
 	title1?: string;
 	title2?: string;
-	rotatingWords?: string[];
+	rotatingWords: string[]; // Changed from optional to required
+	description?: string;
 }) => {
 	const prefersReducedMotion = useReducedMotion();
 	
@@ -222,7 +225,7 @@ const HeroGeometric = ({
 					>
 						<div className="text-base sm:text-lg md:text-xl text-white/40 mt-8 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
 							<ShinyText 
-								text="Tecnología de Inteligencia Artificial que mantiene a tus hijos seguros en línea mientras garantiza que sus datos personales permanezcan privados y protegidos." 
+								text={description || ''} 
 								disabled={false} 
 								speed={3} 
 								className='custom-class'
@@ -239,7 +242,21 @@ const HeroGeometric = ({
 
 export const Hero = () => {
 	const counterRef = useRef(null);
-	const rotatingWords = useMemo(() => ["Privacidad", "Seguridad", "Velocidad"], []);
+	const { t } = useLanguage();
+	
+	// Updated rotating words logic with improved type safety
+	const rotatingWords = useMemo<string[]>(() => {
+		const words = t('hero.rotatingWords');
+		
+	    // More robust type checking and error handling
+		if (Array.isArray(words) && words.length > 0 && words.every(word => typeof word === 'string')) {
+			return words;
+		}
+		
+		console.warn('Invalid or missing rotating words translation, using fallback');
+		return ["Privacy", "Security", "Protection"];
+	}, [t]);
+
 	const [showDemoWarning, setShowDemoWarning] = useState(false);
 	const prefersReducedMotion = useReducedMotion();
 
@@ -282,10 +299,11 @@ export const Hero = () => {
 	return (
 		<div className="relative min-h-screen">
 			<HeroGeometric 
-				badge="Próximamente"
-				title1="Protege a tus Hijos"
-				title2="Sin Comprometer la"
+				badge={t('hero.badge') || "Coming Soon"}
+				title1={t('hero.title') || "Protect Your Children"}
+				title2={t('hero.subtitle') || "Without Compromising"}
 				rotatingWords={rotatingWords}
+				description={t('hero.description')}
 			/>
 			<div className="absolute bottom-16 sm:bottom-24 md:bottom-32 left-0 right-0 z-20">
 				<div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
@@ -310,7 +328,7 @@ export const Hero = () => {
 									>
 										<span className="flex items-center gap-2 px-2 sm:px-4">
 											<div className="flex items-center gap-2 sm:gap-3">
-												<span className="text-sm sm:text-base">Probar Demo</span>
+												<span className="text-sm sm:text-base">{t('hero.tryDemo') || "Try Demo"}</span>
 												<span className="group-hover:translate-x-1 transition-transform">→</span>
 											</div>
 										</span>
@@ -321,13 +339,13 @@ export const Hero = () => {
 										<div className="space-y-1">
 											<h4 className="text-sm font-semibold flex items-center gap-2">
 												<Beaker className="h-4 w-4 text-red-400" />
-												Versión Demo
+												{t('hero.demoVersion') || "Demo Version"}
 											</h4>
 											<p className="text-sm text-white/70">
-												Prueba las funcionalidades principales de SafeCircle en un entorno de demostración.
+												{t('hero.demoDescription') || "Try SafeCircle's main features in a demonstration environment."}
 											</p>
 											<div className="flex items-center pt-2 text-xs text-white/50">
-												<span>Acceso limitado a funciones básicas</span>
+												<span>{t('hero.limitedAccess') || "Limited access to basic features"}</span>
 											</div>
 										</div>
 									</div>
@@ -351,7 +369,7 @@ export const Hero = () => {
 				className="absolute bottom-4 sm:bottom-8 inset-x-0 mx-auto z-20 flex flex-col items-center gap-1 sm:gap-2 cursor-pointer"
 				onClick={() => scrollToSection("about-us")}
 			>
-				<span className="text-white/60 text-xs sm:text-sm">Desplázate hacia abajo</span>
+				<span className="text-white/60 text-xs sm:text-sm">{t('hero.scrollDown') || "Scroll down"}</span>
 				<motion.div
 					animate={{ 
 						y: prefersReducedMotion ? 0 : [0, 6, 0] 
