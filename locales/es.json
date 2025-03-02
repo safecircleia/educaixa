@@ -599,5 +599,131 @@
 				}
 			}
 		}
+	},
+	"token": {
+		"hero": {
+			"title": "Token SC",
+			"subtitle": "Impulsando la seguridad digital a través de la gobernanza descentralizada",
+			"description": "El token de SafeCircle impulsa un ecosistema seguro y descentralizado, recompensando a los usuarios por proteger su privacidad y fomentar una comunidad digital ética."
+		},
+		"sections": {
+			"overview": {
+				"title": "Descripción General",
+				"description": "SC es un token de utilidad y gobernanza en la red Solana, diseñado para empoderar a nuestra comunidad en la toma de decisiones sobre el futuro de SafeCircle.",
+				"contractAddress": "CQcjASdDAvTMJsybZTJJ3hvfdwbi4uTqmtd2SNqYpump"
+			},
+			"features": [
+				{
+					"title": "Gobernanza",
+					"description": "Participa en decisiones clave sobre el desarrollo y dirección de SafeCircle"
+				},
+				{
+					"title": "Staking",
+					"description": "Gana recompensas por mantener tus tokens y contribuir a la seguridad de la red"
+				},
+				{
+					"title": "Descuentos",
+					"description": "Accede a tarifas preferenciales en los servicios de SafeCircle"
+				},
+				{
+					"title": "Votación",
+					"description": "Vota en propuestas de mejora y nuevas características de la plataforma"
+				}
+			],
+			"metrics": {
+				"title": "Métricas y Análisis",
+				"description": "Visualiza el rendimiento y la adopción del token SC en tiempo real"
+			}
+		},
+		"stats": {
+			"price": "Precio",
+			"volume": "Volumen 24h",
+			"liquidity": "Liquidez",
+			"totalUSD": "Total USD",
+			"tvl": "TVL"
+		}
+	},
+	"common": {
+		"copy": "Copiar",
+		"loading": {
+			"tokenData": "Cargando datos del token..."
+		}
+	},
+	"privacy": {
+		"title": "Política de Privacidad",
+		"subtitle": "Tu privacidad es nuestra máxima prioridad. Descubre cómo protegemos tus datos.",
+		"sections": {
+			"commitment": {
+				"title": "Nuestro Compromiso con la Privacidad",
+				"content": "En SafeCircle, priorizamos la privacidad y seguridad de los datos de tu familia. Nuestra plataforma está construida sobre una arquitectura de conocimiento cero, asegurando que tu información personal permanezca completamente privada y bajo tu control."
+			},
+			"dataCollection": {
+				"title": "Recopilación y Uso de Datos",
+				"items": {
+					"localMonitoring": "Nunca vemos ni almacenamos tus datos personales - todo el monitoreo se realiza localmente",
+					"encryption": "Todos los datos están cifrados de extremo a extremo usando encriptación AES-256 y RSA",
+					"control": "Mantienes la propiedad y el control total de tus datos",
+					"export": "Los datos pueden ser exportados o eliminados en cualquier momento"
+				}
+			},
+			"features": {
+				"title": "Características de Privacidad",
+				"items": {
+					"zeroKnowledge": "La arquitectura de conocimiento cero garantiza una privacidad completa",
+					"controls": "Controles de privacidad granulares para personalizar el intercambio de datos",
+					"audits": "Auditorías de seguridad regulares por terceros",
+					"gdpr": "Manejo de datos conforme al GDPR",
+					"transparency": "Políticas transparentes de procesamiento de datos"
+				}
+			},
+			"contact": {
+				"title": "Contáctanos",
+				"content": "Si tienes alguna pregunta sobre nuestra política de privacidad o prácticas de datos, contacta a nuestro equipo de privacidad:",
+				"email": "privacy@safecircle.com"
+			}
+		}
+	},
+	"terms": {
+		"sections": {
+			"agreement": "Acuerdo de Términos",
+			"service": "Descripción del Servicio",
+			"responsibilities": "Responsabilidades del Usuario",
+			"liability": "Limitación de Responsabilidad",
+			"changes": "Cambios en los Términos",
+			"contact": "Información de Contacto"
+		},
+		"agreement": {
+			"description": "Al acceder o utilizar los servicios de SafeCircle, aceptas estar sujeto a estos Términos de Servicio y nuestra Política de Privacidad. Nuestros servicios están diseñados para proteger a las familias mientras respetamos la privacidad y los derechos de propiedad de los datos."
+		},
+		"service": {
+			"description": "SafeCircle proporciona servicios de monitoreo de seguridad infantil impulsados por IA que incluyen:"
+		},
+		"features": {
+			"monitoring": "Monitoreo en tiempo real de la actividad en línea",
+			"protection": "Protección inteligente y filtrado de contenido",
+			"privacy": "Diseño que prioriza la privacidad con arquitectura de conocimiento cero",
+			"encryption": "Protección de datos con cifrado de extremo a extremo"
+		},
+		"responsibilities": {
+			"credentials": "Mantener la confidencialidad de las credenciales de tu cuenta",
+			"compliance": "Usar el servicio en cumplimiento con todas las leyes aplicables",
+			"privacy": "Respetar los derechos de privacidad de todos los usuarios",
+			"security": "No intentar eludir o deshabilitar las funciones de seguridad"
+		},
+		"liability": {
+			"description": "Si bien nos esforzamos por brindar el más alto nivel de protección, SafeCircle no es responsable de:"
+		},
+		"limitations": {
+			"connectivity": "Problemas de conectividad a Internet o interrupciones del servicio",
+			"violations": "Acciones tomadas por usuarios en violación de estos términos",
+			"filtering": "Contenido que pueda eludir nuestros sistemas de filtrado",
+			"damages": "Cualquier daño indirecto, consecuente o incidental"
+		},
+		"changes": {
+			"description": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los usuarios serán notificados de cambios significativos por correo electrónico o a través de la interfaz del servicio."
+		},
+		"contact": {
+			"description": "Para preguntas sobre estos términos, contacta a nuestro equipo legal:"
+		}
 	}
 }

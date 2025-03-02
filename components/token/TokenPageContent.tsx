@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Coins, Wallet, Users, Vote, LineChart, ArrowUpRight, Loader2, Twitter, MessageCircle } from "lucide-react";
-import { tokenContent } from "@/app/token/token-content";
 import { motion } from "framer-motion";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 import ErrorState from "@/components/ui/error-state";
 import Image from "next/image";
 import { DexScreenerWrapper } from "@/components/ui/DexScreenerWrapper";
+import { useLanguage } from '@/context/LanguageContext';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,10 +31,11 @@ const itemVariants = {
 };
 
 function LoadingState() {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">
       <Loader2 className="w-8 h-8 animate-spin text-blue-400 mb-4" />
-      <p className="text-white/60">Cargando datos del token...</p>
+      <p className="text-white/60">{t('common.loading.tokenData')}</p>
     </div>
   );
 }
@@ -42,6 +43,7 @@ function LoadingState() {
 export function TokenPageContent() {
   const { tokenData, isLoading, error, retry } = useTokenData();
   const [chartLoading, setChartLoading] = useState(true);
+  const { t } = useLanguage();
 
   if (error) {
     return (
@@ -69,10 +71,10 @@ export function TokenPageContent() {
           className="text-center space-y-6 mb-16"
         >
           <h1 className="text-6xl font-bold bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">
-            {tokenContent.hero.title}
+            {t('token.hero.title')}
           </h1>
           <p className="text-xl text-white/60 max-w-3xl mx-auto">
-            {tokenContent.hero.description}
+            {t('token.hero.description')}
           </p>
         </motion.div>
 
@@ -87,13 +89,13 @@ export function TokenPageContent() {
             <PixelCard 
               variant="blue" 
               className="group transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.3)]"
-              aria-label={`Token price: ${!isLoading ? `$${Number(tokenData?.priceUsd).toFixed(8)}` : 'Loading...'}`}
+              aria-label={`Token ${t('token.stats.price')}: ${!isLoading ? `$${Number(tokenData?.priceUsd).toFixed(8)}` : 'Loading...'}`}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <div className="space-y-1 text-center">
                   <div className="flex items-center justify-center gap-2">
                     <LineChart className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm text-blue-400 font-medium">Precio</span>
+                    <span className="text-sm text-blue-400 font-medium">{t('token.stats.price')}</span>
                   </div>
                   {isLoading ? (
                     <Loader2 className="w-6 h-6 animate-spin text-blue-400" />
@@ -124,13 +126,13 @@ export function TokenPageContent() {
             <PixelCard 
               variant="pink" 
               className="group transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(236,72,153,0.3)]"
-              aria-label={`24 hour volume: ${!isLoading ? `$${tokenData?.volume.h24.toLocaleString()}` : 'Loading...'}`}
+              aria-label={`${t('token.stats.volume')}: ${!isLoading ? `$${tokenData?.volume.h24.toLocaleString()}` : 'Loading...'}`}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <div className="space-y-1 text-center">
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <Users className="w-5 h-5 text-pink-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm text-pink-400 font-medium">Volumen 24h</span>
+                    <span className="text-sm text-pink-400 font-medium">{t('token.stats.volume')}</span>
                   </div>
                   {isLoading ? (
                     <Loader2 className="w-6 h-6 animate-spin text-pink-400" />
@@ -141,7 +143,7 @@ export function TokenPageContent() {
                           ${tokenData?.volume.h24.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </p>
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-500/10 text-pink-400 border border-pink-500/20">
-                          <span className="opacity-60">USD Total</span>
+                          <span className="opacity-60">{t('token.stats.totalUSD')}</span>
                         </div>
                       </div>
                     </>
@@ -155,13 +157,13 @@ export function TokenPageContent() {
             <PixelCard 
               variant="violet" 
               className="group transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(139,92,246,0.3)]"
-              aria-label={`Total liquidity: ${!isLoading ? `$${tokenData?.liquidity.usd.toLocaleString()}` : 'Loading...'}`}
+              aria-label={`${t('token.stats.liquidity')}: ${!isLoading ? `$${tokenData?.liquidity.usd.toLocaleString()}` : 'Loading...'}`}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <div className="space-y-1 text-center">
                   <div className="flex items-center justify-center gap-2">
                     <Wallet className="w-5 h-5 text-violet-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm text-violet-400 font-medium">Liquidez</span>
+                    <span className="text-sm text-violet-400 font-medium">{t('token.stats.liquidity')}</span>
                   </div>
                   {isLoading ? (
                     <Loader2 className="w-6 h-6 animate-spin text-violet-400" />
@@ -172,7 +174,7 @@ export function TokenPageContent() {
                           ${tokenData?.liquidity.usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </p>
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">
-                          <span className="opacity-60">TVL</span>
+                          <span className="opacity-60">{t('token.stats.tvl')}</span>
                         </div>
                       </div>
                     </>
@@ -202,7 +204,7 @@ export function TokenPageContent() {
                 )}
                 <div>
                   <h2 className="text-2xl font-bold text-white/90">
-                    {tokenContent.sections.overview.title}
+                    {t('token.sections.overview.title')}
                   </h2>
                   <div className="flex gap-2 mt-2">
                     {tokenData?.info.socials.map((social, index) => (
@@ -224,23 +226,23 @@ export function TokenPageContent() {
                 </div>
               </div>
               <p className="text-white/70 leading-relaxed">
-                {tokenContent.sections.overview.description}
+                {t('token.sections.overview.description')}
               </p>
               <div className="flex items-center gap-2 p-4 rounded-lg bg-blue-500/5 border border-blue-500/10 backdrop-blur-sm">
                 <Wallet className="w-5 h-5 text-blue-400" />
                 <span className="text-sm text-white/60">Contract Address:</span>
                 <code className="text-sm text-blue-400 font-mono">
-                  {tokenContent.sections.overview.contractAddress}
+                  {t('token.sections.overview.contractAddress')}
                 </code>
                 <Button
                   variant="ghost"
                   size="sm"
                   className="ml-auto hover:bg-blue-500/10"
                   onClick={() => {
-                    navigator.clipboard.writeText(tokenContent.sections.overview.contractAddress);
+                    navigator.clipboard.writeText(t('token.sections.overview.contractAddress'));
                   }}
                 >
-                  Copiar
+                  {t('common.copy')}
                 </Button>
               </div>
             </div>
@@ -252,32 +254,42 @@ export function TokenPageContent() {
           variants={itemVariants}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
         >
-          {tokenContent.sections.features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-            >
-              <SpotlightCard
-                spotlightColor="rgba(99, 102, 241, 0.2)"
-                className="h-full backdrop-blur-sm"
-              >
-                <div className="p-8 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 flex items-center justify-center">
-                      {index === 0 ? <Vote className="w-5 h-5 text-indigo-400" /> :
-                       index === 1 ? <Coins className="w-5 h-5 text-indigo-400" /> :
-                       index === 2 ? <Wallet className="w-5 h-5 text-indigo-400" /> :
-                       <Users className="w-5 h-5 text-indigo-400" />}
+          {(() => {
+            // Get features array from translations
+            const features = t('token.sections.features');
+            // Ensure it's an array we can map over
+            if (Array.isArray(features)) {
+              return features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                >
+                  <SpotlightCard
+                    spotlightColor="rgba(99, 102, 241, 0.2)"
+                    className="h-full backdrop-blur-sm"
+                  >
+                    <div className="p-8 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 flex items-center justify-center">
+                          {index === 0 ? <Vote className="w-5 h-5 text-indigo-400" /> :
+                           index === 1 ? <Coins className="w-5 h-5 text-indigo-400" /> :
+                           index === 2 ? <Wallet className="w-5 h-5 text-indigo-400" /> :
+                           <Users className="w-5 h-5 text-indigo-400" />}
+                        </div>
+                        <h3 className="text-xl font-bold text-white/90">
+                          {feature.title}
+                        </h3>
+                      </div>
+                      <p className="text-white/70">{feature.description}</p>
                     </div>
-                    <h3 className="text-xl font-bold text-white/90">
-                      {feature.title}
-                    </h3>
-                  </div>
-                  <p className="text-white/70">{feature.description}</p>
-                </div>
-              </SpotlightCard>
-            </motion.div>
-          ))}
+                  </SpotlightCard>
+                </motion.div>
+              ));
+            }
+            // Fallback for non-array case
+            console.warn('Token features is not an array:', features);
+            return null;
+          })()}
         </motion.div>
 
         {/* Chart Section */}
@@ -292,11 +304,11 @@ export function TokenPageContent() {
                   <Coins className="w-5 h-5 text-violet-400" />
                 </div>
                 <h2 className="text-2xl font-bold text-white/90">
-                  {tokenContent.sections.metrics.title}
+                  {t('token.sections.metrics.title')}
                 </h2>
               </div>
               <p className="text-white/70">
-                {tokenContent.sections.metrics.description}
+                {t('token.sections.metrics.description')}
               </p>
               <DexScreenerWrapper pairAddress="4UPkJAdbYrmVp2NN7DWrsAwNDkpriRupRS1GM38hHZG8" />
             </div>

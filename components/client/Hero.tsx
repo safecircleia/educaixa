@@ -99,7 +99,7 @@ const HeroGeometric = ({
 	badge?: string;
 	title1?: string;
 	title2?: string;
-	rotatingWords?: string[];
+	rotatingWords: string[]; // Changed from optional to required
 	description?: string;
 }) => {
 	const prefersReducedMotion = useReducedMotion();
@@ -244,8 +244,8 @@ export const Hero = () => {
 	const counterRef = useRef(null);
 	const { t } = useLanguage();
 	
-	// Updated rotating words logic with better type checking and logging
-	const rotatingWords = useMemo(() => {
+	// Updated rotating words logic with improved type safety
+	const rotatingWords = useMemo<string[]>(() => {
 		const words = t('hero.rotatingWords');
 		
 	    // More robust type checking and error handling

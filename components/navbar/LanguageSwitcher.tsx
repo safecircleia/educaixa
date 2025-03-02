@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronDown, Check } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { ChevronDown, Check, Globe } from 'lucide-react';
 import { 
   DropdownMenu, 
   DropdownMenuTrigger, 
@@ -16,15 +16,18 @@ export function LanguageSwitcher() {
   const { language, setLanguage, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Available languages with their full names and codes
-  const languages = [
-    { code: 'es', name: t('languages.es'), fullName: 'Español' },
-    { code: 'en', name: t('languages.en'), fullName: 'English' },
-    { code: 'fr', name: t('languages.fr'), fullName: 'Français' }
-  ];
+  // Available languages with their codes and display names
+  const languages = useMemo(() => [
+    { code: 'es', name: 'Español' },
+    { code: 'en', name: 'English' },
+    { code: 'fr', name: 'Français' }
+  ], []);
 
   // Get current language display name
-  const currentLanguage = languages.find(lang => lang.code === language);
+  const currentLanguage = useMemo(() => 
+    languages.find(lang => lang.code === language), 
+    [language, languages]
+  );
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -32,33 +35,32 @@ export function LanguageSwitcher() {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="h-8 gap-1.5 px-2 text-white/80 hover:text-white hover:bg-white/5
+          className="h-8 gap-1.5 px-2.5 text-white/80 hover:text-white hover:bg-white/5
             data-[state=open]:bg-white/10 data-[state=open]:text-white transition-colors rounded-lg"
           aria-label={t('navbar.language')}
         >
+          <Globe className="w-3.5 h-3.5 opacity-80 mr-1" />
           <span className="text-sm font-medium">{currentLanguage?.code.toUpperCase()}</span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+          <ChevronDown className={`h-3.5 w-3.5 opacity-70 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-44 bg-background/95 backdrop-blur-md border border-white/10 p-1"
+        className="w-44 bg-background/95 backdrop-blur-md border border-white/10 p-1.5 rounded-xl"
+        sideOffset={8}
       >
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            className={`flex items-center justify-between px-2 py-1.5 text-sm text-white/90 hover:text-white
-              cursor-pointer rounded-md transition-colors
-              ${language === lang.code ? 'bg-white/5' : 'hover:bg-white/5'}`}
+            className={`flex items-center justify-between px-3 py-2 text-sm text-white/90 hover:text-white
+              cursor-pointer rounded-lg transition-colors
+              ${language === lang.code ? 'bg-white/10' : 'hover:bg-white/5'}`}
             onClick={() => {
               setLanguage(lang.code as 'es' | 'en' | 'fr');
               setIsOpen(false);
             }}
           >
-            <div className="flex flex-col">
-              <span className="font-medium">{lang.name}</span>
-              <span className="text-xs text-white/60">{lang.fullName}</span>
-            </div>
+            <span className="font-medium">{lang.name}</span>
             {language === lang.code && (
               <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
