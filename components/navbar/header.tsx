@@ -122,12 +122,12 @@ function Header1() {
                                 <p className="text-sm sm:text-base font-medium">
                                     {t('navbar.telegramWarning.description')}{' '}
                                     <a 
-                                        href="https://t.me/safecircleia" 
+                                        href="https://t.me/safecirclehub" 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
                                         className="font-semibold text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-4 decoration-blue-500/30"
                                     >
-                                        https://t.me/safecircleia
+                                        https://t.me/safecirclehub
                                     </a>
                                     <span className="font-bold text-red-400/90">{' '}{t('navbar.telegramWarning.warning')}</span>
                                 </p>
