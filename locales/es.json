@@ -231,7 +231,13 @@
 		"language": "Idioma",
 		"comingSoon": "Próximamente",
 		"comingSoonDesc": "¡Esta función estará disponible pronto!",
-		"externalLink": "Se abre en una nueva pestaña"
+		"externalLink": "Se abre en una nueva pestaña",
+		"telegramWarning": {
+			"title": "Enlace Oficial de Telegram",
+			"description": "Nuestro enlace oficial de Telegram es",
+			"warning": "¡Todos los demás enlaces son estafas!",
+			"close": "Cerrar notificación"
+		}
 	},
 	"languages": {
 		"es": "Español",
