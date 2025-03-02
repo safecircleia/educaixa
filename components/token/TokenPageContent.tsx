@@ -89,13 +89,17 @@ export function TokenPageContent() {
             <PixelCard 
               variant="blue" 
               className="group transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.3)]"
-              aria-label={`Token ${t('token.stats.price')}: ${!isLoading ? `$${Number(tokenData?.priceUsd).toFixed(8)}` : 'Loading...'}`}
+              aria-label={`Token ${t('token.stats.marketCap')}: ${!isLoading ? 
+                 (tokenData?.marketCap >= 1000000 
+                   ? `$${(tokenData?.marketCap / 1000000).toFixed(2)}${t('token.stats.million')}` 
+                   : `$${(tokenData?.marketCap / 1000).toFixed(2)}${t('token.stats.thousand')}`)
+                 : 'Loading...'}`}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <div className="space-y-1 text-center">
                   <div className="flex items-center justify-center gap-2">
                     <LineChart className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm text-blue-400 font-medium">{t('token.stats.price')}</span>
+                    <span className="text-sm text-blue-400 font-medium">{t('token.stats.marketCap')}</span>
                   </div>
                   {isLoading ? (
                     <Loader2 className="w-6 h-6 animate-spin text-blue-400" />
@@ -103,7 +107,14 @@ export function TokenPageContent() {
                     <>
                       <div className="space-y-1">
                         <p className="text-4xl font-bold tracking-tight bg-gradient-to-br from-blue-400 via-blue-300 to-cyan-400 bg-clip-text text-transparent transform transition-transform group-hover:scale-105">
-                          ${Number(tokenData?.priceUsd).toFixed(8)}
+                          ${tokenData?.marketCap >= 1000000 
+                            ? (tokenData?.marketCap / 1000000).toFixed(2)
+                            : (tokenData?.marketCap / 1000).toFixed(2)}
+                          <span className="text-xl ml-1">
+                            {tokenData?.marketCap >= 1000000 
+                              ? t('token.stats.million') 
+                              : t('token.stats.thousand')}
+                          </span>
                         </p>
                         <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           tokenData?.priceChange.h24 >= 0 

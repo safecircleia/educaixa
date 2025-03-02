@@ -645,6 +645,9 @@
 			"price": "Precio",
 			"volume": "Volumen 24h",
 			"liquidity": "Liquidez",
+			 "marketCap": "Capital de Mercado",
+            "million": "M",
+            "thousand": "K",
 			"totalUSD": "Total USD",
 			"tvl": "TVL"
 		}

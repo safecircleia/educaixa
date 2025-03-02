@@ -34,7 +34,7 @@ export function DashboardSidebar() {
     >
       <div className="flex flex-col h-full">
         <div className="flex items-center gap-2 px-2 mb-8">
-          <img src="/logo-nbg.png" alt="Logo" className="h-8 w-8" />
+          <img src="/logo-nbg.webp" alt="Logo" className="h-8 w-8" />
           <span className="font-bold text-xl">SafeCircle</span>
         </div>
 

@@ -645,6 +645,9 @@
 			"price": "Price",
 			"volume": "24h Volume",
 			"liquidity": "Liquidity",
+			"marketCap": "Market Cap",
+			"million": "M",
+			"thousand": "K",
 			"totalUSD": "USD Total",
 			"tvl": "TVL"
 		}

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     description: 'Protect your children online with advanced AI technology that respects privacy. Real-time monitoring, threat detection, and parental controls all in one secure platform.',
     url: 'https://safecircle.tech',
     images: [{
-      url: '/logo-nbg.png',
+      url: '/logo-nbg.webp',
       width: 800,
       height: 600,
       alt: 'SafeCircle Logo',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'AI-powered child safety that respects privacy',
     site: '@safecircleai',
     creator: '@safecircleai',
-    images: ['/logo-nbg.png'],
+    images: ['/logo-nbg.webp'],
   },
   alternates: {
     canonical: 'https://safecircle.tech'

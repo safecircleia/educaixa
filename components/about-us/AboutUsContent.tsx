@@ -129,7 +129,7 @@ export function AboutUsContent() {
       key: 'tomas',
       role: 'founder',
       description: t('about.team.members.tomas.description'),
-      image: "/team/tomaspfp.png",
+      image: "/team/tomaspfp.webp",
       twitter: "toomas_ps"
     },
     {
@@ -137,7 +137,7 @@ export function AboutUsContent() {
       key: 'victor',
       role: 'cofounder',
       description: t('about.team.members.victor.description'),
-      image: "/team/victorpfp.png",
+      image: "/team/victorpfp.webp",
       twitter: "_mnozz"
     },
     {
@@ -145,7 +145,7 @@ export function AboutUsContent() {
       key: 'fabio',
       role: 'assistant',
       description: t('about.team.members.fabio.description'),
-      image: "/team/fabiopfp.png",
+      image: "/team/fabiopfp.webp",
     }
   ];
 
@@ -179,28 +179,28 @@ export function AboutUsContent() {
         title: t('about.ods.goals.health.title'),
         description: t('about.ods.goals.health.description'),
         href: "https://www.un.org/sustainabledevelopment/es/health/",
-        image: "/ods/3.png"
+        image: "/ods/3.webp"
       },
       {
         id: "ods-8",
         title: t('about.ods.goals.work.title'),
         description: t('about.ods.goals.work.description'),
         href: "https://www.un.org/sustainabledevelopment/es/economic-growth/",
-        image: "/ods/8.png"
+        image: "/ods/8.webp"
       },
       {
         id: "ods-16",
         title: t('about.ods.goals.peace.title'),
         description: t('about.ods.goals.peace.description'),
         href: "https://www.un.org/sustainabledevelopment/es/peace-justice/",
-        image: "/ods/16.png"
+        image: "/ods/16.webp"
       },
       {
         id: "ods-17",
         title: t('about.ods.goals.partnerships.title'),
         description: t('about.ods.goals.partnerships.description'),
         href: "https://www.un.org/sustainabledevelopment/es/globalpartnerships/",
-        image: "/ods/17.png"
+        image: "/ods/17.webp"
       }
     ]
   };
