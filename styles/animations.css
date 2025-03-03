@@ -9,6 +9,28 @@
   100% { background-position: 0 100%; }
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .hexagon-grid {
   background: 
     linear-gradient(60deg, #0a0a0f 25%, transparent 25.5%) 0 0,
@@ -39,4 +61,34 @@
 .liquid-progress {
   background: linear-gradient(90deg, #4dc8ff 0%, #10b981 98.2%);
   filter: drop-shadow(0 0 10px rgba(77,200,255,0.4));
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient 8s ease infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.glow-text-blue {
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+}
+
+.glow-text-violet {
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
 }

@@ -270,7 +270,8 @@
 		"about": "About Us",
 		"needs": "Needs",
 		"collaborators": "Collaborators",
-		"token": "Token",
+		"token": "Monetization",
+		"gancho": "Hook",
 		"community": {
 			"title": "Community",
 			"description": "Join our community and stay up to date with the latest news from SafeCircle.",
@@ -734,5 +735,8 @@
 		"contact": {
 			"description": "For questions about these terms, please contact our legal team:"
 		}
+	},
+	"gancho": {
+		"slogan": "There are peaceful parents, there are safe children, there is SafeCircle"
 	}
 }

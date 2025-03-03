@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About SafeCircle - Our Mission and Team',
     description: 'Meet the SafeCircle team and learn about our mission to create a safer digital environment for children through innovative AI technology and privacy-first solutions.',
-    images: ['/team/tomaspfp.jpg'],
+    images: ['/team/tomaspfp.webp'],
   }
 };
 

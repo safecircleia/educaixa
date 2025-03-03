@@ -37,6 +37,10 @@ export const getNavItems = (t: (key: string) => string): NavItem[] => [
     title: t('navigation.token'),
     href: '/token',
   },
+  {
+    title: t('navigation.gancho'),
+    href: '/gancho',
+  }
   // {
   //   title: t('navigation.community.title'),
   //   description: t('navigation.community.description'),

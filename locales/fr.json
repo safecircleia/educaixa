@@ -485,7 +485,8 @@
 		"about": "À propos",
 		"needs": "Besoins",
 		"collaborators": "Collaborateurs",
-		"token": "Token",
+		"token": "Monétisation",
+		"gancho": "Accroche",
 		"community": {
 			"title": "Communauté",
 			"description": "Rejoignez notre communauté et restez à jour avec les dernières nouvelles de SafeCircle.",
@@ -871,5 +872,8 @@
 		"contact": {
 			"description": "Pour toute question concernant ces conditions, contactez notre équipe juridique :"
 		}
+	},
+	"gancho": {
+		"slogan": "Il y a des parents sereins, il y a des enfants en sécurité, il y a SafeCircle"
 	}
 }
