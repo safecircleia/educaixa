@@ -12,6 +12,17 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Enviroments variables
+env:
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+  NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY }}
+  NEXT_PUBLIC_DISABLE_WAITLIST: ${{ secrets.NEXT_PUBLIC_DISABLE_WAITLIST }}
+  NEXT_PUBLIC_DISABLE_DASHBOARD: ${{ secrets.NEXT_PUBLIC_DISABLE_DASHBOARD }}
+  SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+  NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${{ secrets.NEXT_PUBLIC_UMAMI_WEBSITE_ID }}
+  NEXT_PUBLIC_UMAMI_SCRIPT_URL: ${{ secrets.NEXT_PUBLIC_UMAMI_SCRIPT_URL }}
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
