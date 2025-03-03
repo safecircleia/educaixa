@@ -145,6 +145,7 @@ export function AboutUsContent() {
       role: 'assistant',
       description: t('about.team.members.fabio.description'),
       image: "/team/fabiopfp.webp",
+      twitter: "fabiiowette"
     }
   ];
 
