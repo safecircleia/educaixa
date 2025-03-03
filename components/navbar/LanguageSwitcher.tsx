@@ -40,7 +40,7 @@ export function LanguageSwitcher() {
         variant="ghost" 
         size="sm" 
         disabled
-        className="h-8 gap-1.5 px-2.5 text-white/60 rounded-lg opacity-70"
+        className="h-8 gap-1.5 px-2.5 text-black dark:text-black rounded-lg opacity-70"
         aria-label="Loading languages"
       >
         <Globe className="w-3.5 h-3.5 opacity-80 mr-1" />
@@ -54,8 +54,8 @@ export function LanguageSwitcher() {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="h-8 gap-1.5 px-2.5 text-white/80 hover:text-white hover:bg-white/5
-            data-[state=open]:bg-white/10 data-[state=open]:text-white transition-colors rounded-lg"
+          className="h-8 gap-1.5 px-2.5 text-black dark:text-black hover:text-slate-900 dark:hover:text-black hover:bg-slate-100/80 dark:hover:bg-white/5
+            data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-white/10 data-[state=open]:text-slate-900 dark:data-[state=open]:text-black transition-colors rounded-lg"
           aria-label={t('navbar.language')}
         >
           <Globe className="w-3.5 h-3.5 opacity-80 mr-1" />
@@ -65,15 +65,17 @@ export function LanguageSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-44 bg-background/95 backdrop-blur-md border border-white/10 p-1.5 rounded-xl"
+        className="w-44 bg-white dark:bg-background/95 backdrop-blur-md border border-slate-200 dark:border-white/10 p-1.5 rounded-xl shadow-lg"
         sideOffset={8}
       >
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            className={`flex items-center justify-between px-3 py-2 text-sm text-white/90 hover:text-white
+            className={`flex items-center justify-between px-3 py-2 text-sm text-black dark:text-black hover:text-slate-900 dark:hover:text-black
               cursor-pointer rounded-lg transition-colors
-              ${language === lang.code ? 'bg-white/10' : 'hover:bg-white/5'}`}
+              ${language === lang.code 
+                ? 'bg-slate-100 dark:bg-white/10 text-black dark:text-black' 
+                : 'hover:bg-slate-50 dark:hover:bg-white/5'}`}
             onClick={() => handleLanguageChange(lang.code as 'es' | 'en' | 'fr')}
           >
             <span className="font-medium">{lang.name}</span>
@@ -84,11 +86,10 @@ export function LanguageSwitcher() {
                 transition={{ 
                   type: "spring", 
                   duration: 0.2,
-                  // Make animation more efficient
                   layout: false,
                 }}
               >
-                <Check className="h-4 w-4 text-blue-400" />
+                <Check className="h-4 w-4 text-cyan-600 dark:text-blue-400" />
               </motion.div>
             )}
           </DropdownMenuItem>

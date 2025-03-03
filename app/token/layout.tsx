@@ -1,4 +1,5 @@
 import { Header1 } from '@/components/navbar/header';
+import '../styles/token-header.css'; // We'll create this CSS file
 
 export default function Layout({
   children,
@@ -6,7 +7,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col token-page">
       <Header1 />
       <div className="flex-grow">
         {children}

@@ -151,15 +151,14 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
         <HoverCardTrigger asChild>
           <motion.div 
             animate={controls}
-            className="relative overflow-hidden rounded-2xl border border-white/20 bg-black/30 backdrop-blur-xl px-4 sm:px-8 py-4 sm:py-6 cursor-help group hover:border-white/30 transition-all duration-300 shadow-lg shadow-cyan-500/5 hover:shadow-cyan-500/10"
+            className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white backdrop-blur-xl px-4 sm:px-8 py-4 sm:py-6 cursor-help group hover:border-blue-200/70 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/5"
             style={{
-              boxShadow: reachedMilestone ? '0 0 20px 5px rgba(77, 200, 255, 0.2)' : undefined,
+              boxShadow: reachedMilestone ? '0 0 20px 5px rgba(77, 200, 255, 0.1)' : undefined,
             }}
           >
-
             {/* Glow effect - enhanced for milestone */}
             <div 
-              className={`absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+              className={`absolute inset-0 bg-gradient-to-br from-blue-100/40 via-transparent to-blue-50/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                 reachedMilestone ? 'group-hover:animate-pulse' : ''
               }`}
             ></div>
@@ -167,7 +166,7 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
             {/* Background pulse effect when milestone reached */}
             {reachedMilestone && (
               <motion.div 
-                className="absolute inset-0 bg-cyan-500/5 rounded-2xl z-0"
+                className="absolute inset-0 bg-amber-100/30 rounded-2xl z-0"
                 animate={{ 
                   scale: [1, 1.02, 1],
                   opacity: [0.1, 0.2, 0.1]
@@ -180,31 +179,28 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
               />
             )}
             
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-black/30">
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-gray-100">
               <motion.div
                 className={`h-full ${
                   reachedMilestone 
                     ? "bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400" 
-                    : "bg-gradient-to-r from-cyan-400 to-blue-500"
+                    : "bg-gradient-to-r from-blue-400 to-blue-600"
                 }`}
                 animate={{ width: `${percentage}%` }}
                 transition={{ type: "spring", stiffness: 50, damping: 20 }}
                 style={{
                   boxShadow: reachedMilestone 
-                    ? '0 0 10px 0 rgba(251, 191, 36, 0.5)' 
-                    : '0 0 8px 0 rgba(77, 200, 255, 0.3)'
+                    ? '0 0 10px 0 rgba(251, 191, 36, 0.3)' 
+                    : '0 0 8px 0 rgba(77, 200, 255, 0.2)'
                 }}
               />
             </div>
 
             <div className="relative flex flex-col items-center gap-2 sm:gap-3 z-10">
-              <div className="flex items-center gap-2 sm:gap-3">
-                {/* Removed Sparkles icon that was positioned on the left */}
-                
-                {/* Counter with special effects when milestone reached */}
+              <div className="flex items-center gap-2 sm:gap-3 pt-2 sm:pt-0">
                 <motion.div
                   animate={reachedMilestone ? {
-                    filter: ['drop-shadow(0 0 2px rgba(251, 191, 36, 0.5))', 'drop-shadow(0 0 4px rgba(251, 191, 36, 0.3))', 'drop-shadow(0 0 2px rgba(251, 191, 36, 0.5))'],
+                    filter: ['drop-shadow(0 0 2px rgba(251, 191, 36, 0.3))', 'drop-shadow(0 0 4px rgba(251, 191, 36, 0.2))', 'drop-shadow(0 0 2px rgba(251, 191, 36, 0.3))'],
                   } : {}}
                   transition={{ 
                     duration: 2, 
@@ -218,22 +214,22 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
                     fontSize={32}
                     padding={3}
                     gap={4}
-                    textColor={reachedMilestone ? "rgba(251, 191, 36, 1)" : "white"}
+                    textColor={reachedMilestone ? "rgba(251, 191, 36, 1)" : "#1e3a8a"}
                     fontWeight={700}
-                    className="scale-75 sm:scale-100"
+                    className="scale-[0.65] xs:scale-75 sm:scale-100 text-gray-800"
                   />
                 </motion.div>
-                <Info className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400/70 group-hover:text-cyan-400 transition-colors" />
+                <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600/70 group-hover:text-blue-600 transition-colors" />
               </div>
               
-              <div className={`text-sm sm:text-base font-medium tracking-wide ${
+              <div className={`text-xs xs:text-sm sm:text-base font-medium tracking-wide ${
                 reachedMilestone 
-                  ? 'text-amber-300 group-hover:text-amber-200'
-                  : 'text-white/80 group-hover:text-white/90'
-                } transition-colors flex items-center gap-1.5`}
+                  ? 'text-amber-600 group-hover:text-amber-700'
+                  : 'text-gray-600 group-hover:text-gray-800'
+                } transition-colors flex items-center gap-1 sm:gap-1.5 pt-1 sm:pt-0`}
               >
                 {reachedMilestone && (
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-300" />
+                  <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-600" />
                 )}
                 <span>
                   {t('counter.earlyAccess')} {reachedMilestone ? t('counter.milestone') : ""}
@@ -242,27 +238,31 @@ export const AnimatedCounter = ({ containerRef }: AnimatedCounterProps) => {
             </div>
           </motion.div>
         </HoverCardTrigger>
-        <HoverCardContent side="top" sideOffset={8} className="w-80 bg-black/95 border border-white/10">
+        <HoverCardContent 
+          side="top" 
+          sideOffset={8} 
+          className="w-80 bg-white border border-gray-200 shadow-md"
+        >
           <div className="flex justify-between space-x-4">
             <div className="space-y-2.5">
-              <h4 className="text-sm font-semibold flex items-center gap-2">
-                <Users className="h-4 w-4 text-cyan-400" />
+              <h4 className="text-sm font-semibold flex items-center gap-2 text-gray-800">
+                <Users className="h-4 w-4 text-blue-600" />
                 {t('counter.program')}
                 {reachedMilestone && (
-                  <span className="bg-yellow-500/20 text-yellow-300 text-xs px-2 py-0.5 rounded-full border border-yellow-500/30">
+                  <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded-full border border-yellow-200">
                     {t('counter.milestone')}
                   </span>
                 )}
               </h4>
-              <p className="text-sm leading-relaxed text-white/80">
+              <p className="text-sm leading-relaxed text-gray-600">
                 {t('counter.description').replace('{total}', total.toLocaleString())}
                 {reachedMilestone && (
-                  <span className="block mt-2 text-amber-300/90">
+                  <span className="block mt-2 text-amber-600">
                     {t('counter.milestoneMessage')}
                   </span>
                 )}
               </p>
-              <div className="flex items-center pt-1 text-xs font-medium text-cyan-400/90">
+              <div className="flex items-center pt-1 text-xs font-medium text-blue-600">
                 <span>{t('counter.slotsOccupied').replace('{percentage}', Math.round(percentage).toString())}</span>
               </div>
             </div>

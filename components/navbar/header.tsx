@@ -1,9 +1,9 @@
 "use client";
-
 import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { MobileNav } from "./mobile-nav";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -12,7 +12,7 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Menu, MoveRight, X, ChevronDown, AlertTriangle } from "lucide-react";
+import { MoveRight, X, AlertTriangle } from "lucide-react";
 import { getNavItems } from "@/components/navbar/links";
 import AuthModal from "@/components/client/AuthModal";
 import { LucideIcon } from "lucide-react";
@@ -28,13 +28,10 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from '@/context/LanguageContext';
 
 function Header1() {
-    const [isOpen, setOpen] = useState(false);
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
     const [user, setUser] = useState<any>(null);
     const [showTelegramAlert, setShowTelegramAlert] = useState(() => {
-        // Initialize from localStorage, default to true if not set
         if (typeof window !== 'undefined') {
             const stored = localStorage.getItem('hideTelegramAlert');
             return stored ? false : true;
@@ -43,19 +40,19 @@ function Header1() {
     });
     const [progressValue, setProgressValue] = useState(100);
     const [isHovered, setIsHovered] = useState(false);
-    const { t, isLoading, language } = useLanguage();
-
-    // Memoize nav items to prevent unnecessary recalculations when translations are ready
+    const { t, isLoading } = useLanguage();
+    
+    // Memoize nav items to prevent unnecessary recalculations
     const navItems = useMemo(() => !isLoading ? getNavItems(t) : [], [t, isLoading]);
-
-    // Function to handle hiding the alert
+    
+    // Handle hiding the alert
     const hideTelegramAlert = useCallback(() => {
         setShowTelegramAlert(false);
         if (typeof window !== 'undefined') {
             localStorage.setItem('hideTelegramAlert', 'true');
         }
     }, []);
-
+    
     // Reset localStorage when user exits webpage
     useEffect(() => {
         const handleBeforeUnload = () => {
@@ -63,14 +60,14 @@ function Header1() {
                 localStorage.removeItem('hideTelegramAlert');
             }
         };
-
         window.addEventListener('beforeunload', handleBeforeUnload);
         
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
-
+    
+    // Handle user authentication
     useEffect(() => {
         const getUserSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
@@ -82,22 +79,21 @@ function Header1() {
         });
         return () => authListener?.subscription.unsubscribe();
     }, []);
-
+    
     // Close AuthModal when user signs in
     useEffect(() => {
       if (user) {
         setShowAuthModal(false);
       }
     }, [user]);
-
+    
     // Auto-hide telegram alert after 10 seconds with progress bar
     useEffect(() => {
         if (showTelegramAlert && !isHovered) {
-            const totalDuration = 10000; // 10 seconds
-            const interval = 16; // ~60fps for smooth animation
+            const totalDuration = 10000;
+            const interval = 16;
             const decrementPerInterval = (interval / totalDuration) * 100;
             
-            // Set up interval for progress bar
             const progressInterval = setInterval(() => {
                 setProgressValue(prev => {
                     const newValue = Math.max(prev - decrementPerInterval, 0);
@@ -112,16 +108,15 @@ function Header1() {
                 clearInterval(progressInterval);
             };
         } else if (isHovered) {
-            // Reset progress when hovered
             setProgressValue(100);
         }
     }, [showTelegramAlert, isHovered, hideTelegramAlert]);
-
+    
     const handleLogout = async () => {
         await supabase.auth.signOut();
         setUser(null);
     };
-
+    
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -133,7 +128,7 @@ function Header1() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
+    
     return (
         <>
             {/* Telegram Warning Banner */}
@@ -183,7 +178,6 @@ function Header1() {
                                     opacity: isHovered ? '0.9' : '0.7'
                                 }}
                             />
-                            {/* Glowing effect */}
                             <div 
                                 className="absolute inset-0 blur-sm bg-gradient-to-r from-red-400/30 via-blue-400/30 to-red-400/30"
                                 style={{ 
@@ -210,13 +204,13 @@ function Header1() {
                                 height={50} 
                                 className="w-10 h-10 sm:w-15 sm:h-15"
                             />
-                            <span className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
+                            <span className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-black to-black/90 bg-clip-text text-transparent">
                                 SafeCircle
                             </span>
                         </Link>
                     </div>
 
-                    {/* Navigation Section */}
+                    {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                         {!isLoading && (
                             <NavigationMenu>
@@ -226,13 +220,13 @@ function Header1() {
                                             {item.href ? (
                                                 <Link 
                                                     href={item.href} 
-                                                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                                                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-black/90 hover:text-black hover:bg-black/5 rounded-lg transition-all"
                                                 >
                                                     {item.title}
                                                 </Link>
                                             ) : (
                                                 <>
-                                                    <NavigationMenuTrigger className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white data-[state=open]:bg-white/5 rounded-lg transition-all">
+                                                    <NavigationMenuTrigger className="px-4 py-2 text-sm font-medium text-black/90 hover:text-black data-[state=open]:bg-black/5 rounded-lg transition-all">
                                                         {item.title}
                                                     </NavigationMenuTrigger>
                                                     <NavigationMenuContent>
@@ -240,10 +234,10 @@ function Header1() {
                                                             <ul className="min-w-[400px] lg:min-w-[500px] p-4">
                                                                 <div className="flex flex-col gap-4">
                                                                     <div className="space-y-2">
-                                                                        <h3 className="text-lg font-semibold text-white">
+                                                                        <h3 className="text-lg font-semibold text-black">
                                                                             {item.title}
                                                                         </h3>
-                                                                        <p className="text-sm text-white/90 leading-relaxed">
+                                                                        <p className="text-sm text-black/90 leading-relaxed">
                                                                             {item.description}
                                                                         </p>
                                                                     </div>
@@ -254,7 +248,7 @@ function Header1() {
                                                                                 <Link
                                                                                     key={subItem.label}
                                                                                     href={subItem.comingSoon ? "#" : subItem.href}
-                                                                                    className="group flex items-center justify-between p-2 rounded-lg hover:bg-white/10 transition-all"
+                                                                                    className="group flex items-center justify-between p-2 rounded-lg hover:bg-black/10 transition-all"
                                                                                     onClick={(e) => {
                                                                                         if (subItem.comingSoon) {
                                                                                             e.preventDefault();
@@ -270,11 +264,11 @@ function Header1() {
                                                                                             </div>
                                                                                         )}
                                                                                         <div className="flex flex-col">
-                                                                                            <span className="text-sm font-medium text-white group-hover:text-white/90">
+                                                                                            <span className="text-sm font-medium text-black group-hover:text-black/90">
                                                                                                 {subItem.label}
                                                                                             </span>
                                                                                             {subItem.description && (
-                                                                                                <span className="text-xs text-white/60 group-hover:text-white/70">
+                                                                                                <span className="text-xs text-black/60 group-hover:text-black/70">
                                                                                                     {subItem.description}
                                                                                                 </span>
                                                                                             )}
@@ -285,11 +279,10 @@ function Header1() {
                                                                                             {t('navbar.comingSoon')}
                                                                                         </span>
                                                                                     ) : (
-                                                                                        <MoveRight className="w-4 h-4 text-white/40 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all" />
+                                                                                        <MoveRight className="w-4 h-4 text-black/40 group-hover:text-black/60 group-hover:translate-x-0.5 transition-all" />
                                                                                     )}
                                                                                 </Link>
                                                                             );
-
                                                                             return subItem.external || subItem.comingSoon ? (
                                                                                 <TooltipProvider key={subItem.label}>
                                                                                     <Tooltip>
@@ -338,14 +331,14 @@ function Header1() {
                                         />
                                     </button>
                                 </DropdownMenu.Trigger>
-                                <DropdownMenu.Content className="mt-2 w-56 rounded-lg bg-background/95 backdrop-blur-md border border-white/10 p-2 shadow-lg">
-                                    <DropdownMenu.Label className="px-2 py-1.5 text-sm font-medium text-white">
+                                <DropdownMenu.Content className="mt-2 w-56 rounded-lg bg-background/95 backdrop-blur-md border border-black/10 p-2 shadow-lg">
+                                    <DropdownMenu.Label className="px-2 py-1.5 text-sm font-medium text-black">
                                         {user.user_metadata?.full_name || user.email}
                                     </DropdownMenu.Label>
-                                    <DropdownMenu.Label className="px-2 py-1 text-xs text-white/60">
+                                    <DropdownMenu.Label className="px-2 py-1 text-xs text-black/60">
                                         {user.email}
                                     </DropdownMenu.Label>
-                                    <div className="h-px bg-white/10 my-1.5"></div>
+                                    <div className="h-px bg-black/10 my-1.5"></div>
                                     <DropdownMenu.Item
                                         className="px-2 py-1.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-md cursor-pointer outline-none"
                                         onSelect={handleLogout}
@@ -362,128 +355,12 @@ function Header1() {
                                 {t('navbar.login')}
                             </Button>
                         )}
-
-                        {/* Mobile Menu Button */}
-                        <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => setOpen(!isOpen)}
-                            className="lg:hidden"
-                        >
-                            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                        </Button>
-                    </div>
-
-                    {/* Mobile Menu */}
-                    {isOpen && (
-                        <div className="absolute top-full left-0 right-0 border-t border-white/10 bg-background/95 backdrop-blur-md shadow-lg lg:hidden max-h-[80vh] overflow-y-auto">
-                            <div className="container mx-auto py-4 px-4 space-y-4">
-                                {/* Language Switcher in Mobile Menu */}
-                                <div className="sm:hidden px-4 py-2 border-b border-white/10">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm text-white/70">{!isLoading ? t('navbar.language') : 'Language'}</span>
-                                        <LanguageSwitcher />
-                                    </div>
-                                </div>
-                                
-                                {!isLoading && navItems.map((item) => (
-                                    <div key={item.title} className="border-b border-white/10 last:border-none pb-4">
-                                        <div className="flex flex-col gap-2 px-4">
-                                            {item.href ? (
-                                                <Link 
-                                                    href={item.href} 
-                                                    className="flex justify-between items-center text-base font-semibold text-white hover:text-white/90 transition-colors py-2"
-                                                    onClick={() => setOpen(false)}
-                                                >
-                                                    <span>{item.title}</span>
-                                                    <MoveRight className="w-4 h-4 stroke-1 text-white/70" />
-                                                </Link>
-                                            ) : (
-                                                <>
-                                                    <button
-                                                        onClick={() => setOpenMobileSection(openMobileSection === item.title ? null : item.title)}
-                                                        className="flex justify-between items-center text-base font-semibold text-white py-2"
-                                                    >
-                                                        <span>{item.title}</span>
-                                                        <ChevronDown 
-                                                            className={`w-4 h-4 transition-transform ${
-                                                                openMobileSection === item.title ? 'rotate-180' : ''
-                                                            }`} 
-                                                        />
-                                                    </button>
-                                                    {openMobileSection === item.title && (
-                                                        <div className="space-y-2 mt-2">
-                                                            <p className="text-sm text-white/80 mb-4">{item.description}</p>
-                                                            <div className="space-y-2 pl-2">
-                                                                {item.items?.map((subItem) => {
-                                                                    const Icon = subItem.icon as LucideIcon;
-                                                                    const MobileLink = (
-                                                                        <Link
-                                                                            key={subItem.label}
-                                                                            href={subItem.comingSoon ? "#" : subItem.href}
-                                                                            className={`group flex justify-between items-center py-2 text-sm text-white hover:text-white/90 transition-colors ${
-                                                                                subItem.comingSoon ? 'opacity-60 cursor-not-allowed' : ''
-                                                                            }`}
-                                                                            onClick={(e) => {
-                                                                                if (subItem.comingSoon) {
-                                                                                    e.preventDefault();
-                                                                                } else {
-                                                                                    setOpen(false);
-                                                                                }
-                                                                            }}
-                                                                            target={subItem.external ? "_blank" : undefined}
-                                                                            rel={subItem.external ? "noopener noreferrer" : undefined}
-                                                                        >
-                                                                            <div className="flex items-center gap-3">
-                                                                                {Icon && (
-                                                                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center group-hover:from-blue-500/30 group-hover:to-cyan-500/30 transition-colors">
-                                                                                        <Icon className="w-4 h-4 text-blue-400" />
-                                                                                    </div>
-                                                                                )}
-                                                                                <div className="flex flex-col">
-                                                                                    <span className="font-medium text-white">{subItem.label}</span>
-                                                                                    {subItem.description && (
-                                                                                        <span className="text-xs text-white/70">
-                                                                                            {subItem.description}
-                                                                                        </span>
-                                                                                    )}
-                                                                                </div>
-                                                                            </div>
-                                                                            {subItem.comingSoon ? (
-                                                                                <span className="text-xs px-2 py-1 rounded-full bg-blue-950/60 text-blue-300 border border-blue-500/30">
-                                                                                    {t('navbar.comingSoon')}
-                                                                                </span>
-                                                                            ) : (
-                                                                                <MoveRight className="w-4 h-4 stroke-1 group-hover:translate-x-0.5 transition-transform text-white/70" />
-                                                                            )}
-                                                                        </Link>
-                                                                    );
-
-                                                                    return subItem.external || subItem.comingSoon ? (
-                                                                        <TooltipProvider key={subItem.label}>
-                                                                            <Tooltip>
-                                                                                <TooltipTrigger asChild>
-                                                                                    {MobileLink}
-                                                                                </TooltipTrigger>
-                                                                                <TooltipContent>
-                                                                                    {subItem.external ? t('navbar.externalLink') : 
-                                                                                    subItem.comingSoon ? t('navbar.comingSoonDesc') : null}
-                                                                                </TooltipContent>
-                                                                            </Tooltip>
-                                                                        </TooltipProvider>
-                                                                    ) : MobileLink;
-                                                                })}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                        
+                        {/* Mobile Navigation */}
+                        <div className="lg:hidden">
+                            <MobileNav />
                         </div>
-                    )}
+                    </div>
                 </div>
                 {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
             </header>

@@ -21,7 +21,7 @@ export const HowItWorksSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400">
             {t('sections.howItWorks.title')}
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-black/70 max-w-2xl mx-auto">
             {t('sections.howItWorks.description')}
           </p>
         </motion.div>
@@ -34,7 +34,7 @@ export const HowItWorksSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full"
         >
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 border border-white/10">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 border border-black/10">
             {/* Video Player */}
             <div className="relative w-full bg-black/40 backdrop-blur-sm" style={{ paddingBottom: '56.25%' }}>
               <iframe
@@ -61,7 +61,7 @@ export const HowItWorksSection = () => {
             <div className="font-medium text-blue-400 mb-1">
               {t('sections.howItWorks.benefits.quickSetup.title')}
             </div>
-            <div className="text-white/70 text-sm">
+            <div className="text-black/70 text-sm">
               {t('sections.howItWorks.benefits.quickSetup.description')}
             </div>
           </div>
@@ -69,7 +69,7 @@ export const HowItWorksSection = () => {
             <div className="font-medium text-blue-400 mb-1">
               {t('sections.howItWorks.benefits.protection247.title')}
             </div>
-            <div className="text-white/70 text-sm">
+            <div className="text-black/70 text-sm">
               {t('sections.howItWorks.benefits.protection247.description')}
             </div>
           </div>
@@ -77,7 +77,7 @@ export const HowItWorksSection = () => {
             <div className="font-medium text-blue-400 mb-1">
               {t('sections.howItWorks.benefits.easyToUse.title')}
             </div>
-            <div className="text-white/70 text-sm">
+            <div className="text-black/70 text-sm">
               {t('sections.howItWorks.benefits.easyToUse.description')}
             </div>
           </div>

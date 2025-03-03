@@ -16,6 +16,41 @@ interface NavItem {
   items?: NavSubItem[];
 }
 
+// Define a simpler link structure for direct use in mobile-nav and header
+interface Link {
+  href: string;
+  label: string;
+}
+
+// Export links as a constant for direct use in mobile-nav and header components
+export const links: Link[] = [
+  {
+    label: 'navigation.home',
+    href: '/',
+  },
+  {
+    label: 'navigation.about',
+    href: '/about-us',
+  },
+  {
+    label: 'navigation.needs',
+    href: '/necesidades',
+  },
+  {
+    label: 'navigation.collaborators',
+    href: '/colaboradores',
+  },
+  {
+    label: 'navigation.token',
+    href: '/token',
+  },
+  {
+    label: 'navigation.gancho',
+    href: '/gancho',
+  }
+];
+
+// Keep the original function for backward compatibility
 export const getNavItems = (t: (key: string) => string): NavItem[] => [
   {
     title: t('navigation.home'),

@@ -72,9 +72,9 @@ export const Footer = () => {
                 <div className="relative flex items-center justify-center w-15 h-15 overflow-hidden">
                   <AnimatedLogo size={80} className="rounded-full" />
                 </div>
-                <span className="font-nothing text-3xl text-white/90">SafeCircle</span>
+                <span className="font-nothing text-3xl text-black">SafeCircle</span>
               </motion.div>
-              <p className="text-white/60">
+              <p className="text-black">
                 {t('footer.description') || 'Protecting children online through AI and privacy-focused technology.'}
               </p>
             </div>
@@ -87,7 +87,7 @@ export const Footer = () => {
                   <li key={link.label}>
                     <Link 
                       href={link.href}
-                      className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors group"
+                      className="flex items-center space-x-2 text-black hover:text-gray-700 transition-colors group"
                     >
                       <link.icon className="w-4 h-4 opacity-60 group-hover:opacity-100" />
                       <span>{link.label}</span>
@@ -107,7 +107,7 @@ export const Footer = () => {
                       href={link.href}
                       target={link.external ? "_blank" : undefined}
                       rel={link.external ? "noopener noreferrer" : undefined}
-                      className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors group"
+                      className="flex items-center space-x-2 text-black hover:text-gray-700 transition-colors group"
                     >
                       <link.icon className="w-4 h-4 opacity-60 group-hover:opacity-100" />
                       <span>{link.label}</span>
@@ -153,7 +153,7 @@ export const Footer = () => {
                     ))}
                   </div>
                   <motion.span 
-                    className="text-sm bg-gradient-to-r from-white/60 to-white/40 bg-clip-text text-transparent hover:from-white/80 hover:to-white/60 transition-all duration-300 ease-out ml-8"
+                    className="text-sm bg-gradient-to-r from-black to-black/40 bg-clip-text text-transparent hover:from-black hover:to-black/80 transition-all duration-300 ease-out ml-8"
                     whileHover={{ scale: 1.02 }}
                   >
                     {t('footer.copyright') || `© ${new Date().getFullYear()} SafeCircle`}

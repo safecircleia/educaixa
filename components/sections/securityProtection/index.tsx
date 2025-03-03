@@ -10,10 +10,11 @@ import { useLanguage } from '@/context/LanguageContext';
 export const SecurityProtectionSection = () => {
   const { t } = useLanguage();
   const features = useMemo(() => getFeatures(t), [t]);
-
+  
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
-      <div className="container mx-auto px-4 space-y-12">
+      
+      <div className="container mx-auto px-4 space-y-12 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -30,12 +31,12 @@ export const SecurityProtectionSection = () => {
           >
             <div className="relative w-20 h-20">
               <div className="absolute inset-0 flex items-center justify-center">
-                <ShieldCheck className="w-10 h-10 text-orange-500" />
+                <ShieldCheck className="w-10 h-10 text-orange-600" />
               </div>
               {Array.from({ length: 3 }).map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute inset-0 rounded-xl border-2 border-orange-500/20"
+                  className="absolute inset-0 rounded-xl border-2 border-orange-400/20"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.5, 0.2, 0.5]
@@ -51,15 +52,15 @@ export const SecurityProtectionSection = () => {
             </div>
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 bg-clip-text text-transparent">
             {t('sections.securityprotection.title')}
           </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             {t('sections.securityprotection.description')}
           </p>
         </motion.div>
-
-        <SpotlightCard spotlightColor="rgba(249, 115, 22, 0.2)" className="p-8">
+        
+        <SpotlightCard spotlightColor="rgba(249, 115, 22, 0.1)" className="p-8 border border-gray-200/80 shadow-lg shadow-orange-500/5 bg-white backdrop-blur-sm">
           <div className="grid lg:grid-cols-12 gap-8">
             {/* Main Info Column */}
             <div className="lg:col-span-5 space-y-8">
@@ -70,52 +71,52 @@ export const SecurityProtectionSection = () => {
                 className="space-y-6"
               >
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
                     {t('sections.securityprotection.title')}
                   </h3>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed">
                     {t('sections.securityprotection.description1')}
                   </p>
                 </div>
-
+                
                 {/* Security Stats */}
                 <div className="grid grid-cols-2 gap-4">
                   <motion.div 
-                    className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 backdrop-blur-sm"
+                    className="p-4 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100/70 border border-orange-200/30 shadow-sm"
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <div className="font-mono text-2xl text-orange-500">AES-256</div>
-                    <div className="text-sm text-white/60 mt-1">{t('sections.securityprotection.encryption')}</div>
+                    <div className="font-mono text-2xl text-orange-600">AES-256</div>
+                    <div className="text-sm text-gray-600 mt-1">{t('sections.securityprotection.encryption')}</div>
                   </motion.div>
                   <motion.div 
-                    className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 backdrop-blur-sm"
+                    className="p-4 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100/70 border border-orange-200/30 shadow-sm"
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <div className="font-mono text-2xl text-orange-500">24/7</div>
-                    <div className="text-sm text-white/60 mt-1">{t('sections.securityprotection.monitoring')}</div>
+                    <div className="font-mono text-2xl text-orange-600">24/7</div>
+                    <div className="text-sm text-gray-600 mt-1">{t('sections.securityprotection.monitoring')}</div>
                   </motion.div>
                 </div>
-
+                
                 {/* Security Points */}
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-3 text-white/70">
+                  <li className="flex items-center gap-3 text-gray-700">
                     <div className="w-2 h-2 rounded-full bg-orange-500" />
                     {t('sections.securityprotection.point1')}
                   </li>
-                  <li className="flex items-center gap-3 text-white/70">
+                  <li className="flex items-center gap-3 text-gray-700">
                     <div className="w-2 h-2 rounded-full bg-orange-500" />
                     {t('sections.securityprotection.point2')}
                   </li>
-                  <li className="flex items-center gap-3 text-white/70">
+                  <li className="flex items-center gap-3 text-gray-700">
                     <div className="w-2 h-2 rounded-full bg-orange-500" />
                     {t('sections.securityprotection.point3')}
                   </li>
                 </ul>
               </motion.div>
             </div>
-
+            
             {/* Security Features Grid */}
             <div className="lg:col-span-7">
               <div className="grid sm:grid-cols-2 gap-4">
@@ -128,27 +129,27 @@ export const SecurityProtectionSection = () => {
                     transition={{ delay: index * 0.1 }}
                   >
                     <SpotlightCard 
-                      spotlightColor="rgba(249, 115, 22, 0.1)"
-                      className="group h-full p-6 hover:border-orange-500/20 transition-all duration-300"
+                      spotlightColor="rgba(249, 115, 22, 0.08)"
+                      className="group h-full p-6 border border-gray-200/50 hover:border-orange-200/70 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/5 bg-white/80"
                     >
                       <div className="flex gap-4">
                         <div className="flex-shrink-0">
                           <motion.div 
-                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/10 to-orange-400/20 p-2.5"
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-orange-200/60 p-2.5 shadow-sm"
                             whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                           >
-                            <feature.icon className="w-full h-full text-orange-500 group-hover:text-orange-400 transition-colors" />
+                            <feature.icon className="w-full h-full text-orange-600 group-hover:text-orange-700 transition-colors" />
                           </motion.div>
                         </div>
                         <div>
-                          <h4 className="font-medium text-lg mb-2 group-hover:text-orange-400 transition-colors">
+                          <h4 className="font-medium text-lg mb-2 text-gray-800 group-hover:text-orange-700 transition-colors">
                             {feature.title}
                           </h4>
-                          <p className="text-sm text-white/60 mb-2 group-hover:text-white/70 transition-colors">
+                          <p className="text-sm text-gray-600 mb-2 group-hover:text-gray-700 transition-colors">
                             {feature.description}
                           </p>
-                          <div className="text-xs font-mono text-orange-500">{feature.stats}</div>
+                          <div className="text-xs font-mono text-orange-600 group-hover:text-orange-700">{feature.stats}</div>
                         </div>
                       </div>
                     </SpotlightCard>

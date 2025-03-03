@@ -21,7 +21,6 @@ export default function Layout({
         <div className="flex-grow">
           {children}
         </div>
-        <Footer />
       </div>
     </main>
   );

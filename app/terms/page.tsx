@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfService() {
   return (
-    <main className="min-h-screen bg-black text-gray-300">
+    <main className="min-h-screen bg-white">
       <ErrorBoundary>
         <TermsContent />
       </ErrorBoundary>

@@ -102,7 +102,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="font-sans bg-black text-white min-h-screen flex flex-col">
+      <body className="font-sans bg-white text-black min-h-screen flex flex-col">
         <WalletProviders>
           {/* Use Suspense boundary around the entire app content for better streaming and loading UX */}
           <Suspense fallback={
@@ -115,7 +115,7 @@ export default function RootLayout({
                 {children}
               </CounterProvider>
             </LanguageProvider>
-            <Toaster position="bottom-right" theme="dark" />
+            <Toaster position="bottom-right" theme="light" />
             <UiToaster />
           </Suspense>
         </WalletProviders>

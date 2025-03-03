@@ -20,7 +20,7 @@ const ElegantShape = ({
 	width = 400,
 	height = 100,
 	rotate = 0,
-	gradient = "from-white/[0.08]",
+	gradient = "from-white/[0.12]",
 }: {
 	className?: string;
 	delay?: number;
@@ -77,10 +77,10 @@ const ElegantShape = ({
 						"absolute inset-0 rounded-full",
 						"bg-gradient-to-r to-transparent",
 						gradient,
-						"backdrop-blur-[2px] border-2 border-white/[0.15]",
-						"shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]",
+						"backdrop-blur-[2px] border-[1px] border-white/[0.3]",
+						"shadow-[0_8px_32px_0_rgba(255,255,255,0.2)]",
 						"after:absolute after:inset-0 after:rounded-full",
-						"after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"
+						"after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.4),transparent_70%)]"
 					)}
 				/>
 			</motion.div>
@@ -120,9 +120,9 @@ const HeroGeometric = ({
 
 	// Optimize component structure with lazy loading
 	return (
-		<div className="relative min-h-screen w-full flex items-start justify-center overflow-hidden bg-[#030303] pt-24 md:pt-32">
+		<div className="relative min-h-screen w-full flex items-start justify-center overflow-hidden bg-gradient-to-b from-blue-50/80 via-blue-50/20 to-white pt-24 md:pt-32">
 			{/* Use a CSS background gradient instead of a DOM element for better performance */}
-			<div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.05] via-transparent to-blue-500/[0.05] blur-3xl" />
+			<div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.08] via-transparent to-blue-500/[0.08] blur-3xl" />
 
 			<div className="absolute inset-0 overflow-hidden">
 			<ElegantShape
@@ -182,7 +182,7 @@ const HeroGeometric = ({
 						className="flex flex-col items-center space-y-6"
 					>
 						<h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-1">
-							<span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+							<span className="bg-clip-text text-transparent bg-gradient-to-b from-blue-800 to-blue-600">
 								{title1}
 							</span>
 						</h1>
@@ -191,18 +191,18 @@ const HeroGeometric = ({
 						<LayoutGroup id="titleGroup">
 							<motion.div 
 								layout 
-								className="flex items-baseline flex-nowrap whitespace-nowrap gap-x-3"
+								className="flex flex-col sm:flex-row items-center sm:items-baseline flex-nowrap whitespace-nowrap gap-y-4 sm:gap-x-3"
 							>
 								<motion.span 
 									layout
 									transition={{ type: "spring", damping: 30, stiffness: 400 }}
-									className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80"
+									className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-800 text-center sm:text-left"
 								>
 									{title2}
 								</motion.span>
 								<RotatingText
 									texts={rotatingWords}
-									mainClassName="text-3xl sm:text-4xl md:text-6xl bg-cyan-300 text-black font-bold px-2 sm:px-2 md:px-3 overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+									mainClassName="text-2xl sm:text-4xl md:text-6xl bg-blue-600 text-white font-bold px-2 sm:px-2 md:px-3 overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg shadow-lg"
 									elementLevelClassName=""
 									staggerFrom="last"
 									initial={{ y: "100%" }}
@@ -223,7 +223,7 @@ const HeroGeometric = ({
 						initial="hidden"
 						animate="visible"
 					>
-						<div className="text-base sm:text-lg md:text-xl text-white/40 mt-8 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+						<div className="text-base sm:text-lg md:text-xl text-gray-700 mt-8 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
 							<ShinyText 
 								text={description || ''} 
 								disabled={false} 
@@ -235,7 +235,7 @@ const HeroGeometric = ({
 				</div>
 			</div>
 
-			<div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
+			<div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-blue-50/50 pointer-events-none" />
 		</div>
 	);
 };
@@ -305,17 +305,17 @@ export const Hero = () => {
 				rotatingWords={rotatingWords}
 				description={t('hero.description')}
 			/>
-			<div className="absolute bottom-16 sm:bottom-24 md:bottom-32 left-0 right-0 z-20">
+			<div className="absolute bottom-0 left-0 right-0 z-20 pb-4 sm:pb-8 md:pb-16">
 				<div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-					<div className="space-y-8 sm:space-y-12">
-						<div ref={counterRef} className="max-w-xs sm:max-w-sm md:max-w-lg mx-auto">
+					<div className="space-y-4 sm:space-y-6">
+						<div ref={counterRef} className="max-w-xs sm:max-w-sm md:max-w-lg mx-auto mt-4 sm:mt-0">
 							<AnimatedCounter containerRef={counterRef} />
 						</div>
 						<motion.div
 							initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: prefersReducedMotion ? 0.1 : 0.4 }}
-							className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+							className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6"
 						>
 							<WaitlistButton />
 							<HoverCard openDelay={200}>
@@ -323,10 +323,10 @@ export const Hero = () => {
 									<StarBorder
 										onClick={handleDemoClick}
 										className="group cursor-pointer hover:opacity-90 scale-90 sm:scale-100"
-										color="violet"
+										color="blue"
 										speed="4s"
 									>
-										<span className="flex items-center gap-2 px-2 sm:px-4">
+										<span className="flex items-center gap-2 sm:px-4">
 											<div className="flex items-center gap-2 sm:gap-3">
 												<span className="text-sm sm:text-base">{t('hero.tryDemo') || "Try Demo"}</span>
 												<span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -334,17 +334,17 @@ export const Hero = () => {
 										</span>
 									</StarBorder>
 								</HoverCardTrigger>
-								<HoverCardContent className="w-80 bg-black/95 border border-white/10">
+								<HoverCardContent className="w-80 bg-white border border-gray-200 shadow-lg">
 									<div className="flex justify-between space-x-4">
 										<div className="space-y-1">
 											<h4 className="text-sm font-semibold flex items-center gap-2">
-												<Beaker className="h-4 w-4 text-red-400" />
+												<Beaker className="h-4 w-4 text-blue-600" />
 												{t('hero.demoVersion') || "Demo Version"}
 											</h4>
-											<p className="text-sm text-white/70">
+											<p className="text-sm text-gray-600">
 												{t('hero.demoDescription') || "Try SafeCircle's main features in a demonstration environment."}
 											</p>
-											<div className="flex items-center pt-2 text-xs text-white/50">
+											<div className="flex items-center pt-2 text-xs text-gray-500">
 												<span>{t('hero.limitedAccess') || "Limited access to basic features"}</span>
 											</div>
 										</div>
@@ -355,36 +355,6 @@ export const Hero = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* Scroll Down Indicator - optimize animation */}
-			<motion.div 
-				initial={{ opacity: 0 }}
-				animate={{ 
-					opacity: 1
-				}}
-				transition={{
-					duration: 0.5,
-					delay: 1,
-				}}
-				className="absolute bottom-4 sm:bottom-8 inset-x-0 mx-auto z-20 flex flex-col items-center gap-1 sm:gap-2 cursor-pointer"
-				onClick={() => scrollToSection("about-us")}
-			>
-				<span className="text-white/60 text-xs sm:text-sm">{t('hero.scrollDown') || "Scroll down"}</span>
-				<motion.div
-					animate={{ 
-						y: prefersReducedMotion ? 0 : [0, 6, 0] 
-					}}
-					transition={{
-						duration: 2,
-						repeat: Infinity,
-						ease: "easeInOut",
-						repeatDelay: 0.5,
-					}}
-				>
-					<ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" />
-				</motion.div>
-			</motion.div>
-
 			<DemoWarningDialog 
 				isOpen={showDemoWarning}
 				onClose={() => setShowDemoWarning(false)}
