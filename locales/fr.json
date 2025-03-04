@@ -486,7 +486,6 @@
 		"needs": "Besoins",
 		"collaborators": "Collaborateurs",
 		"token": "Monétisation",
-		"gancho": "Accroche",
 		"community": {
 			"title": "Communauté",
 			"description": "Rejoignez notre communauté et restez à jour avec les dernières nouvelles de SafeCircle.",
@@ -748,7 +747,8 @@
 		"hero": {
 			"title": "Token SC",
 			"subtitle": "Favoriser la sécurité numérique par la gouvernance décentralisée",
-			"description": "Le token de SafeCircle alimente un écosystème sécurisé et décentralisé, récompensant les utilisateurs pour la protection de leur vie privée et la promotion d'une communauté numérique éthique."
+			"description": "Le token de SafeCircle alimente un écosystème sécurisé et décentralisé, récompensant les utilisateurs pour la protection de leur vie privée et la promotion d'une communauté numérique éthique.",
+			"trade": "Acheter SC"
 		},
 		"sections": {
 			"overview": {
@@ -777,6 +777,18 @@
 			"metrics": {
 				"title": "Métriques et Analyse",
 				"description": "Visualisez les performances et l'adoption du token SC en temps réel"
+			},
+			"featured": {
+				"title": "Mis en Avant Sur",
+				"binance": {
+					"title": "Mis en Avant sur Binance Square",
+					"description": "SafeCircle a récemment été mis en avant sur Binance Square, soulignant notre engagement envers la sécurité et la confidentialité dans le monde numérique.",
+					"article": {
+						"title": "Sécurité, Confidentialité et Décentralisation : Le Nouveau Standard en Web3",
+						"content": "SafeCircle est pionnier d'une nouvelle approche de la sécurité numérique en mettant en œuvre des mesures de sécurité robustes et en exploitant la technologie blockchain pour garantir l'intégrité des données et la confidentialité des utilisateurs.",
+						"cta": "Lire l'article complet"
+					}
+				}
 			}
 		},
 		"stats": {
@@ -872,8 +884,5 @@
 		"contact": {
 			"description": "Pour toute question concernant ces conditions, contactez notre équipe juridique :"
 		}
-	},
-	"gancho": {
-		"slogan": "Il y a des parents sereins, il y a des enfants en sécurité, il y a SafeCircle"
 	}
 }
