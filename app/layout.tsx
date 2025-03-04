@@ -92,6 +92,9 @@ export default function RootLayout({
         {/* Preload critical assets */}
         <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
         
+        {/* Prevent automatic translation */}
+        <meta name="google" content="notranslate" />
+        
         {/* Analytics script with defer for non-critical operations */}
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
           <Script

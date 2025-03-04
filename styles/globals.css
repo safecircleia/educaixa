@@ -4,6 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent automatic translation */
+.notranslate {
+  -webkit-user-select: none;  /* Disable highlighting which can sometimes trigger translation */
+}
+
+/* Hide Google Translate toolbar */
+#google_translate_element,
+.skiptranslate,
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Ensure there's no translation visual cues */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Counter Chrome bug with translated pages, ensure they behave properly */
+.translated-ltr body {
+  top: 0 !important;
+}
+
+.translated-rtl body {
+  top: 0 !important;
+}
+
+/* Additional override for frame positioning */
+body > .skiptranslate {
+  display: none !important;
+}
+
+body {
+  position: static !important;
+}
+
 :root {
   --void-black: #0a0a0f;
   --neon-blue: #4dc8ff;

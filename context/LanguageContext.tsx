@@ -31,6 +31,63 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  // Function to prevent Google Chrome's automatic translation
+  const preventChromeTranslation = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      // Add class to indicate this is a multilingual site
+      document.documentElement.classList.add('notranslate');
+      
+      // Use the Translation API to prevent automatic translation
+      const disableTranslation = () => {
+        try {
+          // Check if translation is being attempted
+          const html = window.document.querySelector('html');
+          if (html?.classList.contains('translated-ltr') || html?.classList.contains('translated-rtl')) {
+            // Set the translation state to make Chrome think the page is already translated
+            if (window.google?.translate?.TranslateElement) {
+              window.google.translate.TranslateElement.getInstance()?.restore();
+            }
+          }
+        } catch (err) {
+          // Silent catch - the Google Translate API might not be fully available
+          if (process.env.NODE_ENV === 'development') {
+            console.debug('Google Translate API interaction failed:', err);
+          }
+        }
+      };
+
+      // Apply immediately
+      disableTranslation();
+      
+      // Also set up a mutation observer to detect translation attempts
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'class') {
+            disableTranslation();
+            break;
+          }
+        }
+      });
+      
+      // Start observing the document for class changes
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+      });
+      
+      return () => {
+        observer.disconnect();
+      };
+    } catch (error) {
+      // Failsafe error handling to ensure this doesn't break the application
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error setting up translation prevention:', error);
+      }
+    }
+  }, []);
+
   // Function to dynamically import translations
   const loadTranslations = useCallback(async (lang: Language) => {
     try {
@@ -97,13 +154,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     
     setLanguage(detectedLanguage);
     loadTranslations(detectedLanguage);
-  }, [loadTranslations]);
+    
+    // Activate the Chrome translation prevention
+    preventChromeTranslation();
+  }, [loadTranslations, preventChromeTranslation]);
 
   // Handle language change
   useEffect(() => {
     if (document) {
       document.documentElement.lang = language;
       localStorage.setItem('language', language);
+      
+      // Additionally add the notranslate class to document based on current language
+      document.documentElement.classList.add('notranslate');
     }
   }, [language]);
 
