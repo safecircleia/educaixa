@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { MessageCircleMore, Github, Twitter, MessageCircle, ExternalLink, BookOpen, Shield, FileText, Mail } from 'lucide-react';
-import { RiTelegram2Line, RiDiscordFill, RiLinkedinFill, RiYoutubeFill } from "react-icons/ri";
+import { RiTelegram2Line, RiDiscordFill, RiLinkedinFill, RiYoutubeFill, RiTiktokLine } from "react-icons/ri";
 import { ParticlesEffect } from '../client/ParticlesEffect';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,6 +26,7 @@ export const Footer = () => {
       { label: 'Twitter', href: 'https://twitter.com/safecircleai', icon: Twitter, external: true },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/safecircleai/', icon: RiLinkedinFill, external: true },
       { label: 'YouTube', href: 'https://www.youtube.com/@safecircleai', icon: RiYoutubeFill, external: true },
+      { label: 'Tiktok', href: 'https://www.tiktok.com/@safe.circleai', icon: RiTiktokLine, external: true },
     ],
     developers: [
       { label: t('footer.apiReference') || 'API Reference', href: '/api', icon: BookOpen },

@@ -62,7 +62,7 @@
     "languine": "^3.0.6",
     "lucide-react": "^0.475.0",
     "meshline": "^3.3.1",
-    "motion": "^12.4.0",
+    "motion": "^12.4.10",
     "next": "^15.2.0",
     "next-themes": "^0.4.4",
     "pino-pretty": "^13.0.0",

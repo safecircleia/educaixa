@@ -1,0 +1,42 @@
+/* Custom styles for the token page footer
+.token-page footer span.font-semibold {
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0.9)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+} */
+
+/* Make navigation menu items white */
+.token-page footer .text-black,
+.token-page footer .text-black\/90,
+.token-page footer .text-sm.font-medium {
+  color: white !important;
+}
+
+/* Change hover states */
+.token-page footer .hover\:text-black:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Override dropdown menu text color (keep it dark for readability) */
+.token-page footer .bg-background\/95 .text-black\/90,
+.token-page footer .bg-background\/95 .text-black,
+.token-page footer .bg-background\/95 .text-black\/60 {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Make contact support button white */
+.token-page footer a[href^="mailto:support@safecircle.tech"] {
+  color: white !important;
+}
+
+/* Make social icons white */
+.token-page footer .flex.space-x-4 a svg {
+  color: white !important;
+}
+
+/* Make copyright text white */
+.token-page footer .text-sm.bg-gradient-to-r {
+  background: none !important;
+  color: white !important;
+}

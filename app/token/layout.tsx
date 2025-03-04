@@ -1,5 +1,6 @@
 import { Header1 } from '@/components/navbar/header';
-import '../styles/token-header.css'; // We'll create this CSS file
+import '../styles/token-header.css';
+import '../styles/token-footer.css';
 
 export default function Layout({
   children,

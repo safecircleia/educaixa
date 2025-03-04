@@ -270,7 +270,7 @@
 		"about": "About Us",
 		"needs": "Needs",
 		"collaborators": "Collaborators",
-		"token": "Monetization",
+		"token": "Token",
 		"gancho": "Hook",
 		"community": {
 			"title": "Community",
@@ -611,7 +611,8 @@
 		"hero": {
 			"title": "SC Token",
 			"subtitle": "Driving digital security through decentralized governance",
-			"description": "SafeCircle's token powers a secure and decentralized ecosystem, rewarding users for protecting their privacy and fostering an ethical digital community."
+			"description": "SafeCircle's token powers a secure and decentralized ecosystem, rewarding users for protecting their privacy and fostering an ethical digital community.",
+			"trade": "Trade SC"
 		},
 		"sections": {
 			"overview": {
@@ -640,6 +641,18 @@
 			"metrics": {
 				"title": "Metrics & Analysis",
 				"description": "View SC token performance and adoption in real-time"
+			},
+			"featured": {
+				"title": "Featured On",
+				"binance": {
+					"title": "Featured on Binance Square",
+					"description": "SafeCircle was recently featured on Binance Square, highlighting our commitment to security and privacy in the digital world.",
+					"article": {
+						"title": "Security, Privacy, and Decentralization: The New Standard in Web3",
+						"content": "SafeCircle is pioneering a new approach to digital safety by implementing robust security measures and leveraging blockchain technology to ensure data integrity and user privacy.",
+						"cta": "Read the full article"
+					}
+				}
 			}
 		},
 		"stats": {
@@ -735,8 +748,5 @@
 		"contact": {
 			"description": "For questions about these terms, please contact our legal team:"
 		}
-	},
-	"gancho": {
-		"slogan": "There are peaceful parents, there are safe children, there is SafeCircle"
 	}
 }
