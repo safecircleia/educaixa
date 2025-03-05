@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Info, LineChart, Shield, Lock, Brain, Bell, Users, Settings } from 'lucide-react';
+import { Info, LineChart, Shield, Lock, Brain, Bell, Users, Settings, AlertTriangle } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { SecurityStatsChart } from '@/components/client/SecurityStatsChart';
 import { useLanguage } from '@/context/LanguageContext';
@@ -113,6 +113,43 @@ export function NecesidadesContent() {
           </p>
         </motion.div>
         
+        {/* Real Impact Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mb-16"
+        >
+          <SpotlightCard spotlightColor="rgba(239, 68, 68, 0.1)" className="p-8 border border-gray-200/80 shadow-lg shadow-red-500/5 bg-white backdrop-blur-sm">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-100 to-orange-100/60 flex items-center justify-center shadow-sm">
+                <AlertTriangle className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">El Impacto Real del Acoso Online</h2>
+                <p className="text-gray-600">Un llamado a la acción para proteger a nuestra juventud</p>
+              </div>
+            </div>
+            
+            <div className="prose prose-blue max-w-none">
+              <p className="text-gray-700 leading-relaxed">
+                Cada segundo en internet y en las redes sociales ocurren situaciones de acoso que, aunque invisibles a primera vista, tienen consecuencias devastadoras. La historia de Amanda Todd nos sirve como un poderoso recordatorio de la gravedad de este problema.
+              </p>
+              
+              <div className="my-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">La Historia de Amanda Todd</h4>
+                <p className="text-gray-700">
+                  Amanda, una joven canadiense, enfrentó años de acoso y violencia online en silencio, temerosa de buscar ayuda. Antes de su trágico fallecimiento, compartió su experiencia en un video titulado "Mi historia: luchando, acoso, suicidio, autolesiones", revelando el profundo impacto del ciberacoso en su vida.
+                </p>
+              </div>
+
+              <p className="text-gray-700 leading-relaxed">
+                Su historia, aunque dolorosamente tardía, expuso la realidad que enfrentan muchas víctimas del acoso online. Desafortunadamente, existen incontables historias similares que permanecen en silencio. Esta realidad nos ha impulsado a desarrollar SafeCircle, una solución diseñada para prevenir y combatir activamente el acoso online.
+              </p>
+            </div>
+          </SpotlightCard>
+        </motion.div>
+
         {/* Context Section with Chart */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
