@@ -39,7 +39,7 @@ export const HowItWorksSection = () => {
             <div className="relative w-full bg-black/40 backdrop-blur-sm" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube-nocookie.com/embed/KMNUBzgh64I?si=bUGGFmyFq8ppZBnC"
+                src="https://www.youtube-nocookie.com/embed/SRW46W2CQW0"
                 title="SafeCircle - How it works"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 loading="lazy"
