@@ -82,11 +82,11 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.166.0",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "@opennextjs/cloudflare": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@opennextjs/cloudflare": "^1.0.0-beta.2",
     "@types/node": "^20",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.2.0",
